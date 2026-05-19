@@ -1,6 +1,8 @@
 // Optional activities - curated by area
 // Max ~8 per area. Focused on: hikes, gondolas, skiing, active adventures
 // No guided tours, no horseback riding, no closed trails
+// alltrails: direct link to the trail page
+// park: which park for trail conditions link (jasper, banff, or null)
 
 export const ACTIVITIES = [
   // === JASPER (Days 3-4) ===
@@ -15,6 +17,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 52.8507,
     lng: -118.1231,
+    park: "jasper",
+    alltrails: null,
     tags: ["views", "gondola"]
   },
   {
@@ -28,6 +32,8 @@ export const ACTIVITIES = [
     difficulty: "hard",
     lat: 53.1253,
     lng: -117.7587,
+    park: "jasper",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-skyline",
     tags: ["hike", "summit", "views"]
   },
   {
@@ -41,6 +47,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 52.8393,
     lng: -118.0325,
+    park: "jasper",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/valley-of-the-five-lakes",
     tags: ["hike", "lakes"]
   },
   {
@@ -54,6 +62,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 52.8734,
     lng: -118.0591,
+    park: "jasper",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/old-fort-point-loop",
     tags: ["hike", "quick"]
   },
   {
@@ -67,6 +77,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 52.9025,
     lng: -118.0978,
+    park: "jasper",
+    alltrails: null,
     tags: ["water", "close"]
   },
   {
@@ -80,6 +92,8 @@ export const ACTIVITIES = [
     difficulty: null,
     lat: 53.1303,
     lng: -117.7698,
+    park: "jasper",
+    alltrails: null,
     tags: ["relax", "hot springs"]
   },
   {
@@ -93,6 +107,8 @@ export const ACTIVITIES = [
     difficulty: "moderate",
     lat: 52.6833,
     lng: -118.0567,
+    park: "jasper",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/cavell-meadows-trail",
     tags: ["hike", "glacier", "views"]
   },
   {
@@ -106,6 +122,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 52.6644,
     lng: -117.8838,
+    park: "jasper",
+    alltrails: null,
     tags: ["waterfall", "quick"]
   },
 
@@ -121,6 +139,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 51.4117,
     lng: -116.2337,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore-trail",
     tags: ["hike", "iconic", "easy"]
   },
   {
@@ -134,6 +154,8 @@ export const ACTIVITIES = [
     difficulty: "moderate",
     lat: 51.4167,
     lng: -116.1767,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
     tags: ["hike", "tea house", "iconic"]
   },
   {
@@ -147,6 +169,8 @@ export const ACTIVITIES = [
     difficulty: "hard",
     lat: 51.3936,
     lng: -116.2728,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/plain-of-six-glaciers-trail",
     tags: ["hike", "glacier", "tea house"]
   },
   {
@@ -160,6 +184,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 51.3282,
     lng: -116.1795,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/moraine-lake-rockpile-trail",
     tags: ["hike", "quick", "iconic"]
   },
   {
@@ -173,6 +199,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 51.3264,
     lng: -116.1835,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/consolation-lakes-trail",
     tags: ["hike", "lakes", "quiet"]
   },
   {
@@ -186,6 +214,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 51.4167,
     lng: -116.2167,
+    park: "banff",
+    alltrails: null,
     tags: ["water", "iconic"]
   },
   {
@@ -199,6 +229,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 52.5327,
     lng: -117.6438,
+    park: "jasper",
+    alltrails: null,
     tags: ["waterfall", "quick"]
   },
   {
@@ -212,6 +244,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 51.7171,
     lng: -116.5076,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/peyto-lake-bow-summit-lookout",
     tags: ["views", "quick", "iconic"]
   },
 
@@ -227,6 +261,8 @@ export const ACTIVITIES = [
     difficulty: "moderate",
     lat: 51.2455,
     lng: -115.8399,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/johnston-canyon-to-ink-pots",
     tags: ["hike", "waterfall", "iconic"]
   },
   {
@@ -240,6 +276,8 @@ export const ACTIVITIES = [
     difficulty: "moderate",
     lat: 51.0783,
     lng: -115.4031,
+    park: null,
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/grassi-lakes-trail",
     tags: ["hike", "close", "lakes"]
   },
   {
@@ -253,6 +291,8 @@ export const ACTIVITIES = [
     difficulty: "hard",
     lat: 51.0614,
     lng: -115.4180,
+    park: null,
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/ha-ling-peak",
     tags: ["hike", "summit", "close"]
   },
   {
@@ -266,6 +306,8 @@ export const ACTIVITIES = [
     difficulty: "moderate",
     lat: 51.1182,
     lng: -115.7632,
+    park: "banff",
+    alltrails: null,
     tags: ["skiing", "unique"]
   },
   {
@@ -279,6 +321,8 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 51.1479,
     lng: -115.5555,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-mountain-boardwalk-trail",
     tags: ["gondola", "views"]
   },
   {
@@ -292,6 +336,8 @@ export const ACTIVITIES = [
     difficulty: "moderate",
     lat: 51.2038,
     lng: -115.6015,
+    park: "banff",
+    alltrails: null,
     tags: ["adventure", "climbing"]
   },
   {
@@ -305,6 +351,8 @@ export const ACTIVITIES = [
     difficulty: "moderate",
     lat: 50.6100,
     lng: -115.1187,
+    park: null,
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/rawson-lake-trail",
     tags: ["hike", "lakes", "quiet"]
   },
   {
@@ -318,6 +366,8 @@ export const ACTIVITIES = [
     difficulty: null,
     lat: 51.1508,
     lng: -115.5610,
+    park: "banff",
+    alltrails: null,
     tags: ["relax", "hot springs"]
   }
 ];
@@ -337,4 +387,10 @@ export const DAY_AREAS = {
   7: "banff",
   8: "banff",
   9: "banff"
+};
+
+// Parks Canada trail conditions URLs
+export const PARK_TRAIL_URLS = {
+  jasper: "https://parks.canada.ca/pn-np/ab/jasper/activ/randonee-hiking/etat-sentiers-trail-conditions",
+  banff: "https://parks.canada.ca/pn-np/ab/banff/activ/randonee-hiking/etat-sentiers-trail-conditions"
 };

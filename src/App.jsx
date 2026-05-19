@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { TRIP_DATA, LAYER_NAMES, ITEM_TYPES } from './data/tripData';
-import { ACTIVITIES, AREA_NAMES, DAY_AREAS } from './data/activities';
+import { ACTIVITIES, AREA_NAMES, DAY_AREAS, PARK_TRAIL_URLS } from './data/activities';
 import './App.css';
 
 // Determine which day is "today" - Day 1 before trip starts
@@ -333,6 +333,20 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
                 <span>{activity.duration}</span>
                 <span>{activity.distance}</span>
               </div>
+              {(activity.alltrails || activity.park) && (
+                <div className="explore-card-links">
+                  {activity.alltrails && (
+                    <a href={activity.alltrails} target="_blank" rel="noreferrer" className="explore-link alltrails">
+                      AllTrails
+                    </a>
+                  )}
+                  {activity.park && PARK_TRAIL_URLS[activity.park] && (
+                    <a href={PARK_TRAIL_URLS[activity.park]} target="_blank" rel="noreferrer" className="explore-link conditions">
+                      Trail conditions
+                    </a>
+                  )}
+                </div>
+              )}
               <div className="explore-card-actions">
                 {isAdded ? (
                   <button
@@ -678,29 +692,36 @@ export default function App() {
                           <div key={actId} className="planned-card">
                             <div className="planned-card-top">
                               <div className="planned-card-name">{activity.name}</div>
-                              <button
-                                className="planned-remove"
-                                onClick={() => removeActivity(day.id, actId)}
-                                title="Remove"
-                              >
-                                &times;
-                              </button>
+                              {activity.difficulty && <span className={`difficulty-tag ${activity.difficulty}`}>{activity.difficulty}</span>}
                             </div>
                             <div className="planned-card-meta">
                               <span>{activity.duration}</span>
                               <span>{activity.cost}</span>
-                              {activity.difficulty && <span className={`difficulty-tag ${activity.difficulty}`}>{activity.difficulty}</span>}
+                              <span>{activity.distance}</span>
                             </div>
-                            {activity.lat && (
-                              <a
-                                href={getMapUrl(activity.lat, activity.lng, activity.name)}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="nav-btn"
+                            <div className="planned-card-actions">
+                              {activity.lat && (
+                                <a
+                                  href={getMapUrl(activity.lat, activity.lng, activity.name)}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="nav-btn"
+                                >
+                                  Navigate
+                                </a>
+                              )}
+                              {activity.alltrails && (
+                                <a href={activity.alltrails} target="_blank" rel="noreferrer" className="planned-link">
+                                  AllTrails
+                                </a>
+                              )}
+                              <button
+                                className="planned-remove-btn"
+                                onClick={() => removeActivity(day.id, actId)}
                               >
-                                Navigate
-                              </a>
-                            )}
+                                Remove
+                              </button>
+                            </div>
                           </div>
                         );
                       })}
