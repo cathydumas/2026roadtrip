@@ -137,7 +137,11 @@ export const TRIP_DATA = {
       park: "banff",
       km: 0,
       startAccom: { title: "Canmore Airbnb", lat: 51.089, lng: -115.359 },
-      items: []
+      items: [
+        { layer: 3, type: "market", time: "On arrival", title: "🥩 Valbella Gourmet Foods", note: "104 Elk Run Blvd · Legendary European deli since 1978. Rocky Mountain air-dried meats, sausages", lat: 51.0768197, lng: -115.3216483 },
+        { layer: 3, type: "food", time: "On arrival", title: "☕ JK Bakery Cafe", note: "1000 7 Ave · Great soups, sandwiches, Boston cream donuts. Stock up for hike lunches", lat: 51.0903837, lng: -115.3612421 },
+        { layer: 3, type: "market", time: "On arrival", title: "🛒 Safeway Canmore", note: "1200 Railway Ave · Well-stocked, on-site liquor store", lat: 51.093671, lng: -115.356288 }
+      ]
     },
     {
       id: 9,

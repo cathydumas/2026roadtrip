@@ -412,29 +412,6 @@ export const ACTIVITIES = [
       { title: "⛏️ Atlas Coal Mine", note: "Last standing tipple in Canada. Ghost town vibes. Self-guided or guided tours available", lat: 51.3736, lng: -112.5398, time: "Afternoon" }
     ]
   },
-  // Compound: Stock up run in Canmore
-  {
-    id: "banff-stock-up",
-    area: "banff",
-    name: "🛒 Stock Up Run (Canmore)",
-    description: "Hit the local spots for hike lunches, snacks, and supplies. Valbella for charcuterie, JK Bakery for sandwiches, Safeway for everything else.",
-    cost: "$50-100",
-    duration: "1-2 hours",
-    distance: "All in Canmore",
-    difficulty: null,
-    lat: 51.089,
-    lng: -115.359,
-    park: null,
-    alltrails: null,
-    tags: ["food", "close"],
-    compound: true,
-    stops: [
-      { title: "🥩 Valbella Gourmet Foods", note: "104 Elk Run Blvd. Legendary European deli since 1978. Air-dried meats, sausages, cheeses for hike lunches", lat: 51.0768197, lng: -115.3216483, time: "First" },
-      { title: "☕ JK Bakery Cafe", note: "1000 7 Ave. Great soups, sandwiches, Boston cream donuts. Stock up for hike lunches", lat: 51.0903837, lng: -115.3612421, time: "Second" },
-      { title: "🛒 Safeway Canmore", note: "1200 Railway Ave. Well-stocked, on-site liquor store. Get water, sunscreen, snacks", lat: 51.093671, lng: -115.356288, time: "Last" }
-    ]
-  },
-
   // === RESTAURANTS ===
   // Jasper
   {
