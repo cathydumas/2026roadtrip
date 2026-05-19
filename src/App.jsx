@@ -505,6 +505,19 @@ export default function App() {
     } catch {}
     return {};
   });
+  // Maligne Lake detailed status (canoe route + cruise signals)
+  const [maligneLake, setMaligneLake] = useState(() => {
+    try {
+      const cached = localStorage.getItem('rr_maligne_lake');
+      if (cached) {
+        const { data, fetchedAt } = JSON.parse(cached);
+        if (Date.now() - fetchedAt < 12 * 60 * 60 * 1000) return data;
+      }
+    } catch {}
+    return null;
+  });
+  const [maligneLakeExpanded, setMaligneLakeExpanded] = useState(false);
+
   const [leafletLoaded, setLeafletLoaded] = useState(!!window.L);
 
   // Planned activities: { dayId: [activityId, ...] } - persisted in localStorage
@@ -622,6 +635,39 @@ export default function App() {
     }
 
     fetchConditions();
+  }, []);
+
+  // Fetch Maligne Lake detailed status (canoe route + cruise)
+  // Cached 12 hours. Starts checking daily from May 29.
+  useEffect(() => {
+    // Only start checking from May 29 onward
+    const checkStart = new Date('2026-05-29');
+    if (new Date() < checkStart) return;
+
+    // Check cache freshness
+    try {
+      const cached = localStorage.getItem('rr_maligne_lake');
+      if (cached) {
+        const { fetchedAt } = JSON.parse(cached);
+        if (Date.now() - fetchedAt < 12 * 60 * 60 * 1000) return;
+      }
+    } catch {}
+
+    async function fetchMaligne() {
+      try {
+        const response = await fetch('/api/maligne-lake');
+        const data = await response.json();
+        if (data && data.summary) {
+          setMaligneLake(data);
+          localStorage.setItem('rr_maligne_lake', JSON.stringify({
+            data,
+            fetchedAt: Date.now()
+          }));
+        }
+      } catch {}
+    }
+
+    fetchMaligne();
   }, []);
 
   const toggleLayer = (layer) => {
@@ -787,13 +833,67 @@ export default function App() {
                   )}
 
                   {/* Maligne Lake status for fishing day */}
-                  {day.id === 3 && activityConditions['maligne-lake-status'] && (
-                    <div className="maligne-lake-status">
-                      <span className="maligne-icon">🎣</span>
-                      <div className="maligne-info">
-                        <div className="maligne-title">Maligne Lake Status</div>
-                        <div className="maligne-condition">{activityConditions['maligne-lake-status'].condition}{activityConditions['maligne-lake-status'].comment ? ` - ${activityConditions['maligne-lake-status'].comment}` : ''}</div>
-                      </div>
+                  {day.id === 3 && (maligneLake || activityConditions['maligne-lake-status']) && (
+                    <div className={`maligne-lake-status ${maligneLakeExpanded ? 'expanded' : ''}`}>
+                      <button className="maligne-summary" onClick={() => setMaligneLakeExpanded(!maligneLakeExpanded)}>
+                        <span className="maligne-icon">🎣</span>
+                        <div className="maligne-info">
+                          <div className="maligne-title">Maligne Lake - Fishing Status</div>
+                          <div className="maligne-condition">
+                            {maligneLake ? maligneLake.summary : `${activityConditions['maligne-lake-status'].condition} - ${activityConditions['maligne-lake-status'].comment}`}
+                          </div>
+                        </div>
+                        <span className={`maligne-chevron ${maligneLakeExpanded ? 'open' : ''}`}>▾</span>
+                      </button>
+                      {maligneLakeExpanded && (
+                        <div className="maligne-details">
+                          {maligneLake?.canoeRoute && (
+                            <div className="maligne-signal">
+                              <div className="maligne-signal-label">Parks Canada Canoe Route</div>
+                              <div className="maligne-signal-value">
+                                <span className="maligne-signal-condition">{maligneLake.canoeRoute.condition}</span>
+                                {maligneLake.canoeRoute.comment && <span className="maligne-signal-comment"> - {maligneLake.canoeRoute.comment}</span>}
+                              </div>
+                              {maligneLake.canoeRoute.updatedDate && (
+                                <div className="maligne-signal-date">Updated {maligneLake.canoeRoute.updatedDate}</div>
+                              )}
+                            </div>
+                          )}
+                          {maligneLake?.cruise && (
+                            <div className="maligne-signal">
+                              <div className="maligne-signal-label">Maligne Lake Cruise</div>
+                              <div className="maligne-signal-value">
+                                <span className={`maligne-cruise-status ${maligneLake.cruise.operating ? 'open' : 'closed'}`}>
+                                  {maligneLake.cruise.operating ? '● Operating' : '○ Not yet open'}
+                                </span>
+                                {maligneLake.cruise.note && <span className="maligne-signal-comment"> - {maligneLake.cruise.note}</span>}
+                              </div>
+                            </div>
+                          )}
+                          {!maligneLake && activityConditions['maligne-lake-status'] && (
+                            <div className="maligne-signal">
+                              <div className="maligne-signal-label">Parks Canada</div>
+                              <div className="maligne-signal-value">{activityConditions['maligne-lake-status'].condition} - {activityConditions['maligne-lake-status'].comment}</div>
+                            </div>
+                          )}
+                          <a
+                            href="https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="maligne-link"
+                          >
+                            Parks Canada trail conditions →
+                          </a>
+                          <a
+                            href="https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/location-hours/"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="maligne-link"
+                          >
+                            Maligne Lake Cruise schedule →
+                          </a>
+                        </div>
+                      )}
                     </div>
                   )}
 

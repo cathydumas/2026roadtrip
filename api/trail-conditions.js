@@ -26,7 +26,8 @@ const TRAIL_MAP = {
     'valley of five lakes': ['jasper-valley-five-lakes'],
     'old fort point': ['jasper-old-fort-point'],
     'sulphur skyline': ['jasper-sulphur-skyline'],
-    'maligne lake': ['maligne-lake-status'],
+    'maligne lake canoe route': ['maligne-lake-status'],
+    'maligne lake boat launch': ['maligne-lake-status'],
   }
 };
 

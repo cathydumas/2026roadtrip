@@ -61,7 +61,7 @@ export const TRIP_DATA = {
       items: [
         { layer: 3, type: "activity", time: "Morning", title: "🐻 Buy Bear Spray", note: "Everest Outdoor · ~$50-60 each, get 3", lat: 52.87809120000001, lng: -118.07995149999998 },
         { layer: 4, type: "market", time: "Morning", title: "🛒 Robinson's IGA", note: "218 Connaught Dr · Full grocery, deli counter. Only real supermarket in Jasper", lat: 52.8741, lng: -118.0811 },
-        { layer: 2, type: "activity", time: "5-9 PM", title: "✅ Maligne Lake Fishing", note: "Jasper Park Fishing · CONFIRMED · ⚠️ Check lake ice status before going", lat: 52.6654279, lng: -117.5345287 }
+        { layer: 2, type: "activity", time: "5-9 PM", title: "✅ Maligne Lake Fishing", note: "Jasper Park Fishing · CONFIRMED · See lake status above", lat: 52.6654279, lng: -117.5345287 }
       ]
     },
     {
