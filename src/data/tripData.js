@@ -128,7 +128,7 @@ export const TRIP_DATA = {
       km: 80,
       startAccom: { title: "Paradise Lodge", lat: 51.4161708, lng: -116.196697 },
       items: [
-        { layer: 3, type: "drive", time: "Afternoon", title: "ℹ️ Banff Visitor Centre", note: "224 Banff Ave · Open 9 AM - 7 PM (summer). Park passes, trail conditions, wildlife alerts", lat: 51.1784, lng: -115.5708 },
+        { layer: 3, type: "drive", time: "Afternoon", title: "ℹ️ Banff Visitor Centre", note: "224 Banff Ave · Open 9 AM - 7 PM (summer). Park passes, trail conditions, wildlife alerts. Park at train station (free), 5 min walk north", lat: 51.1700, lng: -115.5692 },
         { layer: 1, type: "hotel", time: "Evening", title: "Canmore Airbnb", note: "Check in - 3 nights", lat: 51.089, lng: -115.359 }
       ]
     },
