@@ -373,21 +373,21 @@ export const ACTIVITIES = [
     alltrails: "https://www.alltrails.com/trail/canada/alberta/rawson-lake--11",
     tags: ["hike", "lakes", "quiet"]
   },
-  // Adventures
+  // Town
   {
-    id: "banff-via-ferrata",
+    id: "banff-townsite",
     area: "banff",
-    name: "Via Ferrata - Mt Norquay",
-    description: "Guided climbing on iron rungs and cables up cliff faces. No experience needed. Multiple routes from beginner (2.5 hrs) to advanced.",
-    cost: "$179-249/person",
-    duration: "3-4 hours",
-    distance: "25 min drive",
-    difficulty: "moderate",
-    lat: 51.2038,
-    lng: -115.6015,
+    name: "Explore Banff Townsite",
+    description: "Walk Banff Ave, shops, restaurants, Bow River boardwalk. Park at the train station lot (free, easy) and walk into town from there. Street parking is a nightmare.",
+    cost: "Free (parking free at train station)",
+    duration: "2-3 hours",
+    distance: "20 min from Canmore",
+    difficulty: null,
+    lat: 51.1766,
+    lng: -115.5718,
     park: "banff",
     alltrails: null,
-    tags: ["adventure", "climbing"]
+    tags: ["town", "food", "easy"]
   },
   // Full day trip: Dinosaur Day (compound activity - adds multiple stops)
   {
