@@ -638,12 +638,8 @@ export default function App() {
   }, []);
 
   // Fetch Maligne Lake detailed status (canoe route + cruise)
-  // Cached 12 hours. Starts checking daily from May 29.
+  // Cached 12 hours. Checks both Parks Canada and cruise schedule.
   useEffect(() => {
-    // Only start checking from May 29 onward
-    const checkStart = new Date('2026-05-29');
-    if (new Date() < checkStart) return;
-
     // Check cache freshness
     try {
       const cached = localStorage.getItem('rr_maligne_lake');
@@ -832,7 +828,22 @@ export default function App() {
                     />
                   )}
 
-                  {/* Maligne Lake status for fishing day */}
+                  {/* Weather strip */}
+                  {weather[day.id] && weather[day.id].time && (
+                    <div className="weather-strip">
+                      {weather[day.id].time.slice(0, 3).map((date, i) => (
+                        <div key={date} className="weather-chip">
+                          <span className="weather-emoji">
+                            {getWeatherEmoji(weather[day.id].weather_code ? weather[day.id].weather_code[i] : weather[day.id].weathercode?.[i])}
+                          </span>
+                          <span className="weather-temp">{Math.round(weather[day.id].temperature_2m_max[i])}°</span>
+                        </div>
+                      ))}
+                      <span className="weather-label">GEM forecast</span>
+                    </div>
+                  )}
+
+                  {/* Maligne Lake status for fishing day - below weather */}
                   {day.id === 3 && (maligneLake || activityConditions['maligne-lake-status']) && (
                     <div className={`maligne-lake-status ${maligneLakeExpanded ? 'expanded' : ''}`}>
                       <button className="maligne-summary" onClick={() => setMaligneLakeExpanded(!maligneLakeExpanded)}>
@@ -894,21 +905,6 @@ export default function App() {
                           </a>
                         </div>
                       )}
-                    </div>
-                  )}
-
-                  {/* Weather strip */}
-                  {weather[day.id] && weather[day.id].time && (
-                    <div className="weather-strip">
-                      {weather[day.id].time.slice(0, 3).map((date, i) => (
-                        <div key={date} className="weather-chip">
-                          <span className="weather-emoji">
-                            {getWeatherEmoji(weather[day.id].weather_code ? weather[day.id].weather_code[i] : weather[day.id].weathercode?.[i])}
-                          </span>
-                          <span className="weather-temp">{Math.round(weather[day.id].temperature_2m_max[i])}°</span>
-                        </div>
-                      ))}
-                      <span className="weather-label">GEM forecast</span>
                     </div>
                   )}
 
