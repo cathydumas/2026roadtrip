@@ -91,6 +91,106 @@ export const TRIP_DATA = {
         { layer: 4, type: "scenic", time: "Afternoon", title: "📷 Peyto Lake", note: "Wolf-shaped lake from Bow Summit", lat: 51.7171414, lng: -116.507574 },
         { layer: 1, type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback Suite, 2 nights", lat: 51.4161708, lng: -116.196697 }
       ]
+    },
+    {
+      id: 6,
+      date: "Fri Jun 19",
+      title: "Lake Louise Day",
+      subtitle: "Moraine Lake, lakeshore & lunch",
+      color: "#0A3D62",
+      emoji: "🏔️",
+      park: "banff",
+      items: [
+        { layer: 4, type: "hike", time: "Morning", title: "Lake Louise Lakeshore Walk", note: "Go early - best light, fewer crowds", lat: 51.4116775, lng: -116.233715, difficulty: "easy" },
+        { layer: 2, type: "food", time: "12:15 PM", title: "✅ Lakeview Lounge", note: "Chateau Lake Louise · Lunch reservation", lat: 51.4163, lng: -116.2138 },
+        { layer: 2, type: "activity", time: "4:00-5:00 PM", title: "✅ Moraine Lake Shuttle", note: "CONFIRMED · 3 adults · Depart Park & Ride", lat: 51.4412008, lng: -116.162196 },
+        { layer: 4, type: "hike", time: "At Moraine Lake", title: "Rockpile Trail", note: "20-min hike to Valley of Ten Peaks viewpoint", lat: 51.3282264, lng: -116.179504, difficulty: "easy" }
+      ]
+    },
+    {
+      id: 7,
+      date: "Sat Jun 20",
+      title: "Lake Louise → Banff → Canmore",
+      subtitle: "Emerald Lake, Banff townsite & hot springs",
+      color: "#6B2D8B",
+      emoji: "♨️",
+      park: "banff",
+      items: [
+        { layer: 4, type: "hike", time: "Early morning", title: "Plain of Six Glaciers Trail", note: "14km return, ends at Teahouse. Only if you have the legs!", lat: 51.3935843, lng: -116.272776, difficulty: "hard" },
+        { layer: 4, type: "scenic", time: "Morning option", title: "⭐ Emerald Lake", note: "Yoho NP · 30 min detour via Field BC. Vivid emerald water, 5km loop trail. Canoe rentals $90/hr", lat: 51.4434375, lng: -116.5307693 },
+        { layer: 4, type: "activity", time: "Afternoon", title: "🚡 Banff Gondola", note: "Sulphur Mountain · Ride to 2,281m, 360° views", lat: 51.1479321, lng: -115.555465 },
+        { layer: 4, type: "hike", time: "OR afternoon", title: "🥾 Tunnel Mountain", note: "2.3km, 260m gain from townsite. ~1.5 hrs, great Bow Valley views", lat: 51.1753469, lng: -115.5618683, difficulty: "moderate" },
+        { layer: 4, type: "hot_spring", time: "Late afternoon", title: "♨️ Banff Upper Hot Springs", note: "Historic pool at 1,585m. Open from 10 AM", lat: 51.1507689, lng: -115.560991 },
+        { layer: 1, type: "hotel", time: "Evening", title: "Canmore Airbnb", note: "Check in - 3 nights", lat: 51.089, lng: -115.359 }
+      ]
+    },
+    {
+      id: 8,
+      date: "Sun Jun 21",
+      title: "Canmore Day 1",
+      subtitle: "Settle in, stock up, pick your adventure",
+      color: "#6B2D8B",
+      emoji: "🥾",
+      park: "banff",
+      items: [
+        { layer: 3, type: "market", time: "On arrival", title: "🥩 Valbella Gourmet Foods", note: "104 Elk Run Blvd · Legendary European deli since 1978. Rocky Mountain air-dried meats, sausages", lat: 51.0768197, lng: -115.3216483 },
+        { layer: 3, type: "food", time: "On arrival", title: "☕ JK Bakery Café", note: "1000 7 Ave · Great soups, sandwiches, Boston cream donuts. Stock up for hike lunches", lat: 51.0903837, lng: -115.3612421 },
+        { layer: 3, type: "market", time: "On arrival", title: "🛒 Safeway Canmore", note: "1200 Railway Ave · Well-stocked, on-site liquor store", lat: 51.093671, lng: -115.356288 },
+        { layer: 4, type: "hike", time: "Full day option", title: "🥾 Johnston Canyon + Ink Pots", note: "Most recommended r/Banff hike. Canyon catwalks to 5 vivid turquoise springs. 11km, 5-6 hrs. Leave by 8 AM", lat: 51.2455293, lng: -115.8398977, difficulty: "moderate" },
+        { layer: 4, type: "hike", time: "Full day option", title: "🥾 Larch Valley + Sentinel Pass", note: "r/Banff top pick. Start from Moraine Lake. Summit at 2,611m. 11km return, stunning", lat: 51.3405856, lng: -116.2216884, difficulty: "hard" },
+        { layer: 4, type: "hike", time: "OR peaceful option", title: "🥾 Kananaskis: Rawson Lake", note: "45 min south on Hwy 40. 7.4km, 335m gain. Turquoise alpine lake, dramatic headwall. 4.9 stars, rarely crowded", lat: 50.609957599999994, lng: -115.11867529999998, difficulty: "moderate" },
+        { layer: 4, type: "hike", time: "OR easy option", title: "🥾 Kananaskis: Troll Falls", note: "3.5km return, beautiful forest waterfall. 4.8 stars. Cave-like structures beyond falls", lat: 50.937069, lng: -115.14146799999999, difficulty: "easy" },
+        { layer: 4, type: "hike", time: "OR stay local", title: "🥾 Grassi Lakes Trail", note: "5km from Canmore - crystal-clear lakes + ancient Cree pictographs. 2 hrs return", lat: 51.0783477, lng: -115.403065, difficulty: "moderate" },
+        { layer: 4, type: "drive", time: "OR half day", title: "🦕 Royal Tyrrell Museum", note: "Drumheller · Open 9 AM-9 PM. Leave 8:30 AM → arrive 11 AM → 3 hrs museum → Horseshoe Canyon → back by 6 PM", lat: 51.4792097, lng: -112.7901466 }
+      ]
+    },
+    {
+      id: 9,
+      date: "Mon Jun 22",
+      title: "Canmore Day 2",
+      subtitle: "Big hike day or Banff classics",
+      color: "#6B2D8B",
+      emoji: "🏔️",
+      park: "banff",
+      items: [
+        { layer: 4, type: "activity", time: "Morning option", title: "⭐ Summer Skiing", note: "Banff Sunshine Village · Rare summer ski season Jun 20-Jul 5. One lift, several runs after record snowfall", lat: 51.1182, lng: -115.7632 },
+        { layer: 4, type: "hike", time: "Morning option", title: "🥾 Ha Ling Peak", note: "Most iconic hike from Canmore - 5.4km, 745m gain. Ridgeline views over Bow Valley. Start by 7 AM", lat: 51.0614458, lng: -115.418039, difficulty: "hard" },
+        { layer: 4, type: "hike", time: "Morning option", title: "🥾 East End of Rundle", note: "14km, 1,000m gain - one of best summit hikes. Not technical but serious - full day", lat: 51.0718, lng: -115.3447, difficulty: "hard" },
+        { layer: 4, type: "scenic", time: "Afternoon", title: "📷 Vermilion Lakes + Bow Falls", note: "r/Banff must-dos. Vermilion: stunning Mt Rundle reflections. Bow Falls: 5 min walk from town", lat: 51.1807714, lng: -115.5941734 }
+      ]
+    },
+    {
+      id: 10,
+      date: "Tue Jun 23",
+      title: "Canmore → Revelstoke",
+      subtitle: "Rafting day via Rogers Pass",
+      color: "#8B1A1A",
+      emoji: "🌊",
+      park: null,
+      items: [
+        { layer: 3, type: "food", time: "9-10 AM", title: "🍳 Hot breakfast before you go", note: "Fuel up before raft. JK Bakery (opens 8 AM) or Safeway deli", lat: 51.0903837, lng: -115.3612421 },
+        { layer: 2, type: "activity", time: "1:45-4:45 PM", title: "✅ Whitewater Rafting", note: "CONFIRMED · Wild Water Adventures · Kicking Horse River Class II-IV+ · Snacks at River Base after", lat: 51.300, lng: -116.963 },
+        { layer: 4, type: "scenic", time: "En route", title: "📷 Rogers Pass", note: "Glacier NP · 1,382m summit, surrounded by massive peaks and glaciers", lat: 51.2833333, lng: -117.516666 },
+        { layer: 1, type: "hotel", time: "Evening", title: "Boulder Mountain Resort", note: "2-bedroom cabin, last night", lat: 50.9913465, lng: -118.26293 }
+      ]
+    },
+    {
+      id: 11,
+      date: "Wed Jun 24",
+      title: "Revelstoke → Victoria",
+      subtitle: "Home stretch via ferry",
+      color: "#2D6A4F",
+      emoji: "⛴️",
+      park: null,
+      items: [
+        { layer: 4, type: "scenic", time: "~45 min", title: "📷 Three Valley Gap", note: "Quick pull-off on Hwy 1 - glacial lake with dramatic mountain reflections", lat: 50.933340799999996, lng: -118.44571399999998 },
+        { layer: 4, type: "activity", time: "~1 hr", title: "🚂 Craigellachie - Last Spike", note: "Where last spike of Canadian Pacific Railway was driven in 1885. 15 min stop", lat: 50.9748665, lng: -118.72388819999999 },
+        { layer: 3, type: "food", time: "Mid-morning", title: "☕ Blondies Cafe", note: "Sicamous · 302 Finlayson St · 4.5 stars. Great espresso, fresh baking, lovely yard", lat: 50.837157499999996, lng: -118.9891111 },
+        { layer: 3, type: "food", time: "Lunch in Kamloops", title: "🍳 Hello Toast", note: "428 Victoria St · Kamloops' most popular brunch. Legendary eggs benny. Get there by noon", lat: 50.676030100000006, lng: -120.3311102 },
+        { layer: 4, type: "food", time: "OR lunch", title: "🍽️ Mittz Kitchen", note: "227 Victoria St · Brisket sandwich, seasonal menu, great BC wines", lat: 50.6756418, lng: -120.3358865 },
+        { layer: 2, type: "ferry", time: "9:00 PM", title: "✅ Tsawwassen → Swartz Bay", note: "CONFIRMED · Spirit of Vancouver Island · Arrives 10:35 PM", lat: 49.0069326, lng: -123.130321 },
+        { layer: 1, type: "activity", time: "Evening", title: "Home sweet Victoria 🏡", note: "Trip complete - 10 days, ~2,400 km" }
+      ]
     }
   ]
 };
