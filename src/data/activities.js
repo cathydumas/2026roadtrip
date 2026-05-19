@@ -387,7 +387,7 @@ export const ACTIVITIES = [
     lng: -115.5692,
     park: "banff",
     alltrails: null,
-    tags: ["town", "food", "easy"]
+    tags: ["town", "easy"]
   },
   // Full day trip: Dinosaur Day (compound activity - adds multiple stops)
   {
