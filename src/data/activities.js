@@ -97,21 +97,6 @@ export const ACTIVITIES = [
     tags: ["relax", "hot springs"]
   },
   {
-    id: "jasper-edith-cavell",
-    area: "jasper",
-    name: "Mt Edith Cavell Meadows",
-    description: "Alpine meadows beneath Angel Glacier. Wildflowers in June. Short but steep trail to jaw-dropping glacier views. Road may have limited hours.",
-    cost: "Free (park pass)",
-    duration: "2-3 hours",
-    distance: "30 min drive",
-    difficulty: "moderate",
-    lat: 52.6833,
-    lng: -118.0567,
-    park: "jasper",
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/cavell-meadows-trail",
-    tags: ["hike", "glacier", "views"]
-  },
-  {
     id: "jasper-athabasca-falls",
     area: "jasper",
     name: "Athabasca Falls",
@@ -389,13 +374,13 @@ export const ACTIVITIES = [
     alltrails: null,
     tags: ["adventure", "climbing"]
   },
-  // Full day trip: Dinosaur Day
+  // Full day trip: Dinosaur Day (compound activity - adds multiple stops)
   {
     id: "banff-dino-day",
     area: "banff",
     name: "🦕 Dinosaur Day (Drumheller)",
-    description: "Full day trip east to the badlands. Royal Tyrrell Museum (world-class dinosaur collection), Hoodoos Trail walk, Horseshoe Canyon viewpoint. Pack lunch or eat in Drumheller.",
-    cost: "$21/person (museum) + gas",
+    description: "Full day trip east to the badlands. Royal Tyrrell Museum, Horseshoe Canyon, Hoodoos Trail, and Atlas Coal Mine ghost town. Leave 8:30 AM, back by 6-7 PM.",
+    cost: "$21/person (museum) + $15 Atlas Coal Mine + gas",
     duration: "Full day (8-10 hours)",
     distance: "1.5 hr drive east from Canmore",
     difficulty: "easy",
@@ -403,7 +388,14 @@ export const ACTIVITIES = [
     lng: -111.5149,
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/drumheller-hoodoos",
-    tags: ["museum", "unique", "full day"]
+    tags: ["museum", "unique", "full day"],
+    compound: true,
+    stops: [
+      { title: "🦕 Royal Tyrrell Museum", note: "World-class dinosaur collection. Open 9 AM-9 PM. Allow 2-3 hours", lat: 51.4792, lng: -112.7901, time: "10:30 AM" },
+      { title: "🏜️ Horseshoe Canyon", note: "Dramatic badlands viewpoint. Short walk down into canyon floor. 15-20 min stop", lat: 51.4372, lng: -112.8897, time: "After museum" },
+      { title: "🌵 Drumheller Hoodoos Trail", note: "Easy 30-min walk among towering hoodoo rock pillars. The classic badlands photo op", lat: 51.4543, lng: -112.5918, time: "Mid-afternoon" },
+      { title: "⛏️ Atlas Coal Mine", note: "Last standing tipple in Canada. Ghost town vibes. Self-guided or guided tours available", lat: 51.3736, lng: -112.5398, time: "Afternoon" }
+    ]
   }
 ];
 

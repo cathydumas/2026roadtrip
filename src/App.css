@@ -537,6 +537,48 @@ body {
   color: #fff;
 }
 
+/* Compound activity sub-stops */
+.planned-stops {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0;
+  padding: 10px 12px;
+  background: light-dark(rgba(0,122,255,0.03), rgba(0,122,255,0.05));
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+
+.planned-stop-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.planned-stop-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.planned-stop-note {
+  font-size: 13px;
+  color: var(--text-secondary);
+  flex: 1;
+  min-width: 0;
+}
+
+.planned-stop-nav {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: light-dark(rgba(0,122,255,0.08), rgba(0,122,255,0.15));
+  flex-shrink: 0;
+}
+
 /* ===== EXPLORE BUTTON ===== */
 .explore-btn {
   display: flex;

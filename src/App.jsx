@@ -3,6 +3,28 @@ import { TRIP_DATA, LAYER_NAMES, ITEM_TYPES } from './data/tripData';
 import { ACTIVITIES, AREA_NAMES, DAY_AREAS, PARK_TRAIL_URLS } from './data/activities';
 import './App.css';
 
+// Rough km estimate between two lat/lng points (Haversine)
+function haversineKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+// Estimate extra km from planned activity points (round trip from accommodation)
+function estimateExtraKm(startAccom, plannedPoints) {
+  if (!plannedPoints || plannedPoints.length === 0 || !startAccom) return 0;
+  // Calculate round-trip from accommodation to farthest planned point
+  // Use 1.4x multiplier to account for road vs straight-line distance
+  let maxDist = 0;
+  plannedPoints.forEach(p => {
+    const dist = haversineKm(startAccom.lat, startAccom.lng, p.lat, p.lng);
+    if (dist > maxDist) maxDist = dist;
+  });
+  return Math.round(maxDist * 2 * 1.4);
+}
+
 // Determine which day is "today" - Day 1 before trip starts
 function getTodayId() {
   const now = new Date();
@@ -110,7 +132,7 @@ async function fetchRoute(coords, dayId) {
 }
 
 // Leaflet map component for each day - uses a stable fingerprint to avoid re-renders
-function DayMap({ day, itemsKey, items, mapProvider }) {
+function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const builtKeyRef = useRef(null);
@@ -148,6 +170,11 @@ function DayMap({ day, itemsKey, items, mapProvider }) {
       allPoints.push(item);
     });
 
+    // Add planned activity points
+    if (plannedPoints && plannedPoints.length > 0) {
+      plannedPoints.forEach(p => allPoints.push(p));
+    }
+
     if (allPoints.length === 0) return;
 
     const coords = allPoints.map(p => [p.lat, p.lng]);
@@ -169,7 +196,7 @@ function DayMap({ day, itemsKey, items, mapProvider }) {
       { maxZoom: 19 }
     ).addTo(map);
 
-    const layerColors = { 1: '#FF3B30', 2: '#FF9500', 3: '#8E8E93' };
+    const layerColors = { 1: '#FF3B30', 2: '#FF9500', 3: '#8E8E93', planned: '#007AFF' };
 
     const getMapUrl = (lat, lng, label) => {
       const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
@@ -493,19 +520,44 @@ export default function App() {
     return result;
   }, [filterItems]);
 
-  // Stable map fingerprints - only changes when the actual visible coords change
+  // Get planned activity points for a day (including compound sub-stops)
+  const getPlannedPoints = useCallback((dayId) => {
+    const ids = plannedActivities[dayId] || [];
+    const points = [];
+    ids.forEach(actId => {
+      const activity = ACTIVITIES.find(a => a.id === actId);
+      if (!activity) return;
+      if (activity.compound && activity.stops) {
+        activity.stops.forEach(stop => {
+          if (stop.lat && stop.lng) {
+            points.push({ lat: stop.lat, lng: stop.lng, title: stop.title, note: stop.note, time: stop.time, layer: 'planned' });
+          }
+        });
+      } else if (activity.lat && activity.lng) {
+        points.push({ lat: activity.lat, lng: activity.lng, title: activity.name, note: activity.description, time: activity.duration, layer: 'planned' });
+      }
+    });
+    return points;
+  }, [plannedActivities]);
+
+  // Stable map fingerprints - includes planned activities
   const mapKeys = useMemo(() => {
     const result = {};
     TRIP_DATA.days.forEach(day => {
       const items = filteredByDay[day.id];
+      const plannedPts = getPlannedPoints(day.id);
       const startPart = day.startAccom ? `S:${day.startAccom.lat},${day.startAccom.lng}|` : '';
-      result[day.id] = startPart + items
+      const itemsPart = items
         .filter(i => i.lat && i.lng)
         .map(i => `${i.lat},${i.lng}`)
         .join('|');
+      const plannedPart = plannedPts.length > 0
+        ? '|P:' + plannedPts.map(p => `${p.lat},${p.lng}`).join('|')
+        : '';
+      result[day.id] = startPart + itemsPart + plannedPart;
     });
     return result;
-  }, [filteredByDay]);
+  }, [filteredByDay, getPlannedPoints]);
 
   const getMapUrl = useCallback((lat, lng, label) => {
     const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
@@ -567,6 +619,9 @@ export default function App() {
           const filteredItems = filteredByDay[day.id];
           const isToday = getTodayId() === day.id;
           const dayArea = DAY_AREAS[day.id];
+          const plannedPts = getPlannedPoints(day.id);
+          const extraKm = estimateExtraKm(day.startAccom || day.items.find(i => i.lat && i.lng), plannedPts);
+          const totalKm = day.km + extraKm;
 
           return (
             <div key={day.id} className={`day-card ${isExpanded ? 'expanded' : ''} ${isToday ? 'today' : ''}`}>
@@ -582,7 +637,7 @@ export default function App() {
                   <div className="day-top-row">
                     <span className="day-date">{day.date}</span>
                     {isToday && <span className="today-pill">Today</span>}
-                    {day.km > 0 && <span className="day-km">{day.km} km</span>}
+                    {totalKm > 0 && <span className="day-km">{totalKm} km{extraKm > 0 ? ` (+${extraKm})` : ''}</span>}
                   </div>
                   <div className="day-title">{day.title}</div>
                 </div>
@@ -602,6 +657,7 @@ export default function App() {
                     <DayMap
                       day={day}
                       items={filteredItems}
+                      plannedPoints={getPlannedPoints(day.id)}
                       itemsKey={mapKeys[day.id]}
                       mapProvider={mapProvider}
                     />
@@ -699,8 +755,29 @@ export default function App() {
                               <span>{activity.cost}</span>
                               <span>{activity.distance}</span>
                             </div>
+                            {/* Compound activities show their sub-stops */}
+                            {activity.compound && activity.stops && (
+                              <div className="planned-stops">
+                                {activity.stops.map((stop, si) => (
+                                  <div key={si} className="planned-stop-row">
+                                    <span className="planned-stop-title">{stop.title}</span>
+                                    <span className="planned-stop-note">{stop.note}</span>
+                                    {stop.lat && (
+                                      <a
+                                        href={getMapUrl(stop.lat, stop.lng, stop.title)}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="planned-stop-nav"
+                                      >
+                                        Navigate
+                                      </a>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
                             <div className="planned-card-actions">
-                              {activity.lat && (
+                              {activity.lat && !activity.compound && (
                                 <a
                                   href={getMapUrl(activity.lat, activity.lng, activity.name)}
                                   target="_blank"
