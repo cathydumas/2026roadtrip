@@ -755,13 +755,13 @@ export default function App() {
                               <span>{activity.cost}</span>
                               <span>{activity.distance}</span>
                             </div>
-                            {/* Compound activities show their sub-stops */}
+                            {/* Compound activities show their sub-stops as a timeline */}
                             {activity.compound && activity.stops && (
                               <div className="planned-stops">
                                 {activity.stops.map((stop, si) => (
                                   <div key={si} className="planned-stop-row">
-                                    <span className="planned-stop-title">{stop.title}</span>
-                                    <span className="planned-stop-note">{stop.note}</span>
+                                    <div className="planned-stop-title">{stop.title}</div>
+                                    <div className="planned-stop-note">{stop.note}</div>
                                     {stop.lat && (
                                       <a
                                         href={getMapUrl(stop.lat, stop.lng, stop.title)}

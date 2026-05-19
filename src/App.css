@@ -537,46 +537,61 @@ body {
   color: #fff;
 }
 
-/* Compound activity sub-stops */
+/* Compound activity sub-stops - timeline style */
 .planned-stops {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
   margin: 10px 0;
-  padding: 10px 12px;
-  background: light-dark(rgba(0,122,255,0.03), rgba(0,122,255,0.05));
-  border-radius: 8px;
-  border-left: 3px solid var(--accent);
+  padding-left: 16px;
+  border-left: 2px solid var(--accent);
 }
 
 .planned-stop-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px;
+  position: relative;
+  padding: 10px 0 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.planned-stop-row:last-child {
+  border-bottom: none;
+}
+
+.planned-stop-row::before {
+  content: '';
+  position: absolute;
+  left: -21px;
+  top: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--card-bg);
+  box-shadow: 0 0 0 2px var(--accent);
 }
 
 .planned-stop-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
+  margin-bottom: 3px;
 }
 
 .planned-stop-note {
   font-size: 13px;
   color: var(--text-secondary);
-  flex: 1;
-  min-width: 0;
+  line-height: 1.4;
+  margin-bottom: 6px;
 }
 
 .planned-stop-nav {
+  display: inline-block;
   font-size: 12px;
   font-weight: 600;
   color: var(--accent);
   text-decoration: none;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
   background: light-dark(rgba(0,122,255,0.08), rgba(0,122,255,0.15));
-  flex-shrink: 0;
 }
 
 /* ===== EXPLORE BUTTON ===== */
