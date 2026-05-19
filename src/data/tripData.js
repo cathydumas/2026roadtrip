@@ -38,12 +38,12 @@ export const TRIP_DATA = {
       startAccom: { title: "Comfort Suites Kelowna", lat: 49.8936661, lng: -119.4170556 },
       items: [
         { layer: 3, type: "food", time: "Morning", title: "☕ 350° Bakehouse", note: "1892 Spall Rd - open 7:30 AM", lat: 49.8793977, lng: -119.4551504 },
-        { layer: 3, type: "market", time: "Morning", title: "🥩 Carnist Butcher", note: "1038 Richter St · Tue-Sat 10-6. Stock up on road trip meats and snacks", lat: 49.8966773, lng: -119.4887348 },
-        { layer: 3, type: "market", time: "Morning", title: "🛒 Nature's Fare Market", note: "1876 Cooper Rd · Organic produce, quality groceries, bulk snacks. Best veg selection in Kelowna", lat: 49.8827, lng: -119.4537 },
+        { layer: 4, type: "market", time: "Morning", title: "🥩 Carnist Butcher", note: "1038 Richter St · Tue-Sat 10-6. Stock up on road trip meats and snacks", lat: 49.8966773, lng: -119.4887348 },
+        { layer: 4, type: "market", time: "Morning", title: "🛒 Nature's Fare Market", note: "1876 Cooper Rd · Organic produce, quality groceries, bulk snacks. Best veg selection in Kelowna", lat: 49.8827, lng: -119.4537 },
         { layer: 3, type: "drive", time: "En route", title: "⛽ Fill up in Kamloops", note: "Last fuel before mountains", lat: 50.6745, lng: -120.3273 },
         { layer: 3, type: "food", time: "Lunch", title: "☕ Wild Flour Cafe", note: "Clearwater · Fresh sourdough, homemade baking", lat: 51.6521206, lng: -120.0389419 },
         { layer: 3, type: "activity", time: "En route", title: "⛽ Fill up in Valemount", note: "Last fuel before Jasper", lat: 52.8321, lng: -119.2626 },
-        { layer: 3, type: "scenic", time: "~20 min stop", title: "📷 Mt Robson Viewpoint", note: "Highest peak in the Canadian Rockies (3,954m). Pull off at the visitor centre for the classic photo op. Often has cloud cap.", lat: 53.1148, lng: -119.2314 },
+        { layer: 3, type: "scenic", time: "~30 min stop", title: "📷 Mt Robson Viewpoint", note: "Highest peak in the Canadian Rockies (3,954m). Pull off at the visitor centre for the classic photo op. Often has cloud cap. Short walk to Overlander Falls (10 min each way, easy, waterfall through canyon).", lat: 53.1148, lng: -119.2314 },
         { layer: 3, type: "drive", time: "On arrival", title: "ℹ️ Jasper Visitor Centre", note: "500 Connaught Dr · Park passes, maps, trail conditions, bear warnings", lat: 52.8734, lng: -118.0817 },
         { layer: 1, type: "hotel", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin, 3 nights", lat: 52.902511, lng: -118.097846 }
       ]
@@ -60,7 +60,7 @@ export const TRIP_DATA = {
       startAccom: { title: "Patricia Lake Bungalows", lat: 52.902511, lng: -118.097846 },
       items: [
         { layer: 3, type: "activity", time: "Morning", title: "🐻 Buy Bear Spray", note: "Everest Outdoor · ~$50-60 each, get 3", lat: 52.87809120000001, lng: -118.07995149999998 },
-        { layer: 3, type: "market", time: "Morning", title: "🛒 Robinson's IGA", note: "218 Connaught Dr · Full grocery, deli counter. Only real supermarket in Jasper", lat: 52.8741, lng: -118.0811 },
+        { layer: 4, type: "market", time: "Morning", title: "🛒 Robinson's IGA", note: "218 Connaught Dr · Full grocery, deli counter. Only real supermarket in Jasper", lat: 52.8741, lng: -118.0811 },
         { layer: 2, type: "activity", time: "5-9 PM", title: "✅ Maligne Lake Fishing", note: "Jasper Park Fishing · CONFIRMED · ⚠️ Check lake ice status before going", lat: 52.6654279, lng: -117.5345287 }
       ]
     },
@@ -75,7 +75,7 @@ export const TRIP_DATA = {
       km: 0,
       startAccom: { title: "Patricia Lake Bungalows", lat: 52.902511, lng: -118.097846 },
       items: [
-        { layer: 3, type: "market", time: "Morning", title: "🧑‍🌾 Jasper Farmers Market", note: "Wednesdays in summer · Local produce, baked goods, crafts. Check if running this week", lat: 52.8734, lng: -118.0817 },
+        { layer: 4, type: "market", time: "11 AM - 3 PM", title: "🧑‍🌾 Jasper Farmers Market", note: "701 Turret St · Wednesdays in summer · Local produce, baked goods, crafts", lat: 52.8755, lng: -118.0828 },
         { layer: 3, type: "drive", time: "On way home", title: "⛽ Fill up in Jasper", note: "Fill tonight - leaving early tomorrow", lat: 52.8734, lng: -118.0817 }
       ]
     },
@@ -90,12 +90,12 @@ export const TRIP_DATA = {
       km: 230,
       startAccom: { title: "Patricia Lake Bungalows", lat: 52.902511, lng: -118.097846 },
       items: [
-        { layer: 2, type: "scenic", time: "~30 min from Jasper", title: "📷 Athabasca Falls", note: "Most powerful waterfall in the Rockies. Short paved walk, multiple viewpoints", lat: 52.664437, lng: -117.883767 },
-        { layer: 2, type: "scenic", time: "~20 min stop", title: "📷 Sunwapta Falls", note: "Dramatic canyon waterfall. Easy 600m walk from parking lot", lat: 52.5327, lng: -117.6438 },
+        { layer: 2, type: "scenic", time: "~30 min from Jasper", title: "📷 Athabasca Falls", note: "Most powerful waterfall in the Rockies. Paved loop trail (1km, 15 min) with multiple viewpoints and canyon bridges", lat: 52.664437, lng: -117.883767 },
+        { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Sunwapta Falls", note: "Dramatic canyon waterfall. Easy 600m walk from parking lot. Continue 1km further to Lower Sunwapta Falls (quieter, almost no people)", lat: 52.5327, lng: -117.6438 },
         { layer: 2, type: "glacier", time: "11:30 AM", title: "✅ Columbia Icefield", note: "CONFIRMED · Ice Explorer + Skywalk", lat: 52.2201943, lng: -117.226141 },
         { layer: 3, type: "drive", time: "Mid-afternoon", title: "⛽ Saskatchewan River Crossing", note: "Only gas between Jasper & Lake Louise", lat: 51.9338, lng: -116.8319 },
-        { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Peyto Lake", note: "Wolf-shaped turquoise lake from Bow Summit lookout. 10-min walk to viewpoint", lat: 51.7171414, lng: -116.507574 },
-        { layer: 2, type: "scenic", time: "~20 min stop", title: "📷 Bow Lake", note: "Stunning glacial lake right off the highway. Walk along the shore or just take in the view from the parking area", lat: 51.6769, lng: -116.4458 },
+        { layer: 2, type: "scenic", time: "~45 min stop", title: "📷 Peyto Lake + Bow Summit", note: "Wolf-shaped turquoise lake from Bow Summit lookout. 10-min paved walk to main viewpoint, OR 40-min loop trail along the ridgeline for even better angles (easy, well-marked)", lat: 51.7171414, lng: -116.507574 },
+        { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Bow Lake", note: "Stunning glacial lake right off the highway. Walk along the shore to Bow Glacier Falls trailhead (20 min each way, flat, wildflowers). Full hike to falls is 9km return, 3 hrs", lat: 51.6769, lng: -116.4458 },
         { layer: 3, type: "drive", time: "Late afternoon", title: "ℹ️ Lake Louise Visitor Centre", note: "Samson Mall · Trail updates, bear activity, Moraine shuttle info", lat: 51.4267, lng: -116.1775 },
         { layer: 1, type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback Suite, 2 nights", lat: 51.4161708, lng: -116.196697 }
       ]
@@ -142,9 +142,9 @@ export const TRIP_DATA = {
       km: 0,
       startAccom: { title: "Canmore Airbnb", lat: 51.089, lng: -115.359 },
       items: [
-        { layer: 3, type: "market", time: "On arrival", title: "🥩 Valbella Gourmet Foods", note: "104 Elk Run Blvd · Legendary European deli since 1978. Rocky Mountain air-dried meats, sausages", lat: 51.0768197, lng: -115.3216483 },
-        { layer: 3, type: "food", time: "On arrival", title: "☕ JK Bakery Cafe", note: "1000 7 Ave · Great soups, sandwiches, Boston cream donuts. Stock up for hike lunches", lat: 51.0903837, lng: -115.3612421 },
-        { layer: 3, type: "market", time: "On arrival", title: "🛒 Safeway Canmore", note: "1200 Railway Ave · Well-stocked, on-site liquor store", lat: 51.093671, lng: -115.356288 }
+        { layer: 4, type: "market", time: "On arrival", title: "🥩 Valbella Gourmet Foods", note: "104 Elk Run Blvd · Legendary European deli since 1978. Rocky Mountain air-dried meats, sausages", lat: 51.0768197, lng: -115.3216483 },
+        { layer: 4, type: "market", time: "On arrival", title: "☕ JK Bakery Cafe", note: "1000 7 Ave · Great soups, sandwiches, Boston cream donuts. Stock up for hike lunches", lat: 51.0903837, lng: -115.3612421 },
+        { layer: 4, type: "market", time: "On arrival", title: "🛒 Safeway Canmore", note: "1200 Railway Ave · Well-stocked, on-site liquor store", lat: 51.093671, lng: -115.356288 }
       ]
     },
     {
@@ -201,7 +201,8 @@ export const TRIP_DATA = {
 export const LAYER_NAMES = {
   1: "Accommodations",
   2: "Booked Activities",
-  3: "Road Stops"
+  3: "Road Stops",
+  4: "Groceries"
 };
 
 export const ITEM_TYPES = {

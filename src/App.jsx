@@ -196,8 +196,7 @@ function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
       { maxZoom: 19 }
     ).addTo(map);
 
-    const layerColors = { 1: '#FF3B30', 2: '#FF9500', 3: '#8E8E93', planned: '#007AFF' };
-    const typeColors = { market: '#34C759' }; // Green pins for groceries
+    const layerColors = { 1: '#FF3B30', 2: '#FF9500', 3: '#8E8E93', 4: '#34C759', planned: '#007AFF' };
 
     const getMapUrl = (lat, lng, label) => {
       const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌🧑‍🌾]/g, '').trim();
@@ -208,8 +207,8 @@ function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
     };
 
     allPoints.forEach((item) => {
-      const color = typeColors[item.type] || layerColors[item.layer] || '#007AFF';
-      const radius = item.layer === 1 ? 9 : item.type === 'market' ? 8 : 7; // Hotels biggest, groceries slightly bigger
+      const color = layerColors[item.layer] || '#007AFF';
+      const radius = item.layer === 1 ? 9 : item.layer === 4 ? 8 : 7; // Hotels biggest, groceries slightly bigger
       const marker = L.circleMarker([item.lat, item.lng], {
         radius,
         fillColor: color,
@@ -490,7 +489,7 @@ export default function App() {
   const [mapProvider, setMapProvider] = useState(() => {
     return localStorage.getItem('rr_map_provider') || 'google';
   });
-  const [activeLayers, setActiveLayers] = useState([1, 2, 3]);
+  const [activeLayers, setActiveLayers] = useState([1, 2, 3, 4]);
   const [prefsOpen, setPrefsOpen] = useState(false);
   const [exploreArea, setExploreArea] = useState(null);
   const [weather, setWeather] = useState({});
@@ -706,7 +705,7 @@ export default function App() {
   };
 
   const getLayerEmoji = (layer) => {
-    const emojis = { 1: '🏨', 2: '🎫', 3: '⛽', 4: '✨' };
+    const emojis = { 1: '🏨', 2: '🎫', 3: '⛽', 4: '🛒' };
     return emojis[layer] || '📍';
   };
 
@@ -732,7 +731,7 @@ export default function App() {
             <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" />
             <line x1="17" y1="16" x2="23" y2="16" />
           </svg>
-          {activeLayerCount < 3 && <span className="prefs-badge">{activeLayerCount}</span>}
+          {activeLayerCount < 4 && <span className="prefs-badge">{activeLayerCount}</span>}
         </button>
       </header>
 
@@ -1010,7 +1009,7 @@ export default function App() {
         <div className="prefs-section">
           <div className="prefs-label">Show layers</div>
           <div className="layer-toggles">
-            {[1, 2, 3].map(layer => (
+            {[1, 2, 3, 4].map(layer => (
               <button
                 key={layer}
                 className={`layer-toggle ${activeLayers.includes(layer) ? 'active' : ''}`}
