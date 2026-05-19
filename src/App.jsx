@@ -279,24 +279,29 @@ function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
 
 // Explore panel for optional activities
 function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, onAddActivity, onRemoveActivity, activityConditions }) {
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [diffFilter, setDiffFilter] = useState('all');
+  const [view, setView] = useState('activities'); // 'activities' or 'food'
+  const [maxDifficulty, setMaxDifficulty] = useState(2); // 0=easy, 1=moderate, 2=hard (slider)
+  const [hideUnsafe, setHideUnsafe] = useState(false);
   const activities = ACTIVITIES.filter(a => a.area === area);
 
-  const allTags = [...new Set(activities.flatMap(a => a.tags || []))];
+  const diffLevels = ['easy', 'moderate', 'hard'];
 
   const filtered = activities.filter(a => {
-    if (selectedTags.length > 0 && !(a.tags && a.tags.some(t => selectedTags.includes(t)))) return false;
-    if (diffFilter !== 'all' && a.difficulty && a.difficulty !== diffFilter) {
-      const levels = ['easy', 'moderate', 'hard'];
-      if (levels.indexOf(a.difficulty) > levels.indexOf(diffFilter)) return false;
+    const isFood = (a.tags && a.tags.includes('food'));
+    // View filter
+    if (view === 'food' && !isFood) return false;
+    if (view === 'activities' && isFood) return false;
+    // Difficulty filter (only for activities with a difficulty rating)
+    if (view === 'activities' && a.difficulty) {
+      if (diffLevels.indexOf(a.difficulty) > maxDifficulty) return false;
+    }
+    // Hide hazardous/closed
+    if (hideUnsafe) {
+      const cond = activityConditions[a.id];
+      if (cond && (cond.severity === 'hazardous' || cond.severity === 'closed')) return false;
     }
     return true;
   });
-
-  const toggleTag = (tag) => {
-    setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
-  };
 
   const getNavUrl = (lat, lng, name) => {
     if (mapProvider === 'apple') {
@@ -307,6 +312,10 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
 
   // Check if we have any conditions data for activities in this area
   const hasConditionsData = activities.some(a => activityConditions[a.id]);
+  const hazardousCount = activities.filter(a => {
+    const cond = activityConditions[a.id];
+    return cond && (cond.severity === 'hazardous' || cond.severity === 'closed');
+  }).length;
   const conditionsTimestamp = (() => {
     try {
       const cached = localStorage.getItem('rr_trail_conditions');
@@ -321,47 +330,73 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
     return null;
   })();
 
+  const foodCount = activities.filter(a => a.tags && a.tags.includes('food')).length;
+  const activityCount = activities.filter(a => !(a.tags && a.tags.includes('food'))).length;
+
   return (
     <div className="explore-panel">
       <div className="explore-header">
         <div>
           <div className="explore-title">Explore {AREA_NAMES[area]}</div>
-          <div className="explore-subtitle">{filtered.length} activities</div>
+          <div className="explore-subtitle">{filtered.length} options</div>
         </div>
         <button className="explore-close" onClick={onClose}>Done</button>
       </div>
 
-      {hasConditionsData && conditionsTimestamp && (
+      {/* View toggle: Activities vs Food */}
+      <div className="explore-view-toggle">
+        <button
+          className={`explore-view-btn ${view === 'activities' ? 'active' : ''}`}
+          onClick={() => setView('activities')}
+        >
+          🥾 Activities ({activityCount})
+        </button>
+        <button
+          className={`explore-view-btn ${view === 'food' ? 'active' : ''}`}
+          onClick={() => setView('food')}
+        >
+          🍽️ Food ({foodCount})
+        </button>
+      </div>
+
+      {/* Difficulty slider - only for activities view */}
+      {view === 'activities' && (
+        <div className="explore-difficulty">
+          <div className="explore-diff-label">
+            Max difficulty: <span className={`diff-value ${diffLevels[maxDifficulty]}`}>{diffLevels[maxDifficulty]}</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="2"
+            value={maxDifficulty}
+            onChange={(e) => setMaxDifficulty(parseInt(e.target.value))}
+            className="diff-slider"
+          />
+          <div className="diff-labels">
+            <span>Easy</span>
+            <span>Moderate</span>
+            <span>Hard</span>
+          </div>
+        </div>
+      )}
+
+      {/* Hide unsafe toggle */}
+      {hasConditionsData && hazardousCount > 0 && view === 'activities' && (
+        <button
+          className={`explore-hide-unsafe ${hideUnsafe ? 'active' : ''}`}
+          onClick={() => setHideUnsafe(!hideUnsafe)}
+        >
+          {hideUnsafe ? '✓ ' : ''}Hide closed/hazardous trails ({hazardousCount})
+        </button>
+      )}
+
+      {/* Conditions freshness */}
+      {hasConditionsData && conditionsTimestamp && view === 'activities' && (
         <div className="conditions-freshness">
           Trail conditions from Parks Canada, {conditionsTimestamp}
         </div>
       )}
-
-      {/* Difficulty filter */}
-      <div className="explore-diff-row">
-        {['all', 'easy', 'moderate', 'hard'].map(d => (
-          <button
-            key={d}
-            className={`explore-diff-btn ${diffFilter === d ? 'active' : ''}`}
-            onClick={() => setDiffFilter(d)}
-          >
-            {d === 'all' ? 'All' : d.charAt(0).toUpperCase() + d.slice(1)}
-          </button>
-        ))}
-      </div>
-
-      {/* Tag filters */}
-      <div className="explore-tags">
-        {allTags.map(tag => (
-          <button
-            key={tag}
-            className={`explore-tag ${selectedTags.includes(tag) ? 'active' : ''}`}
-            onClick={() => toggleTag(tag)}
-          >
-            {tag}
-          </button>
-        ))}
-      </div>
 
       <div className="explore-list">
         {filtered.map(activity => {
