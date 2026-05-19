@@ -63,7 +63,7 @@ export const ACTIVITIES = [
     lat: 52.8734,
     lng: -118.0591,
     park: "jasper",
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/old-fort-point-loop",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/old-fort-point-trail",
     tags: ["hike", "quick"]
   },
   {
@@ -140,7 +140,7 @@ export const ACTIVITIES = [
     lat: 51.4117,
     lng: -116.2337,
     park: "banff",
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore-trail",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore",
     tags: ["hike", "iconic", "easy"]
   },
   {
@@ -185,7 +185,7 @@ export const ACTIVITIES = [
     lat: 51.3282,
     lng: -116.1795,
     park: "banff",
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/moraine-lake-rockpile-trail",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/rockpile",
     tags: ["hike", "quick", "iconic"]
   },
   {
@@ -233,7 +233,7 @@ export const ACTIVITIES = [
     lat: 51.1479,
     lng: -115.5555,
     park: "banff",
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-mountain-boardwalk-trail",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-mountain-trail",
     tags: ["gondola", "views"]
   },
   {
@@ -279,7 +279,7 @@ export const ACTIVITIES = [
     lat: 51.4434,
     lng: -116.5281,
     park: null,
-    alltrails: "https://www.alltrails.com/trail/canada/british-columbia/emerald-lake-loop-trail",
+    alltrails: "https://www.alltrails.com/trail/canada/british-columbia/emerald-lake-loop",
     tags: ["hike", "lakes", "iconic"]
   },
   {
@@ -309,7 +309,7 @@ export const ACTIVITIES = [
     lat: 51.4117,
     lng: -116.2337,
     park: "banff",
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore-trail",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore",
     tags: ["hike", "quick", "morning"]
   },
   // Hikes
@@ -340,7 +340,7 @@ export const ACTIVITIES = [
     lat: 51.0783,
     lng: -115.4031,
     park: null,
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/grassi-lakes-trail",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/grassi-lake-trail",
     tags: ["hike", "close", "lakes"]
   },
   {
@@ -370,7 +370,7 @@ export const ACTIVITIES = [
     lat: 50.6100,
     lng: -115.1187,
     park: null,
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/rawson-lake-trail",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/rawson-lake--11",
     tags: ["hike", "lakes", "quiet"]
   },
   // Adventures
@@ -402,7 +402,7 @@ export const ACTIVITIES = [
     lat: 51.4625,
     lng: -111.5149,
     park: null,
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/hoodoos-trail-drumheller",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/drumheller-hoodoos",
     tags: ["museum", "unique", "full day"]
   }
 ];
