@@ -1,5 +1,5 @@
 // Optional activities - curated by area
-// Max ~8 per area. Focused on: hikes, gondolas, skiing, active adventures
+// Banff/Canmore area is larger (includes Day 7 morning Lake Louise hikes + Dino Day)
 // No guided tours, no horseback riding, no closed trails
 // alltrails: direct link to the trail page
 // park: which park for trail conditions link (jasper, banff, or null)
@@ -127,7 +127,7 @@ export const ACTIVITIES = [
     tags: ["waterfall", "quick"]
   },
 
-  // === LAKE LOUISE (Days 5-6) ===
+  // === LAKE LOUISE (Day 6 only) ===
   {
     id: "ll-lakeshore-walk",
     area: "lakelouise",
@@ -220,6 +220,99 @@ export const ACTIVITIES = [
   },
 
   // === BANFF / CANMORE (Days 7-9) ===
+  // Top picks first: gondola, hot springs, skiing
+  {
+    id: "banff-gondola",
+    area: "banff",
+    name: "Banff Gondola - Sulphur Mountain",
+    description: "8-min ride to 2,281m. Boardwalk to Sanson Peak, interpretive centre, 360-degree views of six mountain ranges. Restaurant at summit.",
+    cost: "$76/person",
+    duration: "2-3 hours",
+    distance: "20 min from Canmore",
+    difficulty: "easy",
+    lat: 51.1479,
+    lng: -115.5555,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-mountain-boardwalk-trail",
+    tags: ["gondola", "views"]
+  },
+  {
+    id: "banff-hot-springs",
+    area: "banff",
+    name: "Banff Upper Hot Springs",
+    description: "Historic outdoor mineral pool at 1,585m with Rundle Mountain views. Open from 10 AM. Perfect post-hike reward.",
+    cost: "$11/person",
+    duration: "1-2 hours",
+    distance: "20 min from Canmore",
+    difficulty: null,
+    lat: 51.1508,
+    lng: -115.5610,
+    park: "banff",
+    alltrails: null,
+    tags: ["relax", "hot springs"]
+  },
+  {
+    id: "banff-sunshine-ski",
+    area: "banff",
+    name: "Summer Skiing - Sunshine Village",
+    description: "Rare summer ski season Jun 20 - Jul 5, 2026. One lift, several runs after record snowfall. Unique once-in-a-lifetime experience.",
+    cost: "$70-90/person",
+    duration: "Half day",
+    distance: "35 min drive",
+    difficulty: "moderate",
+    lat: 51.1182,
+    lng: -115.7632,
+    park: "banff",
+    alltrails: null,
+    tags: ["skiing", "unique"]
+  },
+  // Emerald Lake + Lake Louise morning hikes (valid Day 7 morning)
+  {
+    id: "banff-emerald-lake",
+    area: "banff",
+    name: "Emerald Lake",
+    description: "Stunning turquoise lake in Yoho NP. 5.2km flat loop trail around the lake, canoe rentals, historic lodge. On the way from Lake Louise to Canmore via Field.",
+    cost: "Free (park pass)",
+    duration: "2-3 hours",
+    distance: "40 min from Lake Louise",
+    difficulty: "easy",
+    lat: 51.4434,
+    lng: -116.5281,
+    park: null,
+    alltrails: "https://www.alltrails.com/trail/canada/british-columbia/emerald-lake-loop-trail",
+    tags: ["hike", "lakes", "iconic"]
+  },
+  {
+    id: "banff-agnes-morning",
+    area: "banff",
+    name: "Lake Agnes Tea House (Day 7 AM)",
+    description: "Do this before checking out of Paradise Lodge. 10.5km return, 400m gain. Historic tea house at alpine lake. Cash only. Leave by 7:30 AM to be back by noon.",
+    cost: "$5-15 for tea (cash only)",
+    duration: "3-4 hours",
+    distance: "Starts at Chateau Lake Louise",
+    difficulty: "moderate",
+    lat: 51.4167,
+    lng: -116.1767,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
+    tags: ["hike", "tea house", "morning"]
+  },
+  {
+    id: "banff-lakeshore-morning",
+    area: "banff",
+    name: "Lake Louise Lakeshore (Day 7 AM)",
+    description: "Quick flat walk along the turquoise lake before checking out. Best light early morning, fewer crowds. 1 hour max.",
+    cost: "Free",
+    duration: "1 hour",
+    distance: "5 min from Paradise Lodge",
+    difficulty: "easy",
+    lat: 51.4117,
+    lng: -116.2337,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore-trail",
+    tags: ["hike", "quick", "morning"]
+  },
+  // Hikes
   {
     id: "banff-johnston-canyon",
     area: "banff",
@@ -266,35 +359,21 @@ export const ACTIVITIES = [
     tags: ["hike", "summit", "close"]
   },
   {
-    id: "banff-sunshine-ski",
+    id: "banff-kananaskis-rawson",
     area: "banff",
-    name: "Summer Skiing - Sunshine Village",
-    description: "Rare summer ski season Jun 20 - Jul 5, 2026. One lift, several runs after record snowfall. Unique once-in-a-lifetime experience.",
-    cost: "$70-90/person",
-    duration: "Half day",
-    distance: "35 min drive",
+    name: "Rawson Lake (Kananaskis)",
+    description: "Turquoise alpine lake beneath dramatic headwall. 7.4km, 335m gain. 4.9 stars, rarely crowded. Quieter than anything in Banff.",
+    cost: "Free (K-Country pass $15)",
+    duration: "3-4 hours",
+    distance: "45 min south",
     difficulty: "moderate",
-    lat: 51.1182,
-    lng: -115.7632,
-    park: "banff",
-    alltrails: null,
-    tags: ["skiing", "unique"]
+    lat: 50.6100,
+    lng: -115.1187,
+    park: null,
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/rawson-lake-trail",
+    tags: ["hike", "lakes", "quiet"]
   },
-  {
-    id: "banff-gondola",
-    area: "banff",
-    name: "Banff Gondola - Sulphur Mountain",
-    description: "8-min ride to 2,281m. Boardwalk to Sanson Peak, interpretive centre, 360-degree views of six mountain ranges. Restaurant at summit.",
-    cost: "$76/person",
-    duration: "2-3 hours",
-    distance: "20 min from Canmore",
-    difficulty: "easy",
-    lat: 51.1479,
-    lng: -115.5555,
-    park: "banff",
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-mountain-boardwalk-trail",
-    tags: ["gondola", "views"]
-  },
+  // Adventures
   {
     id: "banff-via-ferrata",
     area: "banff",
@@ -310,35 +389,21 @@ export const ACTIVITIES = [
     alltrails: null,
     tags: ["adventure", "climbing"]
   },
+  // Full day trip: Dinosaur Day
   {
-    id: "banff-kananaskis-rawson",
+    id: "banff-dino-day",
     area: "banff",
-    name: "Rawson Lake (Kananaskis)",
-    description: "Turquoise alpine lake beneath dramatic headwall. 7.4km, 335m gain. 4.9 stars, rarely crowded. Quieter than anything in Banff.",
-    cost: "Free (K-Country pass $15)",
-    duration: "3-4 hours",
-    distance: "45 min south",
-    difficulty: "moderate",
-    lat: 50.6100,
-    lng: -115.1187,
+    name: "🦕 Dinosaur Day (Drumheller)",
+    description: "Full day trip east to the badlands. Royal Tyrrell Museum (world-class dinosaur collection), Hoodoos Trail walk, Horseshoe Canyon viewpoint. Pack lunch or eat in Drumheller.",
+    cost: "$21/person (museum) + gas",
+    duration: "Full day (8-10 hours)",
+    distance: "1.5 hr drive east from Canmore",
+    difficulty: "easy",
+    lat: 51.4625,
+    lng: -111.5149,
     park: null,
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/rawson-lake-trail",
-    tags: ["hike", "lakes", "quiet"]
-  },
-  {
-    id: "banff-hot-springs",
-    area: "banff",
-    name: "Banff Upper Hot Springs",
-    description: "Historic outdoor mineral pool at 1,585m with Rundle Mountain views. Open from 10 AM. Perfect post-hike reward.",
-    cost: "$11/person",
-    duration: "1-2 hours",
-    distance: "20 min from Canmore",
-    difficulty: null,
-    lat: 51.1508,
-    lng: -115.5610,
-    park: "banff",
-    alltrails: null,
-    tags: ["relax", "hot springs"]
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/hoodoos-trail-drumheller",
+    tags: ["museum", "unique", "full day"]
   }
 ];
 
@@ -349,10 +414,10 @@ export const AREA_NAMES = {
 };
 
 // Which days correspond to which activity area
+// Day 5 intentionally excluded - Icefields Parkway is a booked driving day
 export const DAY_AREAS = {
   3: "jasper",
   4: "jasper",
-  5: "lakelouise",
   6: "lakelouise",
   7: "banff",
   8: "banff",
