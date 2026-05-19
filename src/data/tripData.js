@@ -44,8 +44,8 @@ export const TRIP_DATA = {
         { layer: 3, type: "food", time: "Lunch", title: "☕ Wild Flour Cafe", note: "Clearwater · Fresh sourdough, homemade baking", lat: 51.6521206, lng: -120.0389419 },
         { layer: 3, type: "activity", time: "En route", title: "⛽ Fill up in Valemount", note: "Last fuel before Jasper", lat: 52.8321, lng: -119.2626 },
         { layer: 3, type: "scenic", time: "~10 min stop", title: "📷 Mt Robson Viewpoint (highway)", note: "Best unobstructed view of the peak (3,954m) with river foreground. Pulloff on Hwy 16 eastbound, before the visitor centre. Often has cloud cap - stop if it's clear!", lat: 53.0940, lng: -119.1770 },
-        { layer: 3, type: "scenic", time: "~30 min stop", title: "📷 Mt Robson Visitor Centre", note: "Info, washrooms, and short walk to Overlander Falls (10 min each way, easy, waterfall through canyon). Second angle on the peak.", lat: 53.1148, lng: -119.2314 },
-        { layer: 3, type: "drive", time: "On arrival", title: "ℹ️ Jasper Visitor Centre", note: "500 Connaught Dr · Park passes, maps, trail conditions, bear warnings", lat: 52.8734, lng: -118.0817 },
+        { layer: 3, type: "scenic", time: "~30 min stop", title: "📷 Mt Robson Visitor Centre", note: "Open 8 AM - 5 PM (mid-Jun to Sep). Info, washrooms, and short walk to Overlander Falls (10 min each way, easy, waterfall through canyon). Second angle on the peak.", lat: 53.1148, lng: -119.2314 },
+        { layer: 3, type: "drive", time: "On arrival", title: "ℹ️ Jasper Visitor Centre", note: "500 Connaught Dr · Open 9 AM - 7 PM (summer). Park passes, maps, trail conditions, bear warnings", lat: 52.8734, lng: -118.0817 },
         { layer: 1, type: "hotel", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin, 3 nights", lat: 52.902511, lng: -118.097846 }
       ]
     },
@@ -97,7 +97,7 @@ export const TRIP_DATA = {
         { layer: 3, type: "drive", time: "Mid-afternoon", title: "⛽ Saskatchewan River Crossing", note: "Only gas between Jasper & Lake Louise", lat: 51.9338, lng: -116.8319 },
         { layer: 2, type: "scenic", time: "~45 min stop", title: "📷 Peyto Lake + Bow Summit", note: "Wolf-shaped turquoise lake from Bow Summit lookout. 10-min paved walk to main viewpoint, OR 40-min loop trail along the ridgeline for even better angles (easy, well-marked)", lat: 51.7171414, lng: -116.507574 },
         { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Bow Lake", note: "Stunning glacial lake right off the highway. Walk along the shore to Bow Glacier Falls trailhead (20 min each way, flat, wildflowers). Full hike to falls is 9km return, 3 hrs", lat: 51.6769, lng: -116.4458 },
-        { layer: 3, type: "drive", time: "Late afternoon", title: "ℹ️ Lake Louise Visitor Centre", note: "Samson Mall · Trail updates, bear activity, Moraine shuttle info", lat: 51.4267, lng: -116.1775 },
+        { layer: 3, type: "drive", time: "Late afternoon", title: "ℹ️ Lake Louise Visitor Centre", note: "Samson Mall · Open 9 AM - 5 PM (summer). Trail updates, bear activity, Moraine shuttle info", lat: 51.4267, lng: -116.1775 },
         { layer: 1, type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback Suite, 2 nights", lat: 51.4161708, lng: -116.196697 }
       ]
     },
@@ -128,7 +128,7 @@ export const TRIP_DATA = {
       km: 80,
       startAccom: { title: "Paradise Lodge", lat: 51.4161708, lng: -116.196697 },
       items: [
-        { layer: 3, type: "drive", time: "Afternoon", title: "ℹ️ Banff Visitor Centre", note: "224 Banff Ave · Park passes, trail conditions, wildlife alerts", lat: 51.1784, lng: -115.5708 },
+        { layer: 3, type: "drive", time: "Afternoon", title: "ℹ️ Banff Visitor Centre", note: "224 Banff Ave · Open 9 AM - 7 PM (summer). Park passes, trail conditions, wildlife alerts", lat: 51.1784, lng: -115.5708 },
         { layer: 1, type: "hotel", time: "Evening", title: "Canmore Airbnb", note: "Check in - 3 nights", lat: 51.089, lng: -115.359 }
       ]
     },
