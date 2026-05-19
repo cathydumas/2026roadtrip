@@ -111,6 +111,21 @@ export const ACTIVITIES = [
     alltrails: null,
     tags: ["waterfall", "quick"]
   },
+  {
+    id: "jasper-dark-sky",
+    area: "jasper",
+    name: "Jasper Dark Sky Preserve",
+    description: "One of the world's largest dark sky preserves. Best stargazing in the Rockies - Milky Way visible to naked eye. Planetarium show available at the Jasper Planetarium.",
+    cost: "Free (planetarium show $30/person)",
+    duration: "1-2 hours",
+    distance: "5 min from town",
+    difficulty: null,
+    lat: 52.8734,
+    lng: -118.0817,
+    park: "jasper",
+    alltrails: null,
+    tags: ["evening", "unique"]
+  },
 
   // === LAKE LOUISE (Day 6 only) ===
   {
