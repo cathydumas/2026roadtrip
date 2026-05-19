@@ -41,6 +41,7 @@ export const TRIP_DATA = {
         { layer: 3, type: "drive", time: "En route", title: "⛽ Fill up in Kamloops", note: "Last fuel before mountains", lat: 50.6745, lng: -120.3273 },
         { layer: 3, type: "food", time: "Lunch", title: "☕ Wild Flour Cafe", note: "Clearwater · Fresh sourdough, homemade baking", lat: 51.6521206, lng: -120.0389419 },
         { layer: 3, type: "activity", time: "En route", title: "⛽ Fill up in Valemount", note: "Last fuel before Jasper", lat: 52.8321, lng: -119.2626 },
+        { layer: 3, type: "drive", time: "On arrival", title: "ℹ️ Jasper Visitor Centre", note: "500 Connaught Dr · Park passes, maps, trail conditions, bear warnings", lat: 52.8734, lng: -118.0817 },
         { layer: 1, type: "hotel", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin, 3 nights", lat: 52.902511, lng: -118.097846 }
       ]
     },
@@ -90,6 +91,7 @@ export const TRIP_DATA = {
         { layer: 3, type: "drive", time: "Mid-afternoon", title: "⛽ Saskatchewan River Crossing", note: "Only gas between Jasper & Lake Louise", lat: 51.9338, lng: -116.8319 },
         { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Peyto Lake", note: "Wolf-shaped turquoise lake from Bow Summit lookout. 10-min walk to viewpoint", lat: 51.7171414, lng: -116.507574 },
         { layer: 2, type: "scenic", time: "~20 min stop", title: "📷 Bow Lake", note: "Stunning glacial lake right off the highway. Walk along the shore or just take in the view from the parking area", lat: 51.6769, lng: -116.4458 },
+        { layer: 3, type: "drive", time: "Late afternoon", title: "ℹ️ Lake Louise Visitor Centre", note: "Samson Mall · Trail updates, bear activity, Moraine shuttle info", lat: 51.4267, lng: -116.1775 },
         { layer: 1, type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback Suite, 2 nights", lat: 51.4161708, lng: -116.196697 }
       ]
     },
@@ -120,6 +122,7 @@ export const TRIP_DATA = {
       km: 80,
       startAccom: { title: "Paradise Lodge", lat: 51.4161708, lng: -116.196697 },
       items: [
+        { layer: 3, type: "drive", time: "Afternoon", title: "ℹ️ Banff Visitor Centre", note: "224 Banff Ave · Park passes, trail conditions, wildlife alerts", lat: 51.1784, lng: -115.5708 },
         { layer: 1, type: "hotel", time: "Evening", title: "Canmore Airbnb", note: "Check in - 3 nights", lat: 51.089, lng: -115.359 }
       ]
     },
