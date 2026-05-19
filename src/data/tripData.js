@@ -38,6 +38,7 @@ export const TRIP_DATA = {
       startAccom: { title: "Comfort Suites Kelowna", lat: 49.8936661, lng: -119.4170556 },
       items: [
         { layer: 3, type: "food", time: "Morning", title: "☕ 350° Bakehouse", note: "1892 Spall Rd - open 7:30 AM", lat: 49.8793977, lng: -119.4551504 },
+        { layer: 3, type: "market", time: "Morning", title: "🥩 Carnist Butcher", note: "1038 Richter St · Tue-Sat 10-6. Stock up on road trip meats and snacks", lat: 49.8966773, lng: -119.4887348 },
         { layer: 3, type: "drive", time: "En route", title: "⛽ Fill up in Kamloops", note: "Last fuel before mountains", lat: 50.6745, lng: -120.3273 },
         { layer: 3, type: "food", time: "Lunch", title: "☕ Wild Flour Cafe", note: "Clearwater · Fresh sourdough, homemade baking", lat: 51.6521206, lng: -120.0389419 },
         { layer: 3, type: "activity", time: "En route", title: "⛽ Fill up in Valemount", note: "Last fuel before Jasper", lat: 52.8321, lng: -119.2626 },

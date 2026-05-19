@@ -281,7 +281,7 @@ function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
 function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, onAddActivity, onRemoveActivity, activityConditions }) {
   const [view, setView] = useState('activities'); // 'activities' or 'food'
   const [maxDifficulty, setMaxDifficulty] = useState(2); // 0=easy, 1=moderate, 2=hard (slider)
-  const [hideUnsafe, setHideUnsafe] = useState(false);
+  const [hideUnsafe, setHideUnsafe] = useState(true);
   const activities = ACTIVITIES.filter(a => a.area === area);
 
   const diffLevels = ['easy', 'moderate', 'hard'];
@@ -430,7 +430,7 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
                 <span>{activity.duration}</span>
                 <span>{activity.distance}</span>
               </div>
-              {(activity.alltrails || activity.park) && (
+              {(activity.alltrails || activity.park || activity.google) && (
                 <div className="explore-card-links">
                   {activity.alltrails && (
                     <a href={activity.alltrails} target="_blank" rel="noreferrer" className="explore-link alltrails">
@@ -440,6 +440,11 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
                   {activity.park && PARK_TRAIL_URLS[activity.park] && (
                     <a href={PARK_TRAIL_URLS[activity.park]} target="_blank" rel="noreferrer" className="explore-link conditions">
                       Trail conditions
+                    </a>
+                  )}
+                  {activity.google && (
+                    <a href={activity.google} target="_blank" rel="noreferrer" className="explore-link google">
+                      Reviews
                     </a>
                   )}
                 </div>

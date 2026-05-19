@@ -427,6 +427,7 @@ export const ACTIVITIES = [
     lng: -118.0810,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Kimchi+House+Jasper+Alberta",
     tags: ["food"]
   },
   {
@@ -442,6 +443,7 @@ export const ACTIVITIES = [
     lng: -118.0825,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Bear's+Paw+Bakery+Jasper+Alberta",
     tags: ["food"]
   },
   {
@@ -457,6 +459,7 @@ export const ACTIVITIES = [
     lng: -118.0812,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Otto's+Cache+Provisions+Jasper+Alberta",
     tags: ["food"]
   },
   {
@@ -472,6 +475,7 @@ export const ACTIVITIES = [
     lng: -118.0584,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Orso+Trattoria+Fairmont+Jasper+Park+Lodge",
     tags: ["food"]
   },
   {
@@ -487,6 +491,7 @@ export const ACTIVITIES = [
     lng: -118.0828,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Evil+Dave's+Grill+Jasper+Alberta",
     tags: ["food"]
   },
   // Lake Louise - Fairmont dining + village options
@@ -503,6 +508,7 @@ export const ACTIVITIES = [
     lng: -116.2138,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Fairview+Bar+Restaurant+Chateau+Lake+Louise",
     tags: ["food"]
   },
   {
@@ -518,6 +524,7 @@ export const ACTIVITIES = [
     lng: -116.2138,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Walliser+Stube+Chateau+Lake+Louise",
     tags: ["food"]
   },
   {
@@ -533,6 +540,7 @@ export const ACTIVITIES = [
     lng: -116.2138,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Afternoon+Tea+Fairmont+Chateau+Lake+Louise",
     tags: ["food"]
   },
   {
@@ -548,6 +556,7 @@ export const ACTIVITIES = [
     lng: -116.1779,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Truffle+Pigs+Bistro+Lake+Louise",
     tags: ["food"]
   },
   // Banff / Canmore - ramen, brunch, bakery, fine dining
@@ -564,6 +573,7 @@ export const ACTIVITIES = [
     lng: -115.3590,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Ramen+Arashi+Canmore",
     tags: ["food", "close"]
   },
   {
@@ -579,6 +589,7 @@ export const ACTIVITIES = [
     lng: -115.5694,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Ramen+Arashi+Banff",
     tags: ["food"]
   },
   {
@@ -594,6 +605,7 @@ export const ACTIVITIES = [
     lng: -115.5705,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Chaya+Banff+Alberta",
     tags: ["food"]
   },
   {
@@ -609,6 +621,7 @@ export const ACTIVITIES = [
     lng: -115.3585,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/EpiCanmore+bakery+Canmore",
     tags: ["food", "close"]
   },
   {
@@ -624,6 +637,7 @@ export const ACTIVITIES = [
     lng: -115.3592,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Harvest+Cafe+Canmore",
     tags: ["food", "close"]
   },
   {
@@ -639,6 +653,7 @@ export const ACTIVITIES = [
     lng: -115.3580,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Block+Kitchen+Bar+Canmore",
     tags: ["food", "close"]
   },
   {
@@ -654,6 +669,7 @@ export const ACTIVITIES = [
     lng: -115.5712,
     park: null,
     alltrails: null,
+    google: "https://www.google.com/maps/search/Grizzly+House+Banff",
     tags: ["food"]
   }
 ];

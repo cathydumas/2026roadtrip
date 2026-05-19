@@ -874,6 +874,11 @@ body {
   color: light-dark(#e65100, #ffb74d);
 }
 
+.explore-link.google {
+  background: light-dark(#e3f2fd, #1a2a3a);
+  color: light-dark(#1565c0, #64b5f6);
+}
+
 .explore-card-actions {
   display: flex;
   gap: 8px;
