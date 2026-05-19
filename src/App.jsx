@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { TRIP_DATA, LAYER_NAMES, ITEM_TYPES, HIKE_DIFFICULTIES } from './data/tripData';
+import { TRIP_DATA, LAYER_NAMES, ITEM_TYPES } from './data/tripData';
 import { ACTIVITIES, AREA_NAMES, DAY_AREAS } from './data/activities';
 import './App.css';
 
@@ -76,20 +76,35 @@ function generateICS(item, dayDate) {
   URL.revokeObjectURL(url);
 }
 
-// Fetch OSRM route between waypoints
-async function fetchRoute(coords) {
+// Route cache to avoid refetching
+const routeCache = {};
+
+// Fetch OSRM route between waypoints - with retry and caching
+async function fetchRoute(coords, dayId) {
   if (coords.length < 2) return null;
-  const waypoints = coords.map(c => `${c[1]},${c[0]}`).join(';');
+
+  const cacheKey = coords.map(c => `${c[0].toFixed(3)},${c[1].toFixed(3)}`).join('|');
+  if (routeCache[cacheKey]) return routeCache[cacheKey];
+
+  // Limit to 25 waypoints max (OSRM limit)
+  const limited = coords.length > 25
+    ? coords.filter((_, i) => i === 0 || i === coords.length - 1 || i % Math.ceil(coords.length / 23) === 0)
+    : coords;
+
+  const waypoints = limited.map(c => `${c[1]},${c[0]}`).join(';');
   try {
     const resp = await fetch(
       `https://router.project-osrm.org/route/v1/driving/${waypoints}?overview=full&geometries=geojson`
     );
+    if (!resp.ok) return null;
     const data = await resp.json();
     if (data.routes && data.routes[0]) {
-      return data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
+      const result = data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
+      routeCache[cacheKey] = result;
+      return result;
     }
   } catch (e) {
-    console.warn('OSRM route fetch failed, falling back to straight lines');
+    // Silently fail - map will show without route line
   }
   return null;
 }
@@ -114,8 +129,28 @@ function DayMap({ day, itemsKey, items, mapProvider }) {
     const L = window.L;
     if (!L) return;
 
-    const coords = items.filter(i => i.lat && i.lng).map(i => [i.lat, i.lng]);
-    if (coords.length === 0) return;
+    // Build all points for the map: start accommodation + items + end accommodation
+    const allPoints = [];
+
+    // Add start accommodation if this day has one (where you're leaving from)
+    if (day.startAccom && day.startAccom.lat) {
+      allPoints.push({
+        lat: day.startAccom.lat,
+        lng: day.startAccom.lng,
+        title: day.startAccom.title,
+        isAccom: true,
+        layer: 1
+      });
+    }
+
+    // Add all items with coordinates
+    items.filter(i => i.lat && i.lng).forEach(item => {
+      allPoints.push(item);
+    });
+
+    if (allPoints.length === 0) return;
+
+    const coords = allPoints.map(p => [p.lat, p.lng]);
 
     const map = L.map(mapRef.current, {
       zoomControl: false,
@@ -134,7 +169,7 @@ function DayMap({ day, itemsKey, items, mapProvider }) {
       { maxZoom: 19 }
     ).addTo(map);
 
-    const layerColors = { 1: '#FF3B30', 2: '#FF9500', 3: '#8E8E93', 4: '#34C759' };
+    const layerColors = { 1: '#FF3B30', 2: '#FF9500', 3: '#8E8E93' };
 
     const getMapUrl = (lat, lng, label) => {
       const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
@@ -144,10 +179,11 @@ function DayMap({ day, itemsKey, items, mapProvider }) {
       return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
     };
 
-    items.filter(i => i.lat && i.lng).forEach((item) => {
+    allPoints.forEach((item) => {
       const color = layerColors[item.layer] || '#007AFF';
+      const radius = item.layer === 1 ? 9 : 7; // Hotels are bigger dots
       const marker = L.circleMarker([item.lat, item.lng], {
-        radius: 7,
+        radius,
         fillColor: color,
         color: '#fff',
         weight: 2,
@@ -155,35 +191,42 @@ function DayMap({ day, itemsKey, items, mapProvider }) {
         fillOpacity: 0.9,
       }).addTo(map);
 
-      const cleanTitle = item.title.replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
+      const cleanTitle = (item.title || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
       marker.bindPopup(`
         <div style="font-family:-apple-system,system-ui,sans-serif;font-size:14px;min-width:140px">
           <div style="font-weight:700;margin-bottom:4px">${cleanTitle}</div>
+          ${item.isAccom ? '<div style="color:#FF3B30;font-size:12px;margin-bottom:6px">Start</div>' : ''}
           ${item.time ? `<div style="color:#86868b;font-size:12px;margin-bottom:6px">${item.time}</div>` : ''}
-          <a href="${getMapUrl(item.lat, item.lng, item.title)}" target="_blank" rel="noreferrer" style="display:inline-block;padding:6px 12px;background:#007AFF;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600">Navigate</a>
+          <a href="${getMapUrl(item.lat, item.lng, item.title || '')}" target="_blank" rel="noreferrer" style="display:inline-block;padding:6px 12px;background:#007AFF;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600">Navigate</a>
         </div>
       `);
     });
 
-    // Fetch real road route
-    fetchRoute(coords).then(routeCoords => {
-      // Check map still exists (component might have unmounted)
-      if (!mapInstanceRef.current) return;
-      if (routeCoords && routeCoords.length > 1) {
-        L.polyline(routeCoords, {
-          color: day.color || '#007AFF',
-          weight: 3,
-          opacity: 0.7,
-        }).addTo(map);
-      } else if (coords.length > 1) {
-        L.polyline(coords, {
-          color: day.color || '#007AFF',
-          weight: 3,
-          opacity: 0.5,
-          dashArray: '8, 8',
-        }).addTo(map);
-      }
-    });
+    // Fetch real road route (only if 2+ distinct points)
+    const uniqueCoords = coords.filter((c, i) =>
+      i === 0 || Math.abs(c[0] - coords[i-1][0]) > 0.001 || Math.abs(c[1] - coords[i-1][1]) > 0.001
+    );
+
+    if (uniqueCoords.length >= 2) {
+      fetchRoute(uniqueCoords, day.id).then(routeCoords => {
+        if (!mapInstanceRef.current) return;
+        if (routeCoords && routeCoords.length > 1) {
+          L.polyline(routeCoords, {
+            color: day.color || '#007AFF',
+            weight: 3,
+            opacity: 0.7,
+          }).addTo(map);
+        } else {
+          // Fallback: dashed straight lines
+          L.polyline(uniqueCoords, {
+            color: day.color || '#007AFF',
+            weight: 3,
+            opacity: 0.5,
+            dashArray: '8, 8',
+          }).addTo(map);
+        }
+      });
+    }
 
     const bounds = L.latLngBounds(coords);
     map.fitBounds(bounds, { padding: [30, 30] });
@@ -200,25 +243,40 @@ function DayMap({ day, itemsKey, items, mapProvider }) {
     };
   }, [itemsKey]); // Only re-run when the fingerprint changes
 
-  const hasCoords = items.some(i => i.lat && i.lng);
+  // Show map if we have items with coords OR a start accommodation
+  const hasCoords = items.some(i => i.lat && i.lng) || (day.startAccom && day.startAccom.lat);
   if (!hasCoords) return null;
 
   return <div className="day-map" ref={mapRef} />;
 }
 
 // Explore panel for optional activities
-function ExplorePanel({ area, dayId, dayDate, onClose }) {
+function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider }) {
   const [selectedTags, setSelectedTags] = useState([]);
+  const [diffFilter, setDiffFilter] = useState('all'); // 'all', 'easy', 'moderate', 'hard'
   const activities = ACTIVITIES.filter(a => a.area === area);
 
   const allTags = [...new Set(activities.flatMap(a => a.tags || []))];
 
-  const filtered = selectedTags.length === 0
-    ? activities
-    : activities.filter(a => a.tags && a.tags.some(t => selectedTags.includes(t)));
+  const filtered = activities.filter(a => {
+    if (selectedTags.length > 0 && !(a.tags && a.tags.some(t => selectedTags.includes(t)))) return false;
+    if (diffFilter !== 'all' && a.difficulty && a.difficulty !== diffFilter) {
+      // Show easier ones too
+      const levels = ['easy', 'moderate', 'hard'];
+      if (levels.indexOf(a.difficulty) > levels.indexOf(diffFilter)) return false;
+    }
+    return true;
+  });
 
   const toggleTag = (tag) => {
     setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
+  };
+
+  const getNavUrl = (lat, lng, name) => {
+    if (mapProvider === 'apple') {
+      return `http://maps.apple.com/?q=${encodeURIComponent(name)}&ll=${lat},${lng}`;
+    }
+    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
   };
 
   const handleAddToCalendar = (activity) => {
@@ -241,6 +299,20 @@ function ExplorePanel({ area, dayId, dayDate, onClose }) {
         <button className="explore-close" onClick={onClose}>Done</button>
       </div>
 
+      {/* Difficulty filter */}
+      <div className="explore-diff-row">
+        {['all', 'easy', 'moderate', 'hard'].map(d => (
+          <button
+            key={d}
+            className={`explore-diff-btn ${diffFilter === d ? 'active' : ''}`}
+            onClick={() => setDiffFilter(d)}
+          >
+            {d === 'all' ? 'All' : d.charAt(0).toUpperCase() + d.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      {/* Tag filters */}
       <div className="explore-tags">
         {allTags.map(tag => (
           <button
@@ -270,19 +342,16 @@ function ExplorePanel({ area, dayId, dayDate, onClose }) {
               <span>{activity.duration}</span>
               <span>{activity.distance}</span>
             </div>
-            {activity.bestTime && (
-              <div className="explore-card-time">Best: {activity.bestTime}</div>
-            )}
             <div className="explore-card-actions">
               <button
                 className="explore-cal-btn"
                 onClick={() => handleAddToCalendar(activity)}
               >
-                Add to Calendar
+                + Calendar
               </button>
               {activity.lat && (
                 <a
-                  href={`https://www.google.com/maps/dir/?api=1&destination=${activity.lat},${activity.lng}&travelmode=driving`}
+                  href={getNavUrl(activity.lat, activity.lng, activity.name)}
                   target="_blank"
                   rel="noreferrer"
                   className="explore-nav-btn"
@@ -303,8 +372,7 @@ export default function App() {
   const [mapProvider, setMapProvider] = useState(() => {
     return localStorage.getItem('rr_map_provider') || 'google';
   });
-  const [activeLayers, setActiveLayers] = useState([1, 2, 3, 4]);
-  const [hikeDifficulty, setHikeDifficulty] = useState(2);
+  const [activeLayers, setActiveLayers] = useState([1, 2, 3]);
   const [prefsOpen, setPrefsOpen] = useState(false);
   const [exploreArea, setExploreArea] = useState(null); // null or {area, dayId, dayDate}
   const [weather, setWeather] = useState({});
@@ -370,15 +438,8 @@ export default function App() {
   };
 
   const filterItems = useCallback((items) => {
-    return items.filter(item => {
-      if (!activeLayers.includes(item.layer)) return false;
-      if (item.type === 'hike' && item.difficulty) {
-        const levels = ['easy', 'moderate', 'hard'];
-        if (levels.indexOf(item.difficulty) > hikeDifficulty) return false;
-      }
-      return true;
-    });
-  }, [activeLayers, hikeDifficulty]);
+    return items.filter(item => activeLayers.includes(item.layer));
+  }, [activeLayers]);
 
   // Pre-compute filtered items for all days with stable references
   const filteredByDay = useMemo(() => {
@@ -394,7 +455,8 @@ export default function App() {
     const result = {};
     TRIP_DATA.days.forEach(day => {
       const items = filteredByDay[day.id];
-      result[day.id] = items
+      const startPart = day.startAccom ? `S:${day.startAccom.lat},${day.startAccom.lng}|` : '';
+      result[day.id] = startPart + items
         .filter(i => i.lat && i.lng)
         .map(i => `${i.lat},${i.lng}`)
         .join('|');
@@ -451,7 +513,7 @@ export default function App() {
             <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" />
             <line x1="17" y1="16" x2="23" y2="16" />
           </svg>
-          {activeLayerCount < 4 && <span className="prefs-badge">{activeLayerCount}</span>}
+          {activeLayerCount < 3 && <span className="prefs-badge">{activeLayerCount}</span>}
         </button>
       </header>
 
@@ -477,6 +539,7 @@ export default function App() {
                   <div className="day-top-row">
                     <span className="day-date">{day.date}</span>
                     {isToday && <span className="today-pill">Today</span>}
+                    {day.km > 0 && <span className="day-km">{day.km} km</span>}
                   </div>
                   <div className="day-title">{day.title}</div>
                 </div>
@@ -542,11 +605,6 @@ export default function App() {
                               {item.time && <span className="item-time">{item.time}</span>}
                             </div>
                             {item.note && <div className="item-note">{item.note}</div>}
-                            {item.difficulty && (
-                              <span className={`difficulty-tag ${item.difficulty}`}>
-                                {HIKE_DIFFICULTIES[item.difficulty]}
-                              </span>
-                            )}
                             <div className="item-actions">
                               {item.lat && item.lng && (
                                 <a
@@ -608,6 +666,7 @@ export default function App() {
             dayId={exploreArea.dayId}
             dayDate={exploreArea.dayDate}
             onClose={() => setExploreArea(null)}
+            mapProvider={mapProvider}
           />
         </>
       )}
@@ -648,7 +707,7 @@ export default function App() {
         <div className="prefs-section">
           <div className="prefs-label">Show layers</div>
           <div className="layer-toggles">
-            {[1, 2, 3, 4].map(layer => (
+            {[1, 2, 3].map(layer => (
               <button
                 key={layer}
                 className={`layer-toggle ${activeLayers.includes(layer) ? 'active' : ''}`}
@@ -662,25 +721,6 @@ export default function App() {
                 </span>
               </button>
             ))}
-          </div>
-        </div>
-
-        <div className="prefs-section">
-          <div className="prefs-label">
-            Hike difficulty: {hikeDifficulty === 0 ? 'Easy only' : hikeDifficulty === 1 ? 'Up to Moderate' : 'All levels'}
-          </div>
-          <input
-            type="range"
-            min="0"
-            max="2"
-            value={hikeDifficulty}
-            onChange={(e) => setHikeDifficulty(parseInt(e.target.value))}
-            className="difficulty-slider"
-          />
-          <div className="slider-labels">
-            <span>Easy</span>
-            <span>Moderate</span>
-            <span>Strenuous</span>
           </div>
         </div>
 
