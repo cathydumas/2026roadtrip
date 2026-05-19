@@ -251,9 +251,9 @@ function DayMap({ day, itemsKey, items, mapProvider }) {
 }
 
 // Explore panel for optional activities
-function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider }) {
+function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, onAddActivity, onRemoveActivity }) {
   const [selectedTags, setSelectedTags] = useState([]);
-  const [diffFilter, setDiffFilter] = useState('all'); // 'all', 'easy', 'moderate', 'hard'
+  const [diffFilter, setDiffFilter] = useState('all');
   const activities = ACTIVITIES.filter(a => a.area === area);
 
   const allTags = [...new Set(activities.flatMap(a => a.tags || []))];
@@ -261,7 +261,6 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider }) {
   const filtered = activities.filter(a => {
     if (selectedTags.length > 0 && !(a.tags && a.tags.some(t => selectedTags.includes(t)))) return false;
     if (diffFilter !== 'all' && a.difficulty && a.difficulty !== diffFilter) {
-      // Show easier ones too
       const levels = ['easy', 'moderate', 'hard'];
       if (levels.indexOf(a.difficulty) > levels.indexOf(diffFilter)) return false;
     }
@@ -279,22 +278,12 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider }) {
     return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
   };
 
-  const handleAddToCalendar = (activity) => {
-    generateICS({
-      title: activity.name,
-      note: `${activity.description}\n\nCost: ${activity.cost}\nDuration: ${activity.duration}`,
-      time: activity.bestTime,
-      lat: activity.lat,
-      lng: activity.lng,
-    }, dayDate);
-  };
-
   return (
     <div className="explore-panel">
       <div className="explore-header">
         <div>
           <div className="explore-title">Explore {AREA_NAMES[area]}</div>
-          <div className="explore-subtitle">{filtered.length} activities available</div>
+          <div className="explore-subtitle">{filtered.length} activities</div>
         </div>
         <button className="explore-close" onClick={onClose}>Done</button>
       </div>
@@ -326,42 +315,54 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider }) {
       </div>
 
       <div className="explore-list">
-        {filtered.map(activity => (
-          <div key={activity.id} className="explore-card">
-            <div className="explore-card-header">
-              <div className="explore-card-name">{activity.name}</div>
-              {activity.difficulty && (
-                <span className={`difficulty-tag ${activity.difficulty}`}>
-                  {activity.difficulty}
-                </span>
-              )}
+        {filtered.map(activity => {
+          const isAdded = plannedIds.includes(activity.id);
+          return (
+            <div key={activity.id} className={`explore-card ${isAdded ? 'added' : ''}`}>
+              <div className="explore-card-header">
+                <div className="explore-card-name">{activity.name}</div>
+                {activity.difficulty && (
+                  <span className={`difficulty-tag ${activity.difficulty}`}>
+                    {activity.difficulty}
+                  </span>
+                )}
+              </div>
+              <div className="explore-card-desc">{activity.description}</div>
+              <div className="explore-card-meta">
+                <span>{activity.cost}</span>
+                <span>{activity.duration}</span>
+                <span>{activity.distance}</span>
+              </div>
+              <div className="explore-card-actions">
+                {isAdded ? (
+                  <button
+                    className="explore-remove-btn"
+                    onClick={() => onRemoveActivity(dayId, activity.id)}
+                  >
+                    Remove from day
+                  </button>
+                ) : (
+                  <button
+                    className="explore-add-btn"
+                    onClick={() => onAddActivity(dayId, activity.id)}
+                  >
+                    + Add to day {dayId}
+                  </button>
+                )}
+                {activity.lat && (
+                  <a
+                    href={getNavUrl(activity.lat, activity.lng, activity.name)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="explore-nav-btn"
+                  >
+                    Navigate
+                  </a>
+                )}
+              </div>
             </div>
-            <div className="explore-card-desc">{activity.description}</div>
-            <div className="explore-card-meta">
-              <span>{activity.cost}</span>
-              <span>{activity.duration}</span>
-              <span>{activity.distance}</span>
-            </div>
-            <div className="explore-card-actions">
-              <button
-                className="explore-cal-btn"
-                onClick={() => handleAddToCalendar(activity)}
-              >
-                + Calendar
-              </button>
-              {activity.lat && (
-                <a
-                  href={getNavUrl(activity.lat, activity.lng, activity.name)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="explore-nav-btn"
-                >
-                  Navigate
-                </a>
-              )}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -374,10 +375,38 @@ export default function App() {
   });
   const [activeLayers, setActiveLayers] = useState([1, 2, 3]);
   const [prefsOpen, setPrefsOpen] = useState(false);
-  const [exploreArea, setExploreArea] = useState(null); // null or {area, dayId, dayDate}
+  const [exploreArea, setExploreArea] = useState(null);
   const [weather, setWeather] = useState({});
   const [trailConditions, setTrailConditions] = useState({});
   const [leafletLoaded, setLeafletLoaded] = useState(!!window.L);
+
+  // Planned activities: { dayId: [activityId, ...] } - persisted in localStorage
+  const [plannedActivities, setPlannedActivities] = useState(() => {
+    try {
+      const saved = localStorage.getItem('rr_planned');
+      return saved ? JSON.parse(saved) : {};
+    } catch { return {}; }
+  });
+
+  // Save planned activities
+  useEffect(() => {
+    localStorage.setItem('rr_planned', JSON.stringify(plannedActivities));
+  }, [plannedActivities]);
+
+  const addActivity = (dayId, activityId) => {
+    setPlannedActivities(prev => {
+      const dayList = prev[dayId] || [];
+      if (dayList.includes(activityId)) return prev;
+      return { ...prev, [dayId]: [...dayList, activityId] };
+    });
+  };
+
+  const removeActivity = (dayId, activityId) => {
+    setPlannedActivities(prev => {
+      const dayList = (prev[dayId] || []).filter(id => id !== activityId);
+      return { ...prev, [dayId]: dayList };
+    });
+  };
 
   // Load Leaflet from CDN
   useEffect(() => {
@@ -631,12 +660,52 @@ export default function App() {
                       );
                     })}
 
-                    {filteredItems.length === 0 && (
+                    {filteredItems.length === 0 && !plannedActivities[day.id]?.length && (
                       <div className="no-items">
-                        No stops match your filters. Tap the sliders icon to adjust.
+                        No stops yet. Tap Explore below to add activities.
                       </div>
                     )}
                   </div>
+
+                  {/* Planned activities from Explore */}
+                  {plannedActivities[day.id] && plannedActivities[day.id].length > 0 && (
+                    <div className="planned-section">
+                      <div className="planned-label">Planned activities</div>
+                      {plannedActivities[day.id].map(actId => {
+                        const activity = ACTIVITIES.find(a => a.id === actId);
+                        if (!activity) return null;
+                        return (
+                          <div key={actId} className="planned-card">
+                            <div className="planned-card-top">
+                              <div className="planned-card-name">{activity.name}</div>
+                              <button
+                                className="planned-remove"
+                                onClick={() => removeActivity(day.id, actId)}
+                                title="Remove"
+                              >
+                                &times;
+                              </button>
+                            </div>
+                            <div className="planned-card-meta">
+                              <span>{activity.duration}</span>
+                              <span>{activity.cost}</span>
+                              {activity.difficulty && <span className={`difficulty-tag ${activity.difficulty}`}>{activity.difficulty}</span>}
+                            </div>
+                            {activity.lat && (
+                              <a
+                                href={getMapUrl(activity.lat, activity.lng, activity.name)}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="nav-btn"
+                              >
+                                Navigate
+                              </a>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
 
                   {/* Explore button for days in activity areas */}
                   {dayArea && (
@@ -667,6 +736,9 @@ export default function App() {
             dayDate={exploreArea.dayDate}
             onClose={() => setExploreArea(null)}
             mapProvider={mapProvider}
+            plannedIds={plannedActivities[exploreArea.dayId] || []}
+            onAddActivity={addActivity}
+            onRemoveActivity={removeActivity}
           />
         </>
       )}

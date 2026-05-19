@@ -455,6 +455,72 @@ body {
   line-height: 1.5;
 }
 
+/* ===== PLANNED ACTIVITIES ===== */
+.planned-section {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+}
+
+.planned-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.planned-card {
+  background: light-dark(rgba(0,122,255,0.04), rgba(0,122,255,0.08));
+  border: 1px solid light-dark(rgba(0,122,255,0.15), rgba(0,122,255,0.2));
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.planned-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.planned-card-name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.planned-remove {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: light-dark(rgba(0,0,0,0.06), rgba(255,255,255,0.1));
+  color: var(--text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.planned-remove:active {
+  background: #FF3B30;
+  color: #fff;
+}
+
+.planned-card-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 /* ===== EXPLORE BUTTON ===== */
 .explore-btn {
   display: flex;
@@ -653,22 +719,43 @@ body {
   gap: 8px;
 }
 
-.explore-cal-btn {
+.explore-add-btn {
   padding: 8px 14px;
   border: none;
   border-radius: 8px;
-  background: light-dark(#f0f0f5, #2c2c2e);
-  color: var(--text-primary);
+  background: var(--accent);
+  color: #fff;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.explore-cal-btn:active {
+.explore-add-btn:active {
   transform: scale(0.95);
-  background: var(--accent);
+}
+
+.explore-remove-btn {
+  padding: 8px 14px;
+  border: 1.5px solid #FF3B30;
+  border-radius: 8px;
+  background: transparent;
+  color: #FF3B30;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.explore-remove-btn:active {
+  transform: scale(0.95);
+  background: #FF3B30;
   color: #fff;
+}
+
+.explore-card.added {
+  border-color: var(--accent);
+  background: light-dark(rgba(0,122,255,0.03), rgba(0,122,255,0.06));
 }
 
 .explore-nav-btn {
