@@ -345,7 +345,12 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
         {filtered.map(activity => {
           const isAdded = plannedIds.includes(activity.id);
           return (
-            <div key={activity.id} className={`explore-card ${isAdded ? 'added' : ''}`}>
+            <div key={activity.id} className={`explore-card ${isAdded ? 'added' : ''} ${activity.conditions === 'hazardous' ? 'hazardous' : ''}`}>
+              {activity.conditions === 'hazardous' && (
+                <div className="conditions-warning">
+                  ⚠️ {activity.conditionsNote || 'Hazardous conditions reported'}
+                </div>
+              )}
               <div className="explore-card-header">
                 <div className="explore-card-name">{activity.name}</div>
                 {activity.difficulty && (
@@ -745,7 +750,10 @@ export default function App() {
                         const activity = ACTIVITIES.find(a => a.id === actId);
                         if (!activity) return null;
                         return (
-                          <div key={actId} className="planned-card">
+                          <div key={actId} className={`planned-card ${activity.conditions === 'hazardous' ? 'hazardous' : ''}`}>
+                            {activity.conditions === 'hazardous' && (
+                              <div className="conditions-warning">⚠️ {activity.conditionsNote || 'Hazardous conditions reported'}</div>
+                            )}
                             <div className="planned-card-top">
                               <div className="planned-card-name">{activity.name}</div>
                               {activity.difficulty && <span className={`difficulty-tag ${activity.difficulty}`}>{activity.difficulty}</span>}

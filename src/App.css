@@ -858,6 +858,26 @@ body {
   background: light-dark(rgba(0,122,255,0.03), rgba(0,122,255,0.06));
 }
 
+.explore-card.hazardous {
+  border-color: var(--warning-border);
+}
+
+.planned-card.hazardous {
+  border-color: var(--warning-border);
+}
+
+.conditions-warning {
+  font-size: 13px;
+  font-weight: 600;
+  color: light-dark(#856404, #ffd966);
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
 .explore-nav-btn {
   padding: 8px 14px;
   border-radius: 8px;

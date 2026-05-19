@@ -156,6 +156,8 @@ export const ACTIVITIES = [
     lng: -116.1767,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
+    conditions: "hazardous",
+    conditionsNote: "Avalanche danger - check Parks Canada before going",
     tags: ["hike", "tea house", "iconic"]
   },
   {
@@ -295,6 +297,8 @@ export const ACTIVITIES = [
     lng: -116.1767,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
+    conditions: "hazardous",
+    conditionsNote: "Avalanche danger - check Parks Canada before going",
     tags: ["hike", "tea house", "morning"]
   },
   {
