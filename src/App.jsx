@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { TRIP_DATA, LAYER_NAMES, ITEM_TYPES, HIKE_DIFFICULTIES } from './data/tripData';
 import { ACTIVITIES, AREA_NAMES, DAY_AREAS } from './data/activities';
 import './App.css';
@@ -94,13 +94,17 @@ async function fetchRoute(coords) {
   return null;
 }
 
-// Leaflet map component for each day
-function DayMap({ day, items, getMapUrl }) {
+// Leaflet map component for each day - uses a stable fingerprint to avoid re-renders
+function DayMap({ day, itemsKey, items, mapProvider }) {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
+  const builtKeyRef = useRef(null);
 
   useEffect(() => {
+    // Only rebuild if the item fingerprint actually changed
+    if (builtKeyRef.current === itemsKey && mapInstanceRef.current) return;
     if (!mapRef.current) return;
+
     // Clean up previous map
     if (mapInstanceRef.current) {
       mapInstanceRef.current.remove();
@@ -132,6 +136,14 @@ function DayMap({ day, items, getMapUrl }) {
 
     const layerColors = { 1: '#FF3B30', 2: '#FF9500', 3: '#8E8E93', 4: '#34C759' };
 
+    const getMapUrl = (lat, lng, label) => {
+      const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
+      if (mapProvider === 'apple') {
+        return `http://maps.apple.com/?q=${encodeURIComponent(cleanLabel)}&ll=${lat},${lng}`;
+      }
+      return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+    };
+
     items.filter(i => i.lat && i.lng).forEach((item) => {
       const color = layerColors[item.layer] || '#007AFF';
       const marker = L.circleMarker([item.lat, item.lng], {
@@ -155,6 +167,8 @@ function DayMap({ day, items, getMapUrl }) {
 
     // Fetch real road route
     fetchRoute(coords).then(routeCoords => {
+      // Check map still exists (component might have unmounted)
+      if (!mapInstanceRef.current) return;
       if (routeCoords && routeCoords.length > 1) {
         L.polyline(routeCoords, {
           color: day.color || '#007AFF',
@@ -162,7 +176,6 @@ function DayMap({ day, items, getMapUrl }) {
           opacity: 0.7,
         }).addTo(map);
       } else if (coords.length > 1) {
-        // Fallback: straight dashed lines
         L.polyline(coords, {
           color: day.color || '#007AFF',
           weight: 3,
@@ -176,14 +189,16 @@ function DayMap({ day, items, getMapUrl }) {
     map.fitBounds(bounds, { padding: [30, 30] });
 
     mapInstanceRef.current = map;
+    builtKeyRef.current = itemsKey;
 
     return () => {
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
       }
+      builtKeyRef.current = null;
     };
-  }, [items, day.color, getMapUrl]);
+  }, [itemsKey]); // Only re-run when the fingerprint changes
 
   const hasCoords = items.some(i => i.lat && i.lng);
   if (!hasCoords) return null;
@@ -354,7 +369,7 @@ export default function App() {
     );
   };
 
-  const filterItems = (items) => {
+  const filterItems = useCallback((items) => {
     return items.filter(item => {
       if (!activeLayers.includes(item.layer)) return false;
       if (item.type === 'hike' && item.difficulty) {
@@ -363,7 +378,29 @@ export default function App() {
       }
       return true;
     });
-  };
+  }, [activeLayers, hikeDifficulty]);
+
+  // Pre-compute filtered items for all days with stable references
+  const filteredByDay = useMemo(() => {
+    const result = {};
+    TRIP_DATA.days.forEach(day => {
+      result[day.id] = filterItems(day.items);
+    });
+    return result;
+  }, [filterItems]);
+
+  // Stable map fingerprints - only changes when the actual visible coords change
+  const mapKeys = useMemo(() => {
+    const result = {};
+    TRIP_DATA.days.forEach(day => {
+      const items = filteredByDay[day.id];
+      result[day.id] = items
+        .filter(i => i.lat && i.lng)
+        .map(i => `${i.lat},${i.lng}`)
+        .join('|');
+    });
+    return result;
+  }, [filteredByDay]);
 
   const getMapUrl = useCallback((lat, lng, label) => {
     const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
@@ -422,7 +459,7 @@ export default function App() {
       <div className="days-container">
         {TRIP_DATA.days.map(day => {
           const isExpanded = expandedDay === day.id;
-          const filteredItems = filterItems(day.items);
+          const filteredItems = filteredByDay[day.id];
           const isToday = getTodayId() === day.id;
           const dayArea = DAY_AREAS[day.id];
 
@@ -456,7 +493,12 @@ export default function App() {
 
                   {/* Embedded map */}
                   {leafletLoaded && (
-                    <DayMap day={day} items={filteredItems} getMapUrl={getMapUrl} />
+                    <DayMap
+                      day={day}
+                      items={filteredItems}
+                      itemsKey={mapKeys[day.id]}
+                      mapProvider={mapProvider}
+                    />
                   )}
 
                   {/* Weather strip */}
@@ -571,8 +613,18 @@ export default function App() {
       )}
 
       {/* Bottom sheet preferences */}
-      {prefsOpen && <div className="prefs-backdrop" onClick={() => setPrefsOpen(false)} />}
-      <div className={`prefs-sheet ${prefsOpen ? 'open' : ''}`}>
+      {prefsOpen && (
+        <div
+          className="prefs-backdrop"
+          onClick={() => setPrefsOpen(false)}
+          onTouchEnd={(e) => { e.stopPropagation(); setPrefsOpen(false); }}
+        />
+      )}
+      <div
+        className={`prefs-sheet ${prefsOpen ? 'open' : ''}`}
+        onClick={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
+      >
         <div className="prefs-handle" onClick={() => setPrefsOpen(false)} />
 
         <div className="prefs-section">
