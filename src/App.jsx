@@ -49,7 +49,7 @@ function getTodayId() {
 
 // Generate .ics calendar event
 function generateICS(item, dayDate) {
-  const cleanTitle = item.title.replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
+  const cleanTitle = item.title.replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌🧑‍🌾]/g, '').trim();
   // Parse a rough time from item.time
   const dateStr = dayDate.replace(/^[A-Za-z]+ /, ''); // "Jun 14" etc
   const year = 2026;
@@ -197,9 +197,10 @@ function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
     ).addTo(map);
 
     const layerColors = { 1: '#FF3B30', 2: '#FF9500', 3: '#8E8E93', planned: '#007AFF' };
+    const typeColors = { market: '#34C759' }; // Green pins for groceries
 
     const getMapUrl = (lat, lng, label) => {
-      const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
+      const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌🧑‍🌾]/g, '').trim();
       if (mapProvider === 'apple') {
         return `http://maps.apple.com/?q=${encodeURIComponent(cleanLabel)}&ll=${lat},${lng}`;
       }
@@ -207,8 +208,8 @@ function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
     };
 
     allPoints.forEach((item) => {
-      const color = layerColors[item.layer] || '#007AFF';
-      const radius = item.layer === 1 ? 9 : 7; // Hotels are bigger dots
+      const color = typeColors[item.type] || layerColors[item.layer] || '#007AFF';
+      const radius = item.layer === 1 ? 9 : item.type === 'market' ? 8 : 7; // Hotels biggest, groceries slightly bigger
       const marker = L.circleMarker([item.lat, item.lng], {
         radius,
         fillColor: color,
@@ -218,7 +219,7 @@ function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
         fillOpacity: 0.9,
       }).addTo(map);
 
-      const cleanTitle = (item.title || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
+      const cleanTitle = (item.title || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌🧑‍🌾]/g, '').trim();
       marker.bindPopup(`
         <div style="font-family:-apple-system,system-ui,sans-serif;font-size:14px;min-width:140px">
           <div style="font-weight:700;margin-bottom:4px">${cleanTitle}</div>
@@ -683,7 +684,7 @@ export default function App() {
   }, [filteredByDay, getPlannedPoints]);
 
   const getMapUrl = useCallback((lat, lng, label) => {
-    const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
+    const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌🧑‍🌾]/g, '').trim();
     if (mapProvider === 'apple') {
       return `http://maps.apple.com/?q=${encodeURIComponent(cleanLabel)}&ll=${lat},${lng}`;
     }
