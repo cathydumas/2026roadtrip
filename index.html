@@ -5,12 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Rocky Mountains Road Trip 2026</title>
+  <meta name="color-scheme" content="light dark">
+  <title>Rocky Mountains 2026</title>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
+    :root {
+      color-scheme: light dark;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -19,9 +25,9 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #070D14;
-      color: #E2E8F0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
+      background: light-dark(#f5f5f7, #000000);
+      color: light-dark(#1d1d1f, #f5f5f7);
       overscroll-behavior: none;
       -webkit-font-smoothing: antialiased;
     }
@@ -31,18 +37,34 @@
       padding-bottom: env(safe-area-inset-bottom);
     }
 
-    .scrollable {
-      -webkit-overflow-scrolling: touch;
-      overflow-y: auto;
+    .glass {
+      background: light-dark(rgba(255,255,255,0.8), rgba(28,28,30,0.8));
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
     }
 
-    /* Smooth transitions */
-    button {
+    .button {
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    button:active {
-      transform: scale(0.95);
+    .button:active {
+      transform: scale(0.96);
+    }
+
+    .card {
+      background: light-dark(#ffffff, #1c1c1e);
+      border: 1px solid light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.1));
+    }
+
+    .leaflet-container {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .leaflet-tile {
+        filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+      }
     }
   </style>
 </head>
@@ -50,172 +72,150 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
 
     const TRIP_DATA = {
-      title: "BC Interior & Canadian Rockies",
-      subtitle: "Victoria → Kelowna → Jasper → Lake Louise → Canmore → Revelstoke → Home",
-      dates: "June 14–24, 2026",
+      title: "Rocky Mountains 2026",
+      dates: "June 14-24, 2026",
       days: [
         {
           id: 1,
           date: "Sun Jun 14",
           title: "Victoria → Kelowna",
-          subtitle: "Ferry day & wine country arrival",
-          color: "#2D6A4F",
-          locations: [{ lat: 48.428, lng: -123.365, name: "Victoria" }, { lat: 49.888, lng: -119.496, name: "Kelowna" }],
+          emoji: "🍷",
+          color: "#34C759",
           items: [
-            { type: "ferry", time: "10:00 AM", title: "🚢 Swartz Bay Ferry", note: "Queen of Alberni", lat: 48.688, lng: -123.403 },
-            { type: "drive", time: "Afternoon", title: "Drive to Kelowna", note: "~4.5 hrs from ferry" },
-            { type: "food", time: "Lunch in Hope", title: "🏠 Home Restaurant", note: "665 Old Hope Princeton Way", lat: 49.381, lng: -121.451 },
-            { type: "hotel", time: "Late afternoon", title: "Comfort Suites Kelowna", note: "2 nights", lat: 49.888, lng: -119.496 },
-            { type: "wine", time: "7:30 PM", title: "🍷 Mission Hill Family Estate", note: "Terrace Restaurant reservation", lat: 49.833, lng: -119.570 }
+            { emoji: "⛴️", time: "10:00 AM", title: "Swartz Bay Ferry", note: "Queen of Alberni", lat: 48.688, lng: -123.403 },
+            { emoji: "🍽️", time: "Lunch", title: "Home Restaurant", note: "Hope", lat: 49.381, lng: -121.451 },
+            { emoji: "🏨", time: "Evening", title: "Comfort Suites", note: "Kelowna, 2 nights", lat: 49.888, lng: -119.496 },
+            { emoji: "🍷", time: "7:30 PM", title: "Mission Hill Winery", note: "Reservation", lat: 49.833, lng: -119.570 }
           ]
         },
         {
           id: 2,
           date: "Mon Jun 15",
           title: "Kelowna → Jasper",
-          subtitle: "Big drive day with Mt Robson stop",
-          color: "#1B4332",
-          locations: [{ lat: 49.888, lng: -119.496, name: "Kelowna" }, { lat: 52.983, lng: -118.100, name: "Jasper" }],
+          emoji: "🏔️",
+          color: "#30D158",
           items: [
-            { type: "food", time: "Morning", title: "☕ 350° Bakehouse", lat: 49.883, lng: -119.476 },
-            { type: "drive", time: "Mid-morning", title: "Drive north to Jasper", note: "~7 hrs total" },
-            { type: "hike", time: "Midday", title: "Mt Robson + Kinney Lake", note: "Optional 2.2km easy hike", lat: 53.033, lng: -119.233 },
-            { type: "hotel", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin, 3 nights", lat: 52.933, lng: -118.150 }
+            { emoji: "☕", time: "Morning", title: "350° Bakehouse", lat: 49.883, lng: -119.476 },
+            { emoji: "🥾", time: "Midday", title: "Mt Robson + Kinney Lake", note: "Optional 2.2km", lat: 53.033, lng: -119.233 },
+            { emoji: "🏨", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin, 3 nights", lat: 52.933, lng: -118.150 }
           ]
         },
         {
           id: 3,
           date: "Tue Jun 16",
           title: "Jasper Day 1",
-          subtitle: "Maligne Lake + morning hike",
-          color: "#1B4332",
+          emoji: "🎣",
+          color: "#32ADE6",
           park: "jasper",
-          locations: [{ lat: 52.983, lng: -118.100, name: "Jasper" }],
           items: [
-            { type: "activity", time: "Morning first", title: "🐻 Buy Bear Spray", note: "Everest Outdoor Store" },
-            { type: "hike", time: "Morning PICK ONE", title: "🥾 Old Fort Point Loop", note: "Classic 3.4km", lat: 52.900, lng: -118.067, trail: "old-fort-point" },
-            { type: "hike", time: "Morning OR", title: "🥾 Pyramid Lake", note: "Easy 4km", lat: 52.950, lng: -118.067, trail: "pyramid-lake" },
-            { type: "scenic", time: "Afternoon", title: "🏔️ Maligne Lake", note: "Drive Maligne Lake Road", lat: 52.667, lng: -117.567 },
-            { type: "activity", time: "5:00-9:00 PM", title: "🎣 Maligne Lake Fishing", note: "Optional guided tour" }
+            { emoji: "🐻", time: "Morning", title: "Buy Bear Spray", note: "Everest Outdoor" },
+            { emoji: "🥾", time: "Morning", title: "Old Fort Point Loop", note: "Classic 3.4km", lat: 52.900, lng: -118.067, trail: true },
+            { emoji: "🏔️", time: "Afternoon", title: "Maligne Lake", note: "Drive Maligne Lake Road", lat: 52.667, lng: -117.567 },
+            { emoji: "🎣", time: "5-9 PM", title: "Maligne Lake Fishing", note: "Optional" }
           ]
         },
         {
           id: 4,
           date: "Wed Jun 17",
           title: "Jasper Day 2",
-          subtitle: "Miette Hot Springs + adventure",
-          color: "#1B4332",
+          emoji: "♨️",
+          color: "#32ADE6",
           park: "jasper",
-          locations: [{ lat: 52.983, lng: -118.100, name: "Jasper" }],
           items: [
-            { type: "activity", time: "Morning PICK ONE", title: "🚡 Jasper SkyTram", note: "Gondola to 2,263m", lat: 52.867, lng: -118.050 },
-            { type: "hike", time: "Morning OR", title: "🥾 Valley of Five Lakes", note: "Beautiful 4.6km loop", lat: 52.900, lng: -118.167, trail: "five-lakes" },
-            { type: "hot_spring", time: "Evening", title: "♨️ Miette Hot Springs", note: "Hottest in Canadian Rockies", lat: 52.983, lng: -117.800 }
+            { emoji: "🚡", time: "Morning", title: "Jasper SkyTram", note: "Gondola to 2,263m", lat: 52.867, lng: -118.050 },
+            { emoji: "♨️", time: "Evening", title: "Miette Hot Springs", note: "Hottest in Canadian Rockies", lat: 52.983, lng: -117.800 }
           ]
         },
         {
           id: 5,
           date: "Thu Jun 18",
           title: "Jasper → Lake Louise",
-          subtitle: "Icefields Parkway + Columbia Icefield",
-          color: "#0A3D62",
+          emoji: "❄️",
+          color: "#007AFF",
           park: "banff",
-          locations: [{ lat: 52.983, lng: -118.100, name: "Jasper" }, { lat: 51.416, lng: -116.217, name: "Lake Louise" }],
           items: [
-            { type: "drive", time: "Early morning", title: "South on Icefields Parkway", note: "Hwy 93, ~3 hrs to Lake Louise" },
-            { type: "scenic", time: "~30 min south", title: "🏔️ Athabasca Falls", lat: 52.667, lng: -117.883 },
-            { type: "glacier", time: "11:30 AM", title: "❄️ Columbia Icefield", note: "Ice Explorer + Skywalk", lat: 52.217, lng: -117.229 },
-            { type: "scenic", time: "Mid-afternoon", title: "🏔️ Peyto Lake", note: "Famous turquoise lake", lat: 51.717, lng: -116.517 },
-            { type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback, 2 nights", lat: 51.425, lng: -116.177 }
+            { emoji: "🏔️", time: "30 min", title: "Athabasca Falls", lat: 52.667, lng: -117.883 },
+            { emoji: "❄️", time: "11:30 AM", title: "Columbia Icefield", note: "Ice Explorer + Skywalk", lat: 52.217, lng: -117.229 },
+            { emoji: "🏔️", time: "Afternoon", title: "Peyto Lake", note: "Turquoise lake", lat: 51.717, lng: -116.517 },
+            { emoji: "🏨", time: "Evening", title: "Paradise Lodge", note: "Saddleback, 2 nights", lat: 51.425, lng: -116.177 }
           ]
         },
         {
           id: 6,
           date: "Fri Jun 19",
           title: "Lake Louise Day",
-          subtitle: "Moraine Lake, lakeshore & lunch",
-          color: "#0A3D62",
+          emoji: "🏔️",
+          color: "#007AFF",
           park: "banff",
-          locations: [{ lat: 51.416, lng: -116.217, name: "Lake Louise" }],
           items: [
-            { type: "hike", time: "Morning", title: "Lake Louise Lakeshore", note: "Go early for parking", lat: 51.417, lng: -116.217, trail: "lake-louise-lakeshore" },
-            { type: "food", time: "12:15 PM", title: "🍽️ Lakeview Lounge", note: "Chateau Lake Louise, reservation", lat: 51.425, lng: -116.214 },
-            { type: "activity", time: "4:00-5:00 PM", title: "✅ Moraine Lake", note: "Parks Canada booking", lat: 51.333, lng: -116.183 },
-            { type: "hike", time: "At Moraine Lake", title: "Rockpile Trail", note: "20-min iconic view", lat: 51.321, lng: -116.186, trail: "rockpile" }
+            { emoji: "🥾", time: "Morning", title: "Lake Louise Lakeshore", note: "Early for parking", lat: 51.417, lng: -116.217, trail: true },
+            { emoji: "🍽️", time: "12:15 PM", title: "Lakeview Lounge", note: "Chateau, reservation", lat: 51.425, lng: -116.214 },
+            { emoji: "✅", time: "4-5 PM", title: "Moraine Lake", note: "Parks Canada booking", lat: 51.333, lng: -116.183 },
+            { emoji: "🥾", time: "At Moraine", title: "Rockpile Trail", note: "20-min view", lat: 51.321, lng: -116.186, trail: true }
           ]
         },
         {
           id: 7,
           date: "Sat Jun 20",
-          title: "Lake Louise → Banff → Canmore",
-          subtitle: "Emerald Lake, Banff townsite & hot springs",
-          color: "#6B2D8B",
+          title: "Louise → Banff → Canmore",
+          emoji: "♨️",
+          color: "#AF52DE",
           park: "banff",
-          locations: [{ lat: 51.416, lng: -116.217, name: "Lake Louise" }, { lat: 51.178, lng: -115.570, name: "Banff" }, { lat: 51.089, lng: -115.359, name: "Canmore" }],
           items: [
-            { type: "scenic", time: "Morning option", title: "⭐ Emerald Lake", note: "Yoho NP", lat: 51.443, lng: -116.537 },
-            { type: "drive", time: "Midday", title: "Drive to Banff", note: "~45 min from Lake Louise" },
-            { type: "activity", time: "Afternoon", title: "🚡 Banff Gondola", note: "Sulphur Mountain", lat: 51.146, lng: -115.558 },
-            { type: "hot_spring", time: "Late afternoon", title: "♨️ Banff Upper Hot Springs", lat: 51.153, lng: -115.557 },
-            { type: "drive", time: "Evening", title: "Drive to Canmore", note: "~25 min from Banff" },
-            { type: "hotel", time: "Evening", title: "Canmore Airbnb", note: "Check in, 3 nights", lat: 51.089, lng: -115.359 }
+            { emoji: "⭐", time: "Morning", title: "Emerald Lake", note: "Yoho NP", lat: 51.443, lng: -116.537 },
+            { emoji: "🚡", time: "Afternoon", title: "Banff Gondola", lat: 51.146, lng: -115.558 },
+            { emoji: "♨️", time: "Late afternoon", title: "Banff Upper Hot Springs", lat: 51.153, lng: -115.557 },
+            { emoji: "🏨", time: "Evening", title: "Canmore Airbnb", note: "3 nights", lat: 51.089, lng: -115.359 }
           ]
         },
         {
           id: 8,
           date: "Sun Jun 21",
           title: "Canmore Day 1",
-          subtitle: "Settle in, stock up, adventure",
-          color: "#6B2D8B",
+          emoji: "🥾",
+          color: "#AF52DE",
           park: "banff",
-          locations: [{ lat: 51.089, lng: -115.359, name: "Canmore" }],
           items: [
-            { type: "hike", time: "Full day option", title: "🥾 Johnston Canyon + Ink Pots", note: "Famous, 11.6km moderate", lat: 51.242, lng: -115.831, trail: "johnston-canyon" },
-            { type: "hike", time: "OR peaceful option", title: "🥾 Kananaskis: Rawson Lake", note: "Moderate 8km", lat: 50.633, lng: -115.083, trail: "rawson-lake" },
-            { type: "hike", time: "OR stay local", title: "🥾 Grassi Lakes Trail", note: "Moderate 4km", lat: 51.067, lng: -115.367, trail: "grassi-lakes" }
+            { emoji: "🥾", time: "Full day", title: "Johnston Canyon + Ink Pots", note: "Famous, 11.6km", lat: 51.242, lng: -115.831, trail: true },
+            { emoji: "🥾", time: "OR", title: "Grassi Lakes", note: "Moderate 4km", lat: 51.067, lng: -115.367, trail: true }
           ]
         },
         {
           id: 9,
           date: "Mon Jun 22",
           title: "Canmore Day 2",
-          subtitle: "Big hike day or Banff classics",
-          color: "#6B2D8B",
+          emoji: "🏔️",
+          color: "#AF52DE",
           park: "banff",
-          locations: [{ lat: 51.089, lng: -115.359, name: "Canmore" }],
           items: [
-            { type: "hike", time: "Morning option", title: "🥾 Ha Ling Peak", note: "Strenuous 7.4km", lat: 51.054, lng: -115.412, trail: "ha-ling-peak" },
-            { type: "scenic", time: "Afternoon", title: "🏔️ Vermilion Lakes", lat: 51.182, lng: -115.626 }
+            { emoji: "🥾", time: "Morning", title: "Ha Ling Peak", note: "Strenuous 7.4km", lat: 51.054, lng: -115.412, trail: true },
+            { emoji: "🏔️", time: "Afternoon", title: "Vermilion Lakes", lat: 51.182, lng: -115.626 }
           ]
         },
         {
           id: 10,
           date: "Tue Jun 23",
           title: "Canmore → Revelstoke",
-          subtitle: "Rafting day via Rogers Pass",
-          color: "#8B1A1A",
-          locations: [{ lat: 51.089, lng: -115.359, name: "Canmore" }, { lat: 50.999, lng: -118.196, name: "Revelstoke" }],
+          emoji: "🌊",
+          color: "#FF3B30",
           items: [
-            { type: "drive", time: "Noon", title: "Drive to Wild Water Adventures", note: "Golden, BC" },
-            { type: "activity", time: "1:45-4:45 PM", title: "🌊 Whitewater Rafting", note: "Wild Water Adventures", lat: 51.300, lng: -116.963 },
-            { type: "scenic", time: "En route", title: "🏔️ Rogers Pass", note: "Glacier NP", lat: 51.305, lng: -117.527 },
-            { type: "hotel", time: "Evening", title: "Boulder Mountain Resort", note: "1 night", lat: 50.999, lng: -118.196 }
+            { emoji: "🌊", time: "1:45-4:45 PM", title: "Whitewater Rafting", note: "Golden, BC", lat: 51.300, lng: -116.963 },
+            { emoji: "🏔️", time: "En route", title: "Rogers Pass", note: "Glacier NP", lat: 51.305, lng: -117.527 },
+            { emoji: "🏨", time: "Evening", title: "Boulder Mountain Resort", note: "1 night", lat: 50.999, lng: -118.196 }
           ]
         },
         {
           id: 11,
           date: "Wed Jun 24",
           title: "Revelstoke → Victoria",
-          subtitle: "Home stretch via ferry",
-          color: "#2D6A4F",
-          locations: [{ lat: 50.999, lng: -118.196, name: "Revelstoke" }, { lat: 48.428, lng: -123.365, name: "Victoria" }],
+          emoji: "⛴️",
+          color: "#34C759",
           items: [
-            { type: "drive", time: "Morning", title: "Drive to Tsawwassen Ferry", note: "~6 hrs" },
-            { type: "ferry", time: "9:00 PM", title: "🚢 Tsawwassen → Swartz Bay", note: "CONFIRMED 9pm sailing", lat: 49.007, lng: -123.130 },
-            { type: "activity", time: "Evening", title: "Home sweet Victoria 🏡" }
+            { emoji: "⛴️", time: "9:00 PM", title: "Tsawwassen → Swartz Bay", note: "CONFIRMED", lat: 49.007, lng: -123.130 },
+            { emoji: "🏡", time: "Late", title: "Home Victoria" }
           ]
         }
       ]
@@ -224,7 +224,7 @@
     const fetchWeather = async (lat, lng) => {
       try {
         const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum&temperature_unit=celsius&timezone=auto&forecast_days=7`
+          `https://api.open-meteo.com/v1/gem?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&timezone=auto&forecast_days=7`
         );
         const data = await response.json();
         return data.daily;
@@ -234,58 +234,182 @@
       }
     };
 
-    const TRAIL_STATUS = {
-      'old-fort-point': { status: 'open', condition: 'good' },
-      'pyramid-lake': { status: 'open', condition: 'good' },
-      'five-lakes': { status: 'open', condition: 'good' },
-      'lake-louise-lakeshore': { status: 'open', condition: 'good' },
-      'rockpile': { status: 'open', condition: 'good' },
-      'johnston-canyon': { status: 'open', condition: 'caution', note: 'Icy sections' },
-      'rawson-lake': { status: 'open', condition: 'good' },
-      'grassi-lakes': { status: 'open', condition: 'good' },
-      'ha-ling-peak': { status: 'open', condition: 'caution', note: 'Steep scramble' }
+    const fetchTrailConditions = async (park) => {
+      try {
+        const response = await fetch(`/api/trail-conditions?park=${park}`);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Trail conditions fetch error:', error);
+        return null;
+      }
     };
 
-    const ICONS = {
-      hotel: '🏨', drive: '🚗', hike: '🥾', food: '🍽️', wine: '🍷',
-      activity: '⭐', ferry: '⛴️', market: '🛒', glacier: '❄️',
-      hot_spring: '♨️', scenic: '🏔️'
+    const calculateDistance = (lat1, lng1, lat2, lng2) => {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLng = (lng2 - lng1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLng/2) * Math.sin(dLng/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
     };
+
+    const calculateTotalDistance = () => {
+      const majorStops = [
+        { lat: 48.428, lng: -123.365 }, // Victoria
+        { lat: 49.888, lng: -119.496 }, // Kelowna
+        { lat: 52.983, lng: -118.100 }, // Jasper
+        { lat: 51.416, lng: -116.217 }, // Lake Louise
+        { lat: 51.089, lng: -115.359 }, // Canmore
+        { lat: 50.999, lng: -118.196 }, // Revelstoke
+        { lat: 48.428, lng: -123.365 }  // Victoria
+      ];
+
+      let total = 0;
+      for (let i = 0; i < majorStops.length - 1; i++) {
+        total += calculateDistance(
+          majorStops[i].lat, majorStops[i].lng,
+          majorStops[i+1].lat, majorStops[i+1].lng
+        );
+      }
+      return Math.round(total);
+    };
+
+    function DayMap({ items }) {
+      const mapRef = useRef(null);
+      const mapInstanceRef = useRef(null);
+
+      useEffect(() => {
+        if (!mapRef.current || mapInstanceRef.current) return;
+
+        const validItems = items.filter(item => item.lat && item.lng);
+        if (validItems.length === 0) return;
+
+        const bounds = validItems.map(item => [item.lat, item.lng]);
+
+        const map = L.map(mapRef.current, {
+          scrollWheelZoom: false,
+          dragging: true,
+          touchZoom: true
+        }).fitBounds(bounds, { padding: [30, 30] });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: ''
+        }).addTo(map);
+
+        validItems.forEach((item, idx) => {
+          const marker = L.marker([item.lat, item.lng]).addTo(map);
+          marker.bindPopup(`<b>${idx + 1}. ${item.title}</b>${item.note ? '<br>' + item.note : ''}`);
+        });
+
+        if (validItems.length > 1) {
+          const polyline = L.polyline(bounds, {
+            color: '#007AFF',
+            weight: 3,
+            opacity: 0.7
+          }).addTo(map);
+        }
+
+        mapInstanceRef.current = map;
+
+        return () => {
+          if (mapInstanceRef.current) {
+            mapInstanceRef.current.remove();
+            mapInstanceRef.current = null;
+          }
+        };
+      }, [items]);
+
+      const validItems = items.filter(item => item.lat && item.lng);
+      if (validItems.length === 0) return null;
+
+      return <div ref={mapRef} style={{ height: '240px', borderRadius: '16px', marginBottom: '16px' }} />;
+    }
+
+    function OverviewMap({ days }) {
+      const mapRef = useRef(null);
+      const mapInstanceRef = useRef(null);
+
+      useEffect(() => {
+        if (!mapRef.current || mapInstanceRef.current) return;
+
+        const allPoints = [];
+        days.forEach(day => {
+          day.items.forEach(item => {
+            if (item.lat && item.lng) {
+              allPoints.push({ ...item, day: day.title, color: day.color });
+            }
+          });
+        });
+
+        if (allPoints.length === 0) return;
+
+        const bounds = allPoints.map(p => [p.lat, p.lng]);
+
+        const map = L.map(mapRef.current, {
+          scrollWheelZoom: false,
+          dragging: true,
+          touchZoom: true
+        }).fitBounds(bounds, { padding: [40, 40] });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: ''
+        }).addTo(map);
+
+        allPoints.forEach(point => {
+          const marker = L.marker([point.lat, point.lng]).addTo(map);
+          marker.bindPopup(`<b>${point.title}</b><br>${point.day}${point.note ? '<br>' + point.note : ''}`);
+        });
+
+        mapInstanceRef.current = map;
+
+        return () => {
+          if (mapInstanceRef.current) {
+            mapInstanceRef.current.remove();
+            mapInstanceRef.current = null;
+          }
+        };
+      }, [days]);
+
+      return <div ref={mapRef} style={{ height: '400px', borderRadius: '16px', marginBottom: '24px' }} />;
+    }
 
     function App() {
       const [selectedDay, setSelectedDay] = useState(null);
       const [mapProvider, setMapProvider] = useState('apple');
       const [weather, setWeather] = useState({});
+      const [trailConditions, setTrailConditions] = useState({});
+      const [showOverview, setShowOverview] = useState(false);
+      const totalKm = calculateTotalDistance();
 
       useEffect(() => {
         TRIP_DATA.days.forEach(async (day) => {
-          if (day.locations && day.locations[0]) {
-            const loc = day.locations[0];
-            const data = await fetchWeather(loc.lat, loc.lng);
+          const firstLocation = day.items.find(item => item.lat && item.lng);
+          if (firstLocation) {
+            const data = await fetchWeather(firstLocation.lat, firstLocation.lng);
             if (data) {
               setWeather(prev => ({ ...prev, [day.id]: data }));
+            }
+          }
+
+          if (day.park) {
+            const conditions = await fetchTrailConditions(day.park);
+            if (conditions) {
+              setTrailConditions(prev => ({ ...prev, [day.park]: conditions }));
             }
           }
         });
       }, []);
 
-      const getMapUrl = (lat, lng, label, provider = mapProvider) => {
-        if (provider === 'apple') {
-          return `http://maps.apple.com/?q=${encodeURIComponent(label)}&ll=${lat},${lng}&z=13`;
+      const getMapUrl = (lat, lng, label) => {
+        if (mapProvider === 'apple') {
+          return `http://maps.apple.com/?q=${encodeURIComponent(label)}&ll=${lat},${lng}`;
         } else {
           return `https://maps.google.com/?q=${encodeURIComponent(label)}&ll=${lat},${lng}`;
         }
       };
-
-      const getDirectionsUrl = (fromLat, fromLng, toLat, toLng, provider = mapProvider) => {
-        if (provider === 'apple') {
-          return `http://maps.apple.com/?saddr=${fromLat},${fromLng}&daddr=${toLat},${toLng}&dirflg=d`;
-        } else {
-          return `https://maps.google.com/maps/dir/${fromLat},${fromLng}/${toLat},${toLng}/`;
-        }
-      };
-
-      const formatTemp = (temp) => Math.round(temp) + '°C';
 
       const getWeatherEmoji = (code) => {
         if (code <= 3) return '☀️';
@@ -295,83 +419,104 @@
         return '⛈️';
       };
 
+      const formatTemp = (temp) => Math.round(temp) + '°';
+
       return (
-        <div style={{ minHeight: '100vh', background: '#070D14' }}>
-          <header style={{
-            background: 'linear-gradient(135deg, #0A1628 0%, #0F2040 50%, #0A1628 100%)',
-            borderBottom: '1px solid #1E3448',
+        <div style={{ minHeight: '100vh', paddingBottom: '40px' }}>
+          <header className="glass" style={{
             padding: '24px 20px 20px',
             position: 'sticky',
             top: 0,
             zIndex: 100,
-            backdropFilter: 'blur(10px)'
+            borderBottom: '1px solid light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.1))'
           }}>
-            <div style={{ fontSize: '12px', letterSpacing: '3px', color: '#60A5FA', textTransform: 'uppercase', marginBottom: '8px', textAlign: 'center', fontWeight: 600 }}>
+            <div style={{
+              fontSize: '11px',
+              letterSpacing: '0.06em',
+              color: 'light-dark(#86868b, #98989d)',
+              textTransform: 'uppercase',
+              marginBottom: '6px',
+              textAlign: 'center',
+              fontWeight: 600
+            }}>
               {TRIP_DATA.dates}
             </div>
             <h1 style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '26px',
+              fontSize: '32px',
               fontWeight: 700,
-              margin: '0 0 16px',
+              margin: '0 0 4px',
               textAlign: 'center',
-              background: 'linear-gradient(135deg, #F1F5F9 0%, #94A3B8 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              lineHeight: 1.2
+              letterSpacing: '-0.02em'
             }}>
               {TRIP_DATA.title}
             </h1>
+            <div style={{
+              fontSize: '15px',
+              color: 'light-dark(#86868b, #98989d)',
+              textAlign: 'center',
+              marginBottom: '16px',
+              fontWeight: 500
+            }}>
+              {totalKm.toLocaleString()} km total
+            </div>
 
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <button
-                onClick={() => setMapProvider('apple')}
+                className="button"
+                onClick={() => setShowOverview(!showOverview)}
                 style={{
-                  padding: '12px 20px',
+                  padding: '10px 18px',
                   borderRadius: '12px',
                   border: 'none',
-                  background: mapProvider === 'apple' ? '#0176d3' : '#1E3448',
-                  color: '#fff',
-                  fontSize: '16px',
+                  background: showOverview ? '#007AFF' : 'light-dark(#f5f5f7, #1c1c1e)',
+                  color: showOverview ? '#ffffff' : 'light-dark(#1d1d1f, #f5f5f7)',
+                  fontSize: '15px',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  minHeight: '48px',
-                  minWidth: '140px'
+                  minHeight: '44px'
                 }}
               >
-                🍎 Apple Maps
+                🗺️ {showOverview ? 'Hide' : 'Show'} Route
               </button>
               <button
-                onClick={() => setMapProvider('google')}
+                className="button"
+                onClick={() => setMapProvider(mapProvider === 'apple' ? 'google' : 'apple')}
                 style={{
-                  padding: '12px 20px',
+                  padding: '10px 18px',
                   borderRadius: '12px',
                   border: 'none',
-                  background: mapProvider === 'google' ? '#0176d3' : '#1E3448',
-                  color: '#fff',
-                  fontSize: '16px',
+                  background: 'light-dark(#f5f5f7, #1c1c1e)',
+                  color: 'light-dark(#1d1d1f, #f5f5f7)',
+                  fontSize: '15px',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  minHeight: '48px',
-                  minWidth: '140px'
+                  minHeight: '44px'
                 }}
               >
-                🗺️ Google Maps
+                {mapProvider === 'apple' ? '🍎' : '🗺️'} {mapProvider === 'apple' ? 'Apple' : 'Google'} Maps
               </button>
             </div>
           </header>
 
-          <div style={{ padding: '16px', maxWidth: '640px', margin: '0 auto' }}>
+          <div style={{ padding: '16px', maxWidth: '680px', margin: '0 auto' }}>
+            {showOverview && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{ fontSize: '22px', fontWeight: 700, marginBottom: '12px', letterSpacing: '-0.01em' }}>
+                  Full Route Overview
+                </h2>
+                <OverviewMap days={TRIP_DATA.days} />
+              </div>
+            )}
+
             {TRIP_DATA.days.map(day => (
               <div
                 key={day.id}
+                className="card"
                 style={{
-                  background: '#0C1822',
-                  border: `2px solid ${selectedDay === day.id ? day.color : '#1E3448'}`,
-                  borderRadius: '16px',
-                  marginBottom: '16px',
+                  borderRadius: '20px',
+                  marginBottom: '12px',
                   overflow: 'hidden',
-                  transition: 'all 0.2s'
+                  boxShadow: 'light-dark(0 2px 8px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.3))'
                 }}
               >
                 <div
@@ -379,220 +524,231 @@
                   style={{
                     padding: '20px',
                     cursor: 'pointer',
-                    background: selectedDay === day.id ? `${day.color}15` : 'transparent',
-                    minHeight: '48px',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '16px'
+                    gap: '16px',
+                    minHeight: '48px'
                   }}
                 >
                   <div style={{
-                    width: '6px',
-                    height: '64px',
-                    borderRadius: '4px',
-                    background: day.color,
+                    fontSize: '34px',
                     flexShrink: 0
-                  }} />
+                  }}>
+                    {day.emoji}
+                  </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '14px', color: '#64748B', marginBottom: '4px', fontWeight: 500 }}>
+                    <div style={{
+                      fontSize: '13px',
+                      color: 'light-dark(#86868b, #98989d)',
+                      marginBottom: '2px',
+                      fontWeight: 600
+                    }}>
                       {day.date}
                     </div>
-                    <div style={{ fontWeight: 700, fontSize: '20px', color: '#F1F5F9', marginBottom: '4px' }}>
+                    <div style={{
+                      fontSize: '20px',
+                      fontWeight: 700,
+                      letterSpacing: '-0.01em',
+                      marginBottom: '2px'
+                    }}>
                       {day.title}
                     </div>
-                    <div style={{ fontSize: '15px', color: '#94A3B8' }}>
-                      {day.subtitle}
+                    <div style={{
+                      fontSize: '15px',
+                      color: 'light-dark(#86868b, #98989d)'
+                    }}>
+                      {day.items.length} stops
                     </div>
                   </div>
-                  <div style={{ fontSize: '28px', color: '#475569' }}>
-                    {selectedDay === day.id ? '▲' : '▼'}
+                  <div style={{ fontSize: '24px', color: 'light-dark(#c7c7cc, #48484a)' }}>
+                    {selectedDay === day.id ? '◀' : '▶'}
                   </div>
                 </div>
 
                 {selectedDay === day.id && (
                   <div style={{ padding: '0 20px 20px' }}>
+                    <DayMap items={day.items} />
+
                     {weather[day.id] && (
                       <div style={{
-                        background: '#162030',
-                        borderRadius: '10px',
+                        background: 'light-dark(#f5f5f7, #2c2c2e)',
+                        borderRadius: '14px',
                         padding: '14px',
-                        marginBottom: '16px'
+                        marginBottom: '14px'
                       }}>
-                        <div style={{ fontSize: '15px', fontWeight: 600, color: '#93C5FD', marginBottom: '10px' }}>
-                          🌤️ Weather Forecast
+                        <div style={{
+                          fontSize: '15px',
+                          fontWeight: 600,
+                          marginBottom: '10px',
+                          color: 'light-dark(#1d1d1f, #f5f5f7)'
+                        }}>
+                          Weather
                         </div>
-                        <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                        <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
                           {weather[day.id].time.slice(0, 5).map((date, i) => (
                             <div key={date} style={{
-                              background: '#0F1923',
-                              borderRadius: '8px',
-                              padding: '10px 14px',
-                              minWidth: '90px',
+                              background: 'light-dark(#ffffff, #1c1c1e)',
+                              borderRadius: '10px',
+                              padding: '10px',
+                              minWidth: '70px',
                               textAlign: 'center'
                             }}>
-                              <div style={{ fontSize: '13px', color: '#64748B', fontWeight: 500 }}>
+                              <div style={{ fontSize: '11px', color: 'light-dark(#86868b, #98989d)', fontWeight: 600, marginBottom: '4px' }}>
                                 {new Date(date).toLocaleDateString('en-US', { weekday: 'short' })}
                               </div>
-                              <div style={{ fontSize: '28px', margin: '6px 0' }}>
+                              <div style={{ fontSize: '28px', marginBottom: '4px' }}>
                                 {getWeatherEmoji(weather[day.id].weathercode[i])}
                               </div>
-                              <div style={{ fontSize: '16px', fontWeight: 700, color: '#F1F5F9' }}>
+                              <div style={{ fontSize: '17px', fontWeight: 700 }}>
                                 {formatTemp(weather[day.id].temperature_2m_max[i])}
                               </div>
-                              <div style={{ fontSize: '13px', color: '#64748B' }}>
+                              <div style={{ fontSize: '13px', color: 'light-dark(#86868b, #98989d)' }}>
                                 {formatTemp(weather[day.id].temperature_2m_min[i])}
                               </div>
                             </div>
                           ))}
                         </div>
+                        <div style={{ fontSize: '11px', color: 'light-dark(#86868b, #98989d)', marginTop: '8px', textAlign: 'center' }}>
+                          Canadian GEM Model via Open-Meteo
+                        </div>
                       </div>
                     )}
 
                     {day.park && (
-                      <div style={{
-                        background: 'rgba(74,222,128,0.1)',
-                        border: '1px solid rgba(74,222,128,0.3)',
-                        borderRadius: '10px',
-                        padding: '14px',
-                        marginBottom: '16px'
-                      }}>
-                        <div style={{ fontSize: '15px', fontWeight: 600, color: '#4ADE80', marginBottom: '6px' }}>
-                          🥾 Trail Conditions
+                      <a
+                        href={`https://parks.canada.ca/pn-np/ab/${day.park}/activ/experience/sentiers-trails/etat-sentiers-trail-conditions`}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          display: 'block',
+                          background: 'light-dark(#f5f5f7, #2c2c2e)',
+                          borderRadius: '14px',
+                          padding: '14px',
+                          marginBottom: '14px',
+                          textDecoration: 'none',
+                          color: 'inherit'
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <div style={{ fontSize: '15px', fontWeight: 600, marginBottom: '4px' }}>
+                              🥾 {day.park.charAt(0).toUpperCase() + day.park.slice(1)} Trail Conditions
+                            </div>
+                            {trailConditions[day.park] ? (
+                              <>
+                                <div style={{ fontSize: '17px', fontWeight: 700, marginBottom: '2px' }}>
+                                  {trailConditions[day.park].status}
+                                </div>
+                                <div style={{ fontSize: '13px', color: 'light-dark(#86868b, #98989d)' }}>
+                                  {trailConditions[day.park].summary}
+                                </div>
+                              </>
+                            ) : (
+                              <div style={{ fontSize: '13px', color: '#007AFF', fontWeight: 600 }}>
+                                Loading conditions...
+                              </div>
+                            )}
+                          </div>
+                          <div style={{ fontSize: '20px', color: 'light-dark(#c7c7cc, #48484a)' }}>
+                            →
+                          </div>
                         </div>
-                        <a
-                          href={`https://parks.canada.ca/pn-np/ab/${day.park}/activ/randonnee-hiking/etat-sentiers-trail-conditions`}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            color: '#4ADE80',
-                            fontSize: '15px',
-                            textDecoration: 'none',
-                            fontWeight: 500
-                          }}
-                        >
-                          View {day.park.charAt(0).toUpperCase() + day.park.slice(1)} NP conditions →
-                        </a>
-                      </div>
+                        {trailConditions[day.park]?.trails && trailConditions[day.park].trails.length > 0 && (
+                          <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '1px solid light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.1))' }}>
+                            {trailConditions[day.park].trails.slice(0, 5).map((trail, idx) => (
+                              <div key={idx} style={{
+                                fontSize: '13px',
+                                color: 'light-dark(#1d1d1f, #f5f5f7)',
+                                marginBottom: '4px',
+                                display: 'flex',
+                                justifyContent: 'space-between'
+                              }}>
+                                <span>{trail.name}</span>
+                                <span style={{
+                                  fontWeight: 600,
+                                  color: trail.status.toLowerCase().includes('open') || trail.status.toLowerCase().includes('good')
+                                    ? '#34C759'
+                                    : trail.status.toLowerCase().includes('closed')
+                                    ? '#FF3B30'
+                                    : '#FF9500'
+                                }}>
+                                  {trail.status}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </a>
                     )}
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                      {day.items.map((item, idx) => {
-                        const trailStatus = item.trail ? TRAIL_STATUS[item.trail] : null;
-                        const isClosed = trailStatus?.status === 'closed';
-
-                        return (
-                          <div
-                            key={idx}
-                            style={{
-                              background: '#162030',
-                              borderRadius: '14px',
-                              padding: '18px',
-                              opacity: isClosed ? 0.5 : 1,
-                              textDecoration: isClosed ? 'line-through' : 'none'
-                            }}
-                          >
-                            <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {day.items.map((item, idx) => (
+                        <div
+                          key={idx}
+                          style={{
+                            background: 'light-dark(#f5f5f7, #2c2c2e)',
+                            borderRadius: '14px',
+                            padding: '16px'
+                          }}
+                        >
+                          <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+                            <div style={{ fontSize: '28px', flexShrink: 0 }}>
+                              {item.emoji}
+                            </div>
+                            <div style={{ flex: 1 }}>
+                              {item.time && (
+                                <div style={{
+                                  fontSize: '13px',
+                                  color: 'light-dark(#86868b, #98989d)',
+                                  marginBottom: '4px',
+                                  fontWeight: 600
+                                }}>
+                                  {item.time}
+                                </div>
+                              )}
                               <div style={{
-                                fontSize: '28px',
-                                minWidth: '36px',
-                                height: '36px',
-                                borderRadius: '50%',
-                                background: isClosed ? '#374151' : '#1E3448',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0
+                                fontSize: '17px',
+                                fontWeight: 700,
+                                marginBottom: '4px',
+                                letterSpacing: '-0.01em'
                               }}>
-                                {ICONS[item.type] || '⭐'}
+                                {item.title}
                               </div>
-                              <div style={{ flex: 1 }}>
-                                {item.time && (
-                                  <div style={{ fontSize: '14px', color: '#64748B', marginBottom: '6px', fontWeight: 500 }}>
-                                    {item.time}
-                                  </div>
-                                )}
-                                <div style={{ fontSize: '18px', fontWeight: 700, color: '#F1F5F9', marginBottom: '6px', lineHeight: 1.3 }}>
-                                  {item.title}
+                              {item.note && (
+                                <div style={{
+                                  fontSize: '15px',
+                                  color: 'light-dark(#86868b, #98989d)',
+                                  marginBottom: '10px'
+                                }}>
+                                  {item.note}
                                 </div>
-                                {item.note && (
-                                  <div style={{ fontSize: '16px', color: '#94A3B8', marginBottom: '10px', lineHeight: 1.4 }}>
-                                    {item.note}
-                                  </div>
-                                )}
-                                {trailStatus && (
-                                  <div style={{
-                                    fontSize: '14px',
-                                    color: trailStatus.status === 'open'
-                                      ? (trailStatus.condition === 'good' ? '#4ADE80' : '#F59E0B')
-                                      : '#EF4444',
-                                    marginBottom: '10px',
-                                    fontWeight: 700
-                                  }}>
-                                    {trailStatus.status === 'closed' && '🚫 CLOSED'}
-                                    {trailStatus.status === 'open' && trailStatus.condition === 'caution' && '⚠️ CAUTION'}
-                                    {trailStatus.status === 'open' && trailStatus.condition === 'good' && '✅ Open'}
-                                    {trailStatus.note && ` - ${trailStatus.note}`}
-                                  </div>
-                                )}
-                                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                                  {item.lat && item.lng && (
-                                    <>
-                                      <a
-                                        href={getMapUrl(item.lat, item.lng, item.title, mapProvider)}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        style={{
-                                          padding: '12px 18px',
-                                          borderRadius: '10px',
-                                          background: '#0176d3',
-                                          color: '#fff',
-                                          textDecoration: 'none',
-                                          fontSize: '16px',
-                                          fontWeight: 700,
-                                          minHeight: '48px',
-                                          display: 'inline-flex',
-                                          alignItems: 'center',
-                                          gap: '6px'
-                                        }}
-                                      >
-                                        📍 Open in {mapProvider === 'apple' ? 'Apple' : 'Google'} Maps
-                                      </a>
-                                      {idx > 0 && day.items[idx - 1].lat && (
-                                        <a
-                                          href={getDirectionsUrl(
-                                            day.items[idx - 1].lat,
-                                            day.items[idx - 1].lng,
-                                            item.lat,
-                                            item.lng,
-                                            mapProvider
-                                          )}
-                                          target="_blank"
-                                          rel="noreferrer"
-                                          style={{
-                                            padding: '12px 18px',
-                                            borderRadius: '10px',
-                                            background: '#2e844a',
-                                            color: '#fff',
-                                            textDecoration: 'none',
-                                            fontSize: '16px',
-                                            fontWeight: 700,
-                                            minHeight: '48px',
-                                            display: 'inline-flex',
-                                            alignItems: 'center',
-                                            gap: '6px'
-                                          }}
-                                        >
-                                          🧭 Directions
-                                        </a>
-                                      )}
-                                    </>
-                                  )}
-                                </div>
-                              </div>
+                              )}
+                              {item.lat && item.lng && (
+                                <a
+                                  href={getMapUrl(item.lat, item.lng, item.title)}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="button"
+                                  style={{
+                                    display: 'inline-block',
+                                    padding: '10px 16px',
+                                    borderRadius: '10px',
+                                    background: '#007AFF',
+                                    color: '#ffffff',
+                                    textDecoration: 'none',
+                                    fontSize: '15px',
+                                    fontWeight: 700,
+                                    minHeight: '44px',
+                                    lineHeight: '24px'
+                                  }}
+                                >
+                                  📍 Open in {mapProvider === 'apple' ? 'Apple' : 'Google'} Maps
+                                </a>
+                              )}
                             </div>
                           </div>
-                        );
-                      })}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
@@ -602,12 +758,11 @@
 
           <div style={{
             textAlign: 'center',
-            padding: '32px 20px 40px',
-            color: '#475569',
-            fontSize: '15px'
+            padding: '24px 20px',
+            color: 'light-dark(#86868b, #98989d)',
+            fontSize: '13px'
           }}>
-            <p style={{ marginBottom: '8px' }}>Tap any day to expand details</p>
-            <p>Weather forecasts update daily via Open-Meteo</p>
+            <p>Tap any day to see details & map</p>
           </div>
         </div>
       );
