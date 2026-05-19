@@ -41,6 +41,7 @@ export const TRIP_DATA = {
         { layer: 3, type: "drive", time: "En route", title: "⛽ Fill up in Kamloops", note: "Last fuel before mountains", lat: 50.6745, lng: -120.3273 },
         { layer: 3, type: "food", time: "Lunch", title: "☕ Wild Flour Cafe", note: "Clearwater · Fresh sourdough, homemade baking", lat: 51.6521206, lng: -120.0389419 },
         { layer: 3, type: "activity", time: "En route", title: "⛽ Fill up in Valemount", note: "Last fuel before Jasper", lat: 52.8321, lng: -119.2626 },
+        { layer: 3, type: "scenic", time: "~20 min stop", title: "📷 Mt Robson Viewpoint", note: "Highest peak in the Canadian Rockies (3,954m). Pull off at the visitor centre for the classic photo op. Often has cloud cap.", lat: 53.1148, lng: -119.2314 },
         { layer: 3, type: "drive", time: "On arrival", title: "ℹ️ Jasper Visitor Centre", note: "500 Connaught Dr · Park passes, maps, trail conditions, bear warnings", lat: 52.8734, lng: -118.0817 },
         { layer: 1, type: "hotel", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin, 3 nights", lat: 52.902511, lng: -118.097846 }
       ]
@@ -136,11 +137,7 @@ export const TRIP_DATA = {
       park: "banff",
       km: 0,
       startAccom: { title: "Canmore Airbnb", lat: 51.089, lng: -115.359 },
-      items: [
-        { layer: 3, type: "market", time: "On arrival", title: "🥩 Valbella Gourmet Foods", note: "104 Elk Run Blvd · Legendary European deli since 1978. Rocky Mountain air-dried meats, sausages", lat: 51.0768197, lng: -115.3216483 },
-        { layer: 3, type: "food", time: "On arrival", title: "☕ JK Bakery Cafe", note: "1000 7 Ave · Great soups, sandwiches, Boston cream donuts. Stock up for hike lunches", lat: 51.0903837, lng: -115.3612421 },
-        { layer: 3, type: "market", time: "On arrival", title: "🛒 Safeway Canmore", note: "1200 Railway Ave · Well-stocked, on-site liquor store", lat: 51.093671, lng: -115.356288 }
-      ]
+      items: []
     },
     {
       id: 9,

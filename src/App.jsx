@@ -278,7 +278,7 @@ function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
 }
 
 // Explore panel for optional activities
-function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, onAddActivity, onRemoveActivity }) {
+function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, onAddActivity, onRemoveActivity, activityConditions }) {
   const [selectedTags, setSelectedTags] = useState([]);
   const [diffFilter, setDiffFilter] = useState('all');
   const activities = ACTIVITIES.filter(a => a.area === area);
@@ -305,6 +305,22 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
     return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
   };
 
+  // Check if we have any conditions data for activities in this area
+  const hasConditionsData = activities.some(a => activityConditions[a.id]);
+  const conditionsTimestamp = (() => {
+    try {
+      const cached = localStorage.getItem('rr_trail_conditions');
+      if (cached) {
+        const { fetchedAt } = JSON.parse(cached);
+        const hrs = Math.round((Date.now() - fetchedAt) / (1000 * 60 * 60));
+        if (hrs < 1) return 'updated just now';
+        if (hrs === 1) return 'updated 1 hr ago';
+        return `updated ${hrs} hrs ago`;
+      }
+    } catch {}
+    return null;
+  })();
+
   return (
     <div className="explore-panel">
       <div className="explore-header">
@@ -314,6 +330,12 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
         </div>
         <button className="explore-close" onClick={onClose}>Done</button>
       </div>
+
+      {hasConditionsData && conditionsTimestamp && (
+        <div className="conditions-freshness">
+          Trail conditions from Parks Canada, {conditionsTimestamp}
+        </div>
+      )}
 
       {/* Difficulty filter */}
       <div className="explore-diff-row">
@@ -344,11 +366,19 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
       <div className="explore-list">
         {filtered.map(activity => {
           const isAdded = plannedIds.includes(activity.id);
+          const cond = activityConditions[activity.id];
+          const isHazardous = cond && (cond.severity === 'hazardous' || cond.severity === 'closed');
+          const isCaution = cond && cond.severity === 'caution';
           return (
-            <div key={activity.id} className={`explore-card ${isAdded ? 'added' : ''} ${activity.conditions === 'hazardous' ? 'hazardous' : ''}`}>
-              {activity.conditions === 'hazardous' && (
+            <div key={activity.id} className={`explore-card ${isAdded ? 'added' : ''} ${isHazardous ? 'hazardous' : ''} ${isCaution ? 'caution' : ''}`}>
+              {isHazardous && (
                 <div className="conditions-warning">
-                  ⚠️ {activity.conditionsNote || 'Hazardous conditions reported'}
+                  ⚠️ {cond.condition}{cond.comment ? ` - ${cond.comment}` : ''}
+                </div>
+              )}
+              {isCaution && (
+                <div className="conditions-caution">
+                  ⚡ {cond.condition}{cond.comment ? ` - ${cond.comment}` : ''}
                 </div>
               )}
               <div className="explore-card-header">
@@ -423,7 +453,18 @@ export default function App() {
   const [prefsOpen, setPrefsOpen] = useState(false);
   const [exploreArea, setExploreArea] = useState(null);
   const [weather, setWeather] = useState({});
-  const [trailConditions, setTrailConditions] = useState({});
+  // Per-activity conditions from Parks Canada scraper: { activityId: { severity, condition, comment } }
+  const [activityConditions, setActivityConditions] = useState(() => {
+    try {
+      const cached = localStorage.getItem('rr_trail_conditions');
+      if (cached) {
+        const { data, fetchedAt } = JSON.parse(cached);
+        // Use cache if less than 24 hours old
+        if (Date.now() - fetchedAt < 24 * 60 * 60 * 1000) return data;
+      }
+    } catch {}
+    return {};
+  });
   const [leafletLoaded, setLeafletLoaded] = useState(!!window.L);
 
   // Planned activities: { dayId: [activityId, ...] } - persisted in localStorage
@@ -491,19 +532,56 @@ export default function App() {
           // Weather not available yet (too far in future) - that's ok
         }
       }
+    });
+  }, []);
 
-      if (day.park) {
+  // Fetch trail conditions from Parks Canada scraper
+  // Cached in localStorage for 24 hours to avoid hammering the endpoint
+  useEffect(() => {
+    // Check if we already have fresh cached data
+    try {
+      const cached = localStorage.getItem('rr_trail_conditions');
+      if (cached) {
+        const { fetchedAt } = JSON.parse(cached);
+        if (Date.now() - fetchedAt < 24 * 60 * 60 * 1000) return; // Still fresh
+      }
+    } catch {}
+
+    // Fetch both parks in parallel
+    async function fetchConditions() {
+      const parks = ['banff', 'jasper'];
+      const allConditions = {};
+
+      await Promise.all(parks.map(async (park) => {
         try {
-          const response = await fetch(`/api/trail-conditions?park=${day.park}`);
+          const response = await fetch(`/api/trail-conditions?park=${park}`);
           const data = await response.json();
-          if (data && !data.error) {
-            setTrailConditions(prev => ({ ...prev, [day.park]: data }));
+          if (data && !data.error && data.trails) {
+            // Map per-activity conditions
+            data.trails.forEach(trail => {
+              allConditions[trail.id] = {
+                severity: trail.severity,
+                condition: trail.condition,
+                comment: trail.comment,
+                trailName: trail.trailName,
+              };
+            });
           }
         } catch (error) {
           // Trail conditions unavailable - that's ok
         }
+      }));
+
+      if (Object.keys(allConditions).length > 0) {
+        setActivityConditions(allConditions);
+        localStorage.setItem('rr_trail_conditions', JSON.stringify({
+          data: allConditions,
+          fetchedAt: Date.now()
+        }));
       }
-    });
+    }
+
+    fetchConditions();
   }, []);
 
   const toggleLayer = (layer) => {
@@ -683,18 +761,6 @@ export default function App() {
                     </div>
                   )}
 
-                  {/* Trail conditions link */}
-                  {day.park && trailConditions[day.park] && (
-                    <a
-                      href={trailConditions[day.park].url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="trail-link"
-                    >
-                      <span>🥾 {day.park.charAt(0).toUpperCase() + day.park.slice(1)} trails: {trailConditions[day.park].status}</span>
-                      <span className="trail-arrow">→</span>
-                    </a>
-                  )}
 
                   {/* Items list */}
                   <div className="items-list">
@@ -749,10 +815,16 @@ export default function App() {
                       {plannedActivities[day.id].map(actId => {
                         const activity = ACTIVITIES.find(a => a.id === actId);
                         if (!activity) return null;
+                        const cond = activityConditions[actId];
+                        const isHazardous = cond && (cond.severity === 'hazardous' || cond.severity === 'closed');
+                        const isCaution = cond && cond.severity === 'caution';
                         return (
-                          <div key={actId} className={`planned-card ${activity.conditions === 'hazardous' ? 'hazardous' : ''}`}>
-                            {activity.conditions === 'hazardous' && (
-                              <div className="conditions-warning">⚠️ {activity.conditionsNote || 'Hazardous conditions reported'}</div>
+                          <div key={actId} className={`planned-card ${isHazardous ? 'hazardous' : ''} ${isCaution ? 'caution' : ''}`}>
+                            {isHazardous && (
+                              <div className="conditions-warning">⚠️ {cond.condition}{cond.comment ? ` - ${cond.comment}` : ''}</div>
+                            )}
+                            {isCaution && (
+                              <div className="conditions-caution">⚡ {cond.condition}{cond.comment ? ` - ${cond.comment}` : ''}</div>
                             )}
                             <div className="planned-card-top">
                               <div className="planned-card-name">{activity.name}</div>
@@ -845,6 +917,7 @@ export default function App() {
             plannedIds={plannedActivities[exploreArea.dayId] || []}
             onAddActivity={addActivity}
             onRemoveActivity={removeActivity}
+            activityConditions={activityConditions}
           />
         </>
       )}

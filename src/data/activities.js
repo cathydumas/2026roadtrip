@@ -156,8 +156,6 @@ export const ACTIVITIES = [
     lng: -116.1767,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
-    conditions: "hazardous",
-    conditionsNote: "Avalanche danger - check Parks Canada before going",
     tags: ["hike", "tea house", "iconic"]
   },
   {
@@ -297,8 +295,6 @@ export const ACTIVITIES = [
     lng: -116.1767,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
-    conditions: "hazardous",
-    conditionsNote: "Avalanche danger - check Parks Canada before going",
     tags: ["hike", "tea house", "morning"]
   },
   {
@@ -415,6 +411,153 @@ export const ACTIVITIES = [
       { title: "🌵 Drumheller Hoodoos Trail", note: "Easy 30-min walk among towering hoodoo rock pillars. The classic badlands photo op", lat: 51.4543, lng: -112.5918, time: "Mid-afternoon" },
       { title: "⛏️ Atlas Coal Mine", note: "Last standing tipple in Canada. Ghost town vibes. Self-guided or guided tours available", lat: 51.3736, lng: -112.5398, time: "Afternoon" }
     ]
+  },
+  // Compound: Stock up run in Canmore
+  {
+    id: "banff-stock-up",
+    area: "banff",
+    name: "🛒 Stock Up Run (Canmore)",
+    description: "Hit the local spots for hike lunches, snacks, and supplies. Valbella for charcuterie, JK Bakery for sandwiches, Safeway for everything else.",
+    cost: "$50-100",
+    duration: "1-2 hours",
+    distance: "All in Canmore",
+    difficulty: null,
+    lat: 51.089,
+    lng: -115.359,
+    park: null,
+    alltrails: null,
+    tags: ["food", "close"],
+    compound: true,
+    stops: [
+      { title: "🥩 Valbella Gourmet Foods", note: "104 Elk Run Blvd. Legendary European deli since 1978. Air-dried meats, sausages, cheeses for hike lunches", lat: 51.0768197, lng: -115.3216483, time: "First" },
+      { title: "☕ JK Bakery Cafe", note: "1000 7 Ave. Great soups, sandwiches, Boston cream donuts. Stock up for hike lunches", lat: 51.0903837, lng: -115.3612421, time: "Second" },
+      { title: "🛒 Safeway Canmore", note: "1200 Railway Ave. Well-stocked, on-site liquor store. Get water, sunscreen, snacks", lat: 51.093671, lng: -115.356288, time: "Last" }
+    ]
+  },
+
+  // === RESTAURANTS ===
+  // Jasper
+  {
+    id: "jasper-evil-daves",
+    area: "jasper",
+    name: "Evil Dave's Grill",
+    description: "Creative global menu, locally sourced. Bison burger, duck tacos, wild boar ribs. Quirky vibe. Reservations recommended.",
+    cost: "$25-45/plate",
+    duration: "1-1.5 hours",
+    distance: "In town",
+    difficulty: null,
+    lat: 52.8736,
+    lng: -118.0828,
+    park: null,
+    alltrails: null,
+    tags: ["food"]
+  },
+  {
+    id: "jasper-jasper-brewing",
+    area: "jasper",
+    name: "Jasper Brewing Co",
+    description: "First national park brewery in Canada. Good pub food, local craft beers, chill atmosphere. Elk burger and Rockhopper IPA.",
+    cost: "$18-30/plate",
+    duration: "1 hour",
+    distance: "In town",
+    difficulty: null,
+    lat: 52.8740,
+    lng: -118.0818,
+    park: null,
+    alltrails: null,
+    tags: ["food"]
+  },
+  // Lake Louise
+  {
+    id: "ll-truffle-pigs",
+    area: "lakelouise",
+    name: "Truffle Pigs Bistro",
+    description: "Best casual dining in Lake Louise village. Locally sourced bistro menu - elk sliders, truffle fries, great cocktails. In the lodge at Samson Mall.",
+    cost: "$20-40/plate",
+    duration: "1 hour",
+    distance: "Lake Louise village",
+    difficulty: null,
+    lat: 51.4267,
+    lng: -116.1779,
+    park: null,
+    alltrails: null,
+    tags: ["food"]
+  },
+  {
+    id: "ll-lake-louise-station",
+    area: "lakelouise",
+    name: "Lake Louise Station Restaurant",
+    description: "Fine dining in a restored 1909 railway station. Steak, bison, elk. Beautiful heritage building. Reservations needed.",
+    cost: "$35-60/plate",
+    duration: "1.5 hours",
+    distance: "Lake Louise village",
+    difficulty: null,
+    lat: 51.4253,
+    lng: -116.1762,
+    park: null,
+    alltrails: null,
+    tags: ["food"]
+  },
+  // Banff / Canmore
+  {
+    id: "banff-ramen-arashi-banff",
+    area: "banff",
+    name: "Ramen Arashi (Banff)",
+    description: "Same great ramen as the Jasper location. Bear St in Banff. Tonkotsu, spicy miso, or veggie options. Always a line but it moves fast.",
+    cost: "$18-25/bowl",
+    duration: "45 min",
+    distance: "15 min from Canmore",
+    difficulty: null,
+    lat: 51.1764,
+    lng: -115.5694,
+    park: null,
+    alltrails: null,
+    tags: ["food"]
+  },
+  {
+    id: "banff-grizzly-house",
+    area: "banff",
+    name: "Grizzly House",
+    description: "Legendary Banff fondue restaurant since 1967. Hot stone cooking and fondue - exotic meats like rattlesnake, bison, ostrich. Wild retro decor.",
+    cost: "$40-70/person",
+    duration: "1.5 hours",
+    distance: "15 min from Canmore",
+    difficulty: null,
+    lat: 51.1768,
+    lng: -115.5712,
+    park: null,
+    alltrails: null,
+    tags: ["food"]
+  },
+  {
+    id: "banff-canmore-iron-goat",
+    area: "banff",
+    name: "Iron Goat Pub & Grill (Canmore)",
+    description: "Local favourite gastropub. Great burgers, ribs, craft beer selection. Patio with mountain views. Walk from the Airbnb.",
+    cost: "$18-35/plate",
+    duration: "1 hour",
+    distance: "In Canmore",
+    difficulty: null,
+    lat: 51.0889,
+    lng: -115.3597,
+    park: null,
+    alltrails: null,
+    tags: ["food", "close"]
+  },
+  {
+    id: "banff-canmore-gaucho",
+    area: "banff",
+    name: "Gaucho Brazilian BBQ (Canmore)",
+    description: "All-you-can-eat Brazilian steakhouse. Skewers of grilled meats carved tableside. Great for hungry hikers. Reserve ahead.",
+    cost: "$45-55/person",
+    duration: "1.5 hours",
+    distance: "In Canmore",
+    difficulty: null,
+    lat: 51.0893,
+    lng: -115.3575,
+    park: null,
+    alltrails: null,
+    tags: ["food", "close"]
   }
 ];
 
@@ -437,6 +580,6 @@ export const DAY_AREAS = {
 
 // Parks Canada trail conditions URLs
 export const PARK_TRAIL_URLS = {
-  jasper: "https://parks.canada.ca/pn-np/ab/jasper/activ/randonee-hiking/etat-sentiers-trail-conditions",
-  banff: "https://parks.canada.ca/pn-np/ab/banff/activ/randonee-hiking/etat-sentiers-trail-conditions"
+  jasper: "https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions",
+  banff: "https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking/etat-sentiers-trail-conditions"
 };
