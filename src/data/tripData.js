@@ -196,9 +196,9 @@ export const TRIP_DATA = {
 };
 
 export const LAYER_NAMES = {
-  1: "Must-Stops",
-  2: "Reserved",
-  3: "Road Utilities",
+  1: "Accommodations",
+  2: "Booked Activities",
+  3: "Road Stops",
   4: "Optional"
 };
 
