@@ -10,6 +10,8 @@
   --border: light-dark(rgba(0,0,0,0.08), rgba(255,255,255,0.08));
   --accent: #007AFF;
   --sheet-bg: light-dark(#f2f2f7, #1c1c1e);
+  --warning-bg: light-dark(#FFF3CD, #3a2e10);
+  --warning-border: light-dark(#FFCC00, #B8860B);
 }
 
 * {
@@ -36,7 +38,7 @@ body {
 .header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -226,14 +228,16 @@ body {
   font-weight: 500;
 }
 
-/* Map */
+/* Map - z-index kept LOW so sheets go above */
 .day-map {
   width: 100%;
-  height: 180px;
+  height: 200px;
   border-radius: 12px;
   margin-bottom: 12px;
   overflow: hidden;
   background: light-dark(#e8e8ed, #2c2c2e);
+  position: relative;
+  z-index: 1;
 }
 
 /* Weather strip */
@@ -316,6 +320,14 @@ body {
   border-bottom: none;
 }
 
+.item-row.item-warning {
+  background: var(--warning-bg);
+  border: 1.5px solid var(--warning-border);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 4px 0;
+}
+
 .item-dot {
   width: 10px;
   height: 10px;
@@ -381,9 +393,16 @@ body {
   color: light-dark(#c0392b, #ff7b7b);
 }
 
+/* Item actions row */
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
 .nav-btn {
   display: inline-block;
-  margin-top: 8px;
   padding: 8px 14px;
   border-radius: 8px;
   background: var(--accent);
@@ -400,12 +419,239 @@ body {
   transform: scale(0.95);
 }
 
+.cal-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cal-btn:active {
+  transform: scale(0.9);
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
 .no-items {
   text-align: center;
   padding: 32px 16px;
   color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.5;
+}
+
+/* ===== EXPLORE BUTTON ===== */
+.explore-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: 12px;
+  border: 1.5px dashed var(--accent);
+  border-radius: 12px;
+  background: light-dark(rgba(0,122,255,0.04), rgba(0,122,255,0.08));
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.explore-btn:active {
+  transform: scale(0.98);
+  background: light-dark(rgba(0,122,255,0.1), rgba(0,122,255,0.15));
+}
+
+.explore-count {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+/* ===== EXPLORE PANEL (full-screen overlay) ===== */
+.explore-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 500;
+  animation: fadeIn 0.2s;
+}
+
+.explore-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 420px;
+  z-index: 600;
+  background: var(--bg);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  animation: slideInRight 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  padding: 20px;
+  padding-bottom: 40px;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.explore-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.explore-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.explore-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.explore-close {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+.explore-close:active {
+  transform: scale(0.95);
+}
+
+.explore-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.explore-tag {
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.explore-tag.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.explore-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.explore-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.explore-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.explore-card-name {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.explore-card-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.explore-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.explore-card-time {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.explore-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.explore-cal-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: light-dark(#f0f0f5, #2c2c2e);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.explore-cal-btn:active {
+  transform: scale(0.95);
+  background: var(--accent);
+  color: #fff;
+}
+
+.explore-nav-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+
+.explore-nav-btn:active {
+  transform: scale(0.95);
 }
 
 /* ===== PREFS BOTTOM SHEET ===== */
@@ -614,7 +860,18 @@ body {
   box-shadow: none !important;
 }
 
+/* Keep leaflet controls below our sheets */
+.leaflet-pane { z-index: 1 !important; }
+.leaflet-top, .leaflet-bottom { z-index: 2 !important; }
+.leaflet-popup-pane { z-index: 3 !important; }
+
 /* ===== RESPONSIVE ===== */
+@media (max-width: 440px) {
+  .explore-panel {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 380px) {
   .header-title { font-size: 18px; }
   .day-title { font-size: 15px; }

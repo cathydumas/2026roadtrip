@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { TRIP_DATA, LAYER_NAMES, ITEM_TYPES, HIKE_DIFFICULTIES } from './data/tripData';
+import { ACTIVITIES, AREA_NAMES, DAY_AREAS } from './data/activities';
 import './App.css';
 
 // Determine which day is "today" - Day 1 before trip starts
@@ -20,10 +21,77 @@ function getTodayId() {
       return i + 1;
     }
   }
-
-  // Before trip or after trip - show Day 1
   if (now < tripDates[0]) return 1;
   return 11;
+}
+
+// Generate .ics calendar event
+function generateICS(item, dayDate) {
+  const cleanTitle = item.title.replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
+  // Parse a rough time from item.time
+  const dateStr = dayDate.replace(/^[A-Za-z]+ /, ''); // "Jun 14" etc
+  const year = 2026;
+  const monthDay = dateStr.trim();
+  const dateObj = new Date(`${monthDay}, ${year}`);
+  const ymd = dateObj.toISOString().split('T')[0].replace(/-/g, '');
+
+  let startTime = '090000';
+  let endTime = '100000';
+
+  if (item.time) {
+    const timeMatch = item.time.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
+    if (timeMatch) {
+      let h = parseInt(timeMatch[1]);
+      const m = timeMatch[2];
+      const ampm = timeMatch[3];
+      if (ampm && ampm.toUpperCase() === 'PM' && h < 12) h += 12;
+      if (ampm && ampm.toUpperCase() === 'AM' && h === 12) h = 0;
+      startTime = `${String(h).padStart(2, '0')}${m}00`;
+      const endH = h + 1;
+      endTime = `${String(endH).padStart(2, '0')}${m}00`;
+    }
+  }
+
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Rockies2026//EN',
+    'BEGIN:VEVENT',
+    `DTSTART:${ymd}T${startTime}`,
+    `DTEND:${ymd}T${endTime}`,
+    `SUMMARY:${cleanTitle}`,
+    `DESCRIPTION:${(item.note || '').replace(/\n/g, '\\n')}`,
+    item.lat ? `GEO:${item.lat};${item.lng}` : '',
+    item.lat ? `LOCATION:${item.lat}\\, ${item.lng}` : '',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].filter(Boolean).join('\r\n');
+
+  const blob = new Blob([ics], { type: 'text/calendar' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${cleanTitle.replace(/[^a-zA-Z0-9]/g, '_')}.ics`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Fetch OSRM route between waypoints
+async function fetchRoute(coords) {
+  if (coords.length < 2) return null;
+  const waypoints = coords.map(c => `${c[1]},${c[0]}`).join(';');
+  try {
+    const resp = await fetch(
+      `https://router.project-osrm.org/route/v1/driving/${waypoints}?overview=full&geometries=geojson`
+    );
+    const data = await resp.json();
+    if (data.routes && data.routes[0]) {
+      return data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
+    }
+  } catch (e) {
+    console.warn('OSRM route fetch failed, falling back to straight lines');
+  }
+  return null;
 }
 
 // Leaflet map component for each day
@@ -32,7 +100,12 @@ function DayMap({ day, items, getMapUrl }) {
   const mapInstanceRef = useRef(null);
 
   useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return;
+    if (!mapRef.current) return;
+    // Clean up previous map
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.remove();
+      mapInstanceRef.current = null;
+    }
 
     const L = window.L;
     if (!L) return;
@@ -48,23 +121,21 @@ function DayMap({ day, items, getMapUrl }) {
       touchZoom: true,
     });
 
-    // Use a clean, modern tile layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19,
-    }).addTo(map);
+    // Clean map tiles
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    L.tileLayer(
+      prefersDark
+        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+        : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      { maxZoom: 19 }
+    ).addTo(map);
 
-    // Add markers with layer colors
-    const layerColors = {
-      1: '#FF3B30',
-      2: '#FF9500',
-      3: '#8E8E93',
-      4: '#34C759'
-    };
+    const layerColors = { 1: '#FF3B30', 2: '#FF9500', 3: '#8E8E93', 4: '#34C759' };
 
-    items.filter(i => i.lat && i.lng).forEach((item, idx) => {
+    items.filter(i => i.lat && i.lng).forEach((item) => {
       const color = layerColors[item.layer] || '#007AFF';
       const marker = L.circleMarker([item.lat, item.lng], {
-        radius: 8,
+        radius: 7,
         fillColor: color,
         color: '#fff',
         weight: 2,
@@ -72,42 +143,143 @@ function DayMap({ day, items, getMapUrl }) {
         fillOpacity: 0.9,
       }).addTo(map);
 
+      const cleanTitle = item.title.replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
       marker.bindPopup(`
         <div style="font-family:-apple-system,system-ui,sans-serif;font-size:14px;min-width:140px">
-          <div style="font-weight:700;margin-bottom:4px">${item.title.replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊]/g, '').trim()}</div>
+          <div style="font-weight:700;margin-bottom:4px">${cleanTitle}</div>
           ${item.time ? `<div style="color:#86868b;font-size:12px;margin-bottom:6px">${item.time}</div>` : ''}
           <a href="${getMapUrl(item.lat, item.lng, item.title)}" target="_blank" rel="noreferrer" style="display:inline-block;padding:6px 12px;background:#007AFF;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600">Navigate</a>
         </div>
       `);
     });
 
-    // Draw route line
-    if (coords.length > 1) {
-      L.polyline(coords, {
-        color: day.color || '#007AFF',
-        weight: 3,
-        opacity: 0.6,
-        dashArray: '8, 8',
-      }).addTo(map);
-    }
+    // Fetch real road route
+    fetchRoute(coords).then(routeCoords => {
+      if (routeCoords && routeCoords.length > 1) {
+        L.polyline(routeCoords, {
+          color: day.color || '#007AFF',
+          weight: 3,
+          opacity: 0.7,
+        }).addTo(map);
+      } else if (coords.length > 1) {
+        // Fallback: straight dashed lines
+        L.polyline(coords, {
+          color: day.color || '#007AFF',
+          weight: 3,
+          opacity: 0.5,
+          dashArray: '8, 8',
+        }).addTo(map);
+      }
+    });
 
-    // Fit bounds
     const bounds = L.latLngBounds(coords);
     map.fitBounds(bounds, { padding: [30, 30] });
 
     mapInstanceRef.current = map;
 
     return () => {
-      map.remove();
-      mapInstanceRef.current = null;
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
     };
-  }, [items]);
+  }, [items, day.color, getMapUrl]);
 
   const hasCoords = items.some(i => i.lat && i.lng);
   if (!hasCoords) return null;
 
+  return <div className="day-map" ref={mapRef} />;
+}
+
+// Explore panel for optional activities
+function ExplorePanel({ area, dayId, dayDate, onClose }) {
+  const [selectedTags, setSelectedTags] = useState([]);
+  const activities = ACTIVITIES.filter(a => a.area === area);
+
+  const allTags = [...new Set(activities.flatMap(a => a.tags || []))];
+
+  const filtered = selectedTags.length === 0
+    ? activities
+    : activities.filter(a => a.tags && a.tags.some(t => selectedTags.includes(t)));
+
+  const toggleTag = (tag) => {
+    setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
+  };
+
+  const handleAddToCalendar = (activity) => {
+    generateICS({
+      title: activity.name,
+      note: `${activity.description}\n\nCost: ${activity.cost}\nDuration: ${activity.duration}`,
+      time: activity.bestTime,
+      lat: activity.lat,
+      lng: activity.lng,
+    }, dayDate);
+  };
+
   return (
-    <div className="day-map" ref={mapRef} />
+    <div className="explore-panel">
+      <div className="explore-header">
+        <div>
+          <div className="explore-title">Explore {AREA_NAMES[area]}</div>
+          <div className="explore-subtitle">{filtered.length} activities available</div>
+        </div>
+        <button className="explore-close" onClick={onClose}>Done</button>
+      </div>
+
+      <div className="explore-tags">
+        {allTags.map(tag => (
+          <button
+            key={tag}
+            className={`explore-tag ${selectedTags.includes(tag) ? 'active' : ''}`}
+            onClick={() => toggleTag(tag)}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+
+      <div className="explore-list">
+        {filtered.map(activity => (
+          <div key={activity.id} className="explore-card">
+            <div className="explore-card-header">
+              <div className="explore-card-name">{activity.name}</div>
+              {activity.difficulty && (
+                <span className={`difficulty-tag ${activity.difficulty}`}>
+                  {activity.difficulty}
+                </span>
+              )}
+            </div>
+            <div className="explore-card-desc">{activity.description}</div>
+            <div className="explore-card-meta">
+              <span>{activity.cost}</span>
+              <span>{activity.duration}</span>
+              <span>{activity.distance}</span>
+            </div>
+            {activity.bestTime && (
+              <div className="explore-card-time">Best: {activity.bestTime}</div>
+            )}
+            <div className="explore-card-actions">
+              <button
+                className="explore-cal-btn"
+                onClick={() => handleAddToCalendar(activity)}
+              >
+                Add to Calendar
+              </button>
+              {activity.lat && (
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${activity.lat},${activity.lng}&travelmode=driving`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="explore-nav-btn"
+                >
+                  Navigate
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -119,6 +291,7 @@ export default function App() {
   const [activeLayers, setActiveLayers] = useState([1, 2, 3, 4]);
   const [hikeDifficulty, setHikeDifficulty] = useState(2);
   const [prefsOpen, setPrefsOpen] = useState(false);
+  const [exploreArea, setExploreArea] = useState(null); // null or {area, dayId, dayDate}
   const [weather, setWeather] = useState({});
   const [trailConditions, setTrailConditions] = useState({});
   const [leafletLoaded, setLeafletLoaded] = useState(!!window.L);
@@ -143,21 +316,21 @@ export default function App() {
     localStorage.setItem('rr_map_provider', mapProvider);
   }, [mapProvider]);
 
-  // Fetch weather
+  // Fetch weather - use forecast_days for near-future, gracefully handle if too far out
   useEffect(() => {
     TRIP_DATA.days.forEach(async (day) => {
       const firstWithCoords = day.items.find(item => item.lat && item.lng);
       if (firstWithCoords) {
         try {
           const response = await fetch(
-            `https://api.open-meteo.com/v1/gem?latitude=${firstWithCoords.lat}&longitude=${firstWithCoords.lng}&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&timezone=America/Vancouver&start_date=2026-06-14&end_date=2026-06-24`
+            `https://api.open-meteo.com/v1/gem?latitude=${firstWithCoords.lat}&longitude=${firstWithCoords.lng}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&timezone=America/Vancouver&forecast_days=16`
           );
           const data = await response.json();
-          if (data.daily) {
+          if (data.daily && data.daily.time) {
             setWeather(prev => ({ ...prev, [day.id]: data.daily }));
           }
         } catch (error) {
-          console.error('Weather fetch error:', error);
+          // Weather not available yet (too far in future) - that's ok
         }
       }
 
@@ -165,9 +338,11 @@ export default function App() {
         try {
           const response = await fetch(`/api/trail-conditions?park=${day.park}`);
           const data = await response.json();
-          setTrailConditions(prev => ({ ...prev, [day.park]: data }));
+          if (data && !data.error) {
+            setTrailConditions(prev => ({ ...prev, [day.park]: data }));
+          }
         } catch (error) {
-          console.error('Trail conditions fetch error:', error);
+          // Trail conditions unavailable - that's ok
         }
       }
     });
@@ -190,15 +365,16 @@ export default function App() {
     });
   };
 
-  const getMapUrl = (lat, lng, label) => {
-    const cleanLabel = label.replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊]/g, '').trim();
+  const getMapUrl = useCallback((lat, lng, label) => {
+    const cleanLabel = (label || '').replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌]/g, '').trim();
     if (mapProvider === 'apple') {
       return `http://maps.apple.com/?q=${encodeURIComponent(cleanLabel)}&ll=${lat},${lng}`;
     }
-    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=&travelmode=driving`;
-  };
+    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+  }, [mapProvider]);
 
   const getWeatherEmoji = (code) => {
+    if (code === undefined || code === null) return '?';
     if (code <= 3) return '☀️';
     if (code <= 49) return '☁️';
     if (code <= 69) return '🌧️';
@@ -248,6 +424,7 @@ export default function App() {
           const isExpanded = expandedDay === day.id;
           const filteredItems = filterItems(day.items);
           const isToday = getTodayId() === day.id;
+          const dayArea = DAY_AREAS[day.id];
 
           return (
             <div key={day.id} className={`day-card ${isExpanded ? 'expanded' : ''} ${isToday ? 'today' : ''}`}>
@@ -279,19 +456,17 @@ export default function App() {
 
                   {/* Embedded map */}
                   {leafletLoaded && (
-                    <DayMap
-                      day={day}
-                      items={filteredItems}
-                      getMapUrl={getMapUrl}
-                    />
+                    <DayMap day={day} items={filteredItems} getMapUrl={getMapUrl} />
                   )}
 
                   {/* Weather strip */}
-                  {weather[day.id] && (
+                  {weather[day.id] && weather[day.id].time && (
                     <div className="weather-strip">
-                      {weather[day.id].time && weather[day.id].time.slice(0, 3).map((date, i) => (
+                      {weather[day.id].time.slice(0, 3).map((date, i) => (
                         <div key={date} className="weather-chip">
-                          <span className="weather-emoji">{getWeatherEmoji(weather[day.id].weathercode[i])}</span>
+                          <span className="weather-emoji">
+                            {getWeatherEmoji(weather[day.id].weather_code ? weather[day.id].weather_code[i] : weather[day.id].weathercode?.[i])}
+                          </span>
                           <span className="weather-temp">{Math.round(weather[day.id].temperature_2m_max[i])}°</span>
                         </div>
                       ))}
@@ -314,46 +489,86 @@ export default function App() {
 
                   {/* Items list */}
                   <div className="items-list">
-                    {filteredItems.map((item, idx) => (
-                      <div key={idx} className="item-row">
-                        <div className="item-dot" style={{ background: getLayerColor(item.layer) }} />
-                        <div className="item-body">
-                          <div className="item-header-row">
-                            <span className="item-title">{item.title}</span>
-                            {item.time && <span className="item-time">{item.time}</span>}
+                    {filteredItems.map((item, idx) => {
+                      const isWarning = item.title.includes('LAST SHUTTLE') || item.time?.includes('⚠️');
+                      return (
+                        <div key={idx} className={`item-row ${isWarning ? 'item-warning' : ''}`}>
+                          <div className="item-dot" style={{ background: getLayerColor(item.layer) }} />
+                          <div className="item-body">
+                            <div className="item-header-row">
+                              <span className="item-title">{item.title}</span>
+                              {item.time && <span className="item-time">{item.time}</span>}
+                            </div>
+                            {item.note && <div className="item-note">{item.note}</div>}
+                            {item.difficulty && (
+                              <span className={`difficulty-tag ${item.difficulty}`}>
+                                {HIKE_DIFFICULTIES[item.difficulty]}
+                              </span>
+                            )}
+                            <div className="item-actions">
+                              {item.lat && item.lng && (
+                                <a
+                                  href={getMapUrl(item.lat, item.lng, item.title)}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="nav-btn"
+                                >
+                                  Navigate
+                                </a>
+                              )}
+                              <button
+                                className="cal-btn"
+                                onClick={() => generateICS(item, day.date)}
+                                title="Add to Apple Calendar"
+                              >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                              </button>
+                            </div>
                           </div>
-                          {item.note && <div className="item-note">{item.note}</div>}
-                          {item.difficulty && (
-                            <span className={`difficulty-tag ${item.difficulty}`}>
-                              {HIKE_DIFFICULTIES[item.difficulty]}
-                            </span>
-                          )}
-                          {item.lat && item.lng && (
-                            <a
-                              href={getMapUrl(item.lat, item.lng, item.title)}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="nav-btn"
-                            >
-                              Navigate →
-                            </a>
-                          )}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
 
                     {filteredItems.length === 0 && (
                       <div className="no-items">
-                        No stops match your filters. Tap <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{verticalAlign:'middle'}}><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg> to adjust.
+                        No stops match your filters. Tap the sliders icon to adjust.
                       </div>
                     )}
                   </div>
+
+                  {/* Explore button for days in activity areas */}
+                  {dayArea && (
+                    <button
+                      className="explore-btn"
+                      onClick={() => setExploreArea({ area: dayArea, dayId: day.id, dayDate: day.date })}
+                    >
+                      <span>✨ Explore {AREA_NAMES[dayArea]} activities</span>
+                      <span className="explore-count">
+                        {ACTIVITIES.filter(a => a.area === dayArea).length} options
+                      </span>
+                    </button>
+                  )}
                 </div>
               )}
             </div>
           );
         })}
       </div>
+
+      {/* Explore activities panel */}
+      {exploreArea && (
+        <>
+          <div className="explore-backdrop" onClick={() => setExploreArea(null)} />
+          <ExplorePanel
+            area={exploreArea.area}
+            dayId={exploreArea.dayId}
+            dayDate={exploreArea.dayDate}
+            onClose={() => setExploreArea(null)}
+          />
+        </>
+      )}
 
       {/* Bottom sheet preferences */}
       {prefsOpen && <div className="prefs-backdrop" onClick={() => setPrefsOpen(false)} />}

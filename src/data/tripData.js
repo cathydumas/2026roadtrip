@@ -86,6 +86,7 @@ export const TRIP_DATA = {
       park: "banff",
       items: [
         { layer: 4, type: "scenic", time: "~30 min", title: "📷 Athabasca Falls", note: "Most powerful waterfall in Rockies", lat: 52.664437, lng: -117.883767 },
+        { layer: 4, type: "scenic", time: "~20 min", title: "📷 Sunwapta Falls", note: "Dramatic canyon waterfall, easy 600m walk from parking", lat: 52.5327, lng: -117.6438 },
         { layer: 2, type: "glacier", time: "11:30 AM", title: "✅ Columbia Icefield", note: "CONFIRMED · Ice Explorer + Skywalk", lat: 52.2201943, lng: -117.226141 },
         { layer: 3, type: "drive", time: "Mid-afternoon", title: "⛽ Saskatchewan River Crossing", note: "Only gas between Jasper & Lake Louise", lat: 51.9338, lng: -116.8319 },
         { layer: 4, type: "scenic", time: "Afternoon", title: "📷 Peyto Lake", note: "Wolf-shaped lake from Bow Summit", lat: 51.7171414, lng: -116.507574 },
@@ -102,9 +103,12 @@ export const TRIP_DATA = {
       park: "banff",
       items: [
         { layer: 4, type: "hike", time: "Morning", title: "Lake Louise Lakeshore Walk", note: "Go early - best light, fewer crowds", lat: 51.4116775, lng: -116.233715, difficulty: "easy" },
+        { layer: 4, type: "hike", time: "Morning option", title: "🥾 Lake Agnes Tea House", note: "10.5km return, 400m gain, 3-4 hrs. Historic tea house (cash only, $5-15). Add Big Beehive for panoramic views (+1.5 hrs)", lat: 51.4167, lng: -116.1767, difficulty: "moderate" },
         { layer: 2, type: "food", time: "12:15 PM", title: "✅ Lakeview Lounge", note: "Chateau Lake Louise · Lunch reservation", lat: 51.4163, lng: -116.2138 },
-        { layer: 2, type: "activity", time: "4:00-5:00 PM", title: "✅ Moraine Lake Shuttle", note: "CONFIRMED · 3 adults · Depart Park & Ride", lat: 51.4412008, lng: -116.162196 },
-        { layer: 4, type: "hike", time: "At Moraine Lake", title: "Rockpile Trail", note: "20-min hike to Valley of Ten Peaks viewpoint", lat: 51.3282264, lng: -116.179504, difficulty: "easy" }
+        { layer: 2, type: "activity", time: "4:00-5:00 PM", title: "✅ Moraine Lake Shuttle", note: "CONFIRMED · 3 adults · Depart Park & Ride · Shuttles every 30 min", lat: 51.4412008, lng: -116.162196 },
+        { layer: 4, type: "hike", time: "At Moraine Lake", title: "Rockpile Trail", note: "20-min hike to Valley of Ten Peaks viewpoint", lat: 51.3282264, lng: -116.179504, difficulty: "easy" },
+        { layer: 4, type: "hike", time: "At Moraine Lake", title: "🥾 Lakeshore Trail + Consolation Lakes", note: "Lakeshore: 3km flat along the lake. OR Consolation Lakes: 6km return, easy. Both gorgeous", lat: 51.3264, lng: -116.1835, difficulty: "easy" },
+        { layer: 3, type: "activity", time: "⚠️ 7:30 PM", title: "🚌 LAST SHUTTLE back from Moraine Lake", note: "DO NOT MISS - no cell service, no lights, no way to call for help after this. Leave trailhead by 7:00 PM", lat: 51.3282264, lng: -116.179504 }
       ]
     },
     {
