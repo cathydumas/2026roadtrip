@@ -786,6 +786,17 @@ export default function App() {
                     />
                   )}
 
+                  {/* Maligne Lake status for fishing day */}
+                  {day.id === 3 && activityConditions['maligne-lake-status'] && (
+                    <div className="maligne-lake-status">
+                      <span className="maligne-icon">🎣</span>
+                      <div className="maligne-info">
+                        <div className="maligne-title">Maligne Lake Status</div>
+                        <div className="maligne-condition">{activityConditions['maligne-lake-status'].condition}{activityConditions['maligne-lake-status'].comment ? ` - ${activityConditions['maligne-lake-status'].comment}` : ''}</div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Weather strip */}
                   {weather[day.id] && weather[day.id].time && (
                     <div className="weather-strip">

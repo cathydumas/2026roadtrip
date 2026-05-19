@@ -39,6 +39,7 @@ export const TRIP_DATA = {
       items: [
         { layer: 3, type: "food", time: "Morning", title: "☕ 350° Bakehouse", note: "1892 Spall Rd - open 7:30 AM", lat: 49.8793977, lng: -119.4551504 },
         { layer: 3, type: "market", time: "Morning", title: "🥩 Carnist Butcher", note: "1038 Richter St · Tue-Sat 10-6. Stock up on road trip meats and snacks", lat: 49.8966773, lng: -119.4887348 },
+        { layer: 3, type: "market", time: "Morning", title: "🛒 Nature's Fare Market", note: "1876 Cooper Rd · Organic produce, quality groceries, bulk snacks. Best veg selection in Kelowna", lat: 49.8827, lng: -119.4537 },
         { layer: 3, type: "drive", time: "En route", title: "⛽ Fill up in Kamloops", note: "Last fuel before mountains", lat: 50.6745, lng: -120.3273 },
         { layer: 3, type: "food", time: "Lunch", title: "☕ Wild Flour Cafe", note: "Clearwater · Fresh sourdough, homemade baking", lat: 51.6521206, lng: -120.0389419 },
         { layer: 3, type: "activity", time: "En route", title: "⛽ Fill up in Valemount", note: "Last fuel before Jasper", lat: 52.8321, lng: -119.2626 },
@@ -59,7 +60,8 @@ export const TRIP_DATA = {
       startAccom: { title: "Patricia Lake Bungalows", lat: 52.902511, lng: -118.097846 },
       items: [
         { layer: 3, type: "activity", time: "Morning", title: "🐻 Buy Bear Spray", note: "Everest Outdoor · ~$50-60 each, get 3", lat: 52.87809120000001, lng: -118.07995149999998 },
-        { layer: 2, type: "activity", time: "5-9 PM", title: "✅ Maligne Lake Fishing", note: "Jasper Park Fishing · CONFIRMED", lat: 52.6654279, lng: -117.5345287 }
+        { layer: 3, type: "market", time: "Morning", title: "🛒 Robinson's IGA", note: "218 Connaught Dr · Full grocery, deli counter. Only real supermarket in Jasper", lat: 52.8741, lng: -118.0811 },
+        { layer: 2, type: "activity", time: "5-9 PM", title: "✅ Maligne Lake Fishing", note: "Jasper Park Fishing · CONFIRMED · ⚠️ Check lake ice status before going", lat: 52.6654279, lng: -117.5345287 }
       ]
     },
     {
@@ -73,6 +75,7 @@ export const TRIP_DATA = {
       km: 0,
       startAccom: { title: "Patricia Lake Bungalows", lat: 52.902511, lng: -118.097846 },
       items: [
+        { layer: 3, type: "market", time: "Morning", title: "🧑‍🌾 Jasper Farmers Market", note: "Wednesdays in summer · Local produce, baked goods, crafts. Check if running this week", lat: 52.8734, lng: -118.0817 },
         { layer: 3, type: "drive", time: "On way home", title: "⛽ Fill up in Jasper", note: "Fill tonight - leaving early tomorrow", lat: 52.8734, lng: -118.0817 }
       ]
     },
