@@ -77,15 +77,19 @@ export const TRIP_DATA = {
       id: 5,
       date: "Thu Jun 18",
       title: "Jasper → Lake Louise",
-      subtitle: "Icefields Parkway + Columbia Icefield",
+      subtitle: "Icefields Parkway - the whole point is the drive",
       color: "#0A3D62",
       emoji: "❄️",
       park: "banff",
       km: 230,
       startAccom: { title: "Patricia Lake Bungalows", lat: 52.902511, lng: -118.097846 },
       items: [
+        { layer: 2, type: "scenic", time: "~30 min from Jasper", title: "📷 Athabasca Falls", note: "Most powerful waterfall in the Rockies. Short paved walk, multiple viewpoints", lat: 52.664437, lng: -117.883767 },
+        { layer: 2, type: "scenic", time: "~20 min stop", title: "📷 Sunwapta Falls", note: "Dramatic canyon waterfall. Easy 600m walk from parking lot", lat: 52.5327, lng: -117.6438 },
         { layer: 2, type: "glacier", time: "11:30 AM", title: "✅ Columbia Icefield", note: "CONFIRMED · Ice Explorer + Skywalk", lat: 52.2201943, lng: -117.226141 },
         { layer: 3, type: "drive", time: "Mid-afternoon", title: "⛽ Saskatchewan River Crossing", note: "Only gas between Jasper & Lake Louise", lat: 51.9338, lng: -116.8319 },
+        { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Peyto Lake", note: "Wolf-shaped turquoise lake from Bow Summit lookout. 10-min walk to viewpoint", lat: 51.7171414, lng: -116.507574 },
+        { layer: 2, type: "scenic", time: "~20 min stop", title: "📷 Bow Lake", note: "Stunning glacial lake right off the highway. Walk along the shore or just take in the view from the parking area", lat: 51.6769, lng: -116.4458 },
         { layer: 1, type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback Suite, 2 nights", lat: 51.4161708, lng: -116.196697 }
       ]
     },

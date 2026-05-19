@@ -218,36 +218,6 @@ export const ACTIVITIES = [
     alltrails: null,
     tags: ["water", "iconic"]
   },
-  {
-    id: "ll-sunwapta-falls",
-    area: "lakelouise",
-    name: "Sunwapta Falls",
-    description: "Dramatic canyon waterfall on the Icefields Parkway. Easy 600m walk from parking. Beautiful stop between Jasper and Lake Louise.",
-    cost: "Free (park pass)",
-    duration: "20-30 min",
-    distance: "On Icefields Parkway",
-    difficulty: "easy",
-    lat: 52.5327,
-    lng: -117.6438,
-    park: "jasper",
-    alltrails: null,
-    tags: ["waterfall", "quick"]
-  },
-  {
-    id: "ll-peyto-lake",
-    area: "lakelouise",
-    name: "Peyto Lake (Bow Summit)",
-    description: "Wolf-shaped turquoise lake viewed from Bow Summit lookout. 10-min walk to viewpoint. One of the most photographed spots in the Rockies.",
-    cost: "Free (park pass)",
-    duration: "30 min",
-    distance: "40 min drive north",
-    difficulty: "easy",
-    lat: 51.7171,
-    lng: -116.5076,
-    park: "banff",
-    alltrails: "https://www.alltrails.com/trail/canada/alberta/peyto-lake-bow-summit-lookout",
-    tags: ["views", "quick", "iconic"]
-  },
 
   // === BANFF / CANMORE (Days 7-9) ===
   {
