@@ -112,6 +112,21 @@ export const ACTIVITIES = [
     tags: ["waterfall", "quick"]
   },
   {
+    id: "jasper-wilcox-pass",
+    area: "jasper",
+    name: "Wilcox Pass",
+    description: "8km return, 335m gain. Alpine meadows with jaw-dropping views of the Columbia Icefield and Athabasca Glacier from above. Wildflowers in June. Trailhead right off Icefields Parkway near the Columbia Icefield Centre.",
+    cost: "Free (park pass)",
+    duration: "3-4 hours",
+    distance: "100 min drive south (Icefields Parkway)",
+    difficulty: "moderate",
+    lat: 52.2180,
+    lng: -117.2230,
+    park: "jasper",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/wilcox-pass",
+    tags: ["hike", "views", "alpine"]
+  },
+  {
     id: "jasper-dark-sky",
     area: "jasper",
     name: "Jasper Dark Sky Preserve",
