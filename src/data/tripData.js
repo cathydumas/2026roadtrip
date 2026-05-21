@@ -93,7 +93,7 @@ export const TRIP_DATA = {
       items: [
         { layer: 2, type: "scenic", time: "~30 min from Jasper", title: "📷 Athabasca Falls", note: "Most powerful waterfall in the Rockies. Paved loop trail (1km, 15 min) with multiple viewpoints and canyon bridges", lat: 52.664437, lng: -117.883767 },
         { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Sunwapta Falls", note: "Dramatic canyon waterfall. Easy 600m walk from parking lot. Continue 1km further to Lower Sunwapta Falls (quieter, almost no people)", lat: 52.5327, lng: -117.6438 },
-        { layer: 2, type: "glacier", time: "11:30 AM", title: "✅ Columbia Icefield", note: "CONFIRMED · Ice Explorer + Skywalk", lat: 52.2201943, lng: -117.226141 },
+        { layer: 2, type: "glacier", time: "⚠️ 11:15 AM arrival", title: "✅ Columbia Icefield", note: "CONFIRMED · Ice Explorer + Skywalk · Must arrive at 11:15 with ticket ready · Wear hiking shoes", glacierTempDelta: -15, lat: 52.2201943, lng: -117.226141 },
         { layer: 3, type: "drive", time: "Mid-afternoon", title: "⛽ Saskatchewan River Crossing", note: "Only gas between Jasper & Lake Louise", lat: 51.9338, lng: -116.8319 },
         { layer: 2, type: "scenic", time: "~45 min stop", title: "📷 Peyto Lake + Bow Summit", note: "Wolf-shaped turquoise lake from Bow Summit lookout. 10-min paved walk to main viewpoint, OR 40-min loop trail along the ridgeline for even better angles (easy, well-marked)", lat: 51.7171414, lng: -116.507574 },
         { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Bow Lake", note: "Stunning glacial lake right off the highway. Walk along the shore to Bow Glacier Falls trailhead (20 min each way, flat, wildflowers). Full hike to falls is 9km return, 3 hrs", lat: 51.6769, lng: -116.4458 },
