@@ -85,7 +85,7 @@ export const ACTIVITIES = [
     id: "jasper-miette-hot-springs",
     area: "jasper",
     name: "Miette Hot Springs",
-    description: "Hottest mineral springs in the Canadian Rockies (40C). Outdoor pool surrounded by mountains. Perfect after a hike.",
+    description: "Hottest mineral springs in the Canadian Rockies (40C). Outdoor pool surrounded by mountains. Opens May 15, 2026.",
     cost: "$9/person",
     duration: "1-2 hours",
     distance: "60 min drive",
