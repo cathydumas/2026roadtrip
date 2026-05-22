@@ -1,13 +1,11 @@
-// Vercel Serverless Function - scrapes Parks Canada trail conditions
+// Vercel Serverless Function - scrapes Parks Canada AND Alberta Parks trail conditions
 // and matches them to our activity IDs.
 //
-// Usage: GET /api/trail-conditions?park=banff  (or jasper)
+// Usage: GET /api/trail-conditions?park=banff  (or jasper or kananaskis)
 // Returns: { park, trails: [ { id, name, condition, severity, comment } ], url, lastUpdated }
 
 // Mapping: Parks Canada trail name fragments → our activity IDs
-// Each key is a lowercase substring to match against the trail name on the page.
-// Value is an array of activity IDs that should inherit that trail's condition.
-const TRAIL_MAP = {
+const TRAIL_MAP_PARKS_CANADA = {
   banff: {
     'lake agnes': ['ll-agnes-tea-house', 'banff-agnes-morning'],
     'johnston canyon': ['banff-johnston-canyon'],
@@ -17,8 +15,6 @@ const TRAIL_MAP = {
     'consolation lake': ['ll-lakeshore-consolation'],
     'lake louise lakeshore': ['ll-lakeshore-walk', 'banff-lakeshore-morning'],
     'moraine lake': ['ll-rockpile', 'll-lakeshore-consolation'],
-    'grassi lake': ['banff-grassi-lakes'],
-    'ha ling': ['banff-ha-ling'],
     'ink pots': ['banff-johnston-canyon'],
   },
   jasper: {
@@ -32,15 +28,163 @@ const TRAIL_MAP = {
   }
 };
 
+// Mapping: Alberta Parks trail name fragments → our activity IDs
+const TRAIL_MAP_ALBERTA_PARKS = {
+  'grassi lakes': ['banff-grassi-lakes'],
+  'ha ling': ['banff-ha-ling'],
+  'rawson lake': ['banff-kananaskis-rawson'],
+};
+
 // Classify condition + comment into a severity level
 // Checks both fields since avalanche warnings are sometimes in the comment only
 function classifySeverity(condition, comment) {
   const text = ((condition || '') + ' ' + (comment || '')).toLowerCase();
   if (text.includes('closed') || text.includes('no access')) return 'closed';
   if (text.includes('hazardous') || text.includes('not recommended') || text.includes('avalanche')) return 'hazardous';
-  if (text.includes('poor') || text.includes('variable') || text.includes('wet') || text.includes('winter condition') || text.includes('snow covered') || text.includes('icy')) return 'caution';
-  if (text.includes('good') || text.includes('mainly dry') || text.includes('fair')) return 'good';
+  if (text.includes('warning') || text.includes('poor') || text.includes('variable') || text.includes('wet') || text.includes('winter condition') || text.includes('snow covered') || text.includes('icy') || text.includes('muddy')) return 'caution';
+  if (text.includes('open') || text.includes('good') || text.includes('mainly dry') || text.includes('fair')) return 'good';
   return 'unknown';
+}
+
+// Classify Alberta Parks status field (simpler: Open, Warning, Closed)
+function classifyAlbertaParksStatus(status, notes) {
+  const statusLower = (status || '').toLowerCase();
+  const notesLower = (notes || '').toLowerCase();
+
+  if (statusLower === 'closed') return 'closed';
+  if (statusLower === 'warning' || notesLower.includes('avalanche') || notesLower.includes('hazardous')) return 'caution';
+  if (statusLower === 'open') {
+    // Check notes for concerning keywords even if status is "open"
+    if (notesLower.includes('snow') || notesLower.includes('ice') || notesLower.includes('muddy')) return 'caution';
+    return 'good';
+  }
+  return 'unknown';
+}
+
+async function scrapeParksCanada(park) {
+  const urls = {
+    jasper: 'https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions',
+    banff: 'https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking/etat-sentiers-trail-conditions',
+  };
+
+  const results = [];
+  const trailMapping = TRAIL_MAP_PARKS_CANADA[park] || {};
+
+  try {
+    const response = await fetch(urls[park], {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; VacationPlanner/1.0)' }
+    });
+
+    if (!response.ok) return results;
+
+    const html = await response.text();
+    const rowRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+    let rowMatch;
+
+    while ((rowMatch = rowRegex.exec(html)) !== null) {
+      const rowContent = rowMatch[1];
+      const cellRegex = /<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;
+      const cells = [];
+      let cellMatch;
+      while ((cellMatch = cellRegex.exec(rowContent)) !== null) {
+        const text = cellMatch[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+        cells.push(text);
+      }
+
+      if (cells.length < 3) continue;
+
+      const trailName = cells[1];
+      const condition = cells[2];
+      const comment = cells.length > 3 ? cells[3] : '';
+
+      if (!trailName || trailName.toLowerCase() === 'trail' || trailName.length < 3) continue;
+
+      const trailLower = trailName.toLowerCase();
+      for (const [fragment, activityIds] of Object.entries(trailMapping)) {
+        if (trailLower.includes(fragment)) {
+          const severity = classifySeverity(condition, comment);
+          activityIds.forEach(actId => {
+            if (!results.find(r => r.id === actId)) {
+              results.push({
+                id: actId,
+                trailName: trailName,
+                condition: condition,
+                severity: severity,
+                comment: comment.slice(0, 200),
+                source: 'Parks Canada'
+              });
+            }
+          });
+        }
+      }
+    }
+  } catch (error) {
+    // Silently fail - Parks Canada unavailable
+  }
+
+  return results;
+}
+
+async function scrapeAlbertaParks() {
+  const url = 'https://www.albertaparks.ca/parks/kananaskis/kananaskis-country/advisories-and-public-safety/trail-reports/canmore-and-area/';
+  const results = [];
+
+  try {
+    const response = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; VacationPlanner/1.0)' }
+    });
+
+    if (!response.ok) return results;
+
+    const html = await response.text();
+
+    // Alberta Parks uses a table with columns: Trail, Activities, Length, Status, Keywords
+    // We need Trail name (column 1) and Status (column 4)
+    const rowRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+    let rowMatch;
+
+    while ((rowMatch = rowRegex.exec(html)) !== null) {
+      const rowContent = rowMatch[1];
+      const cellRegex = /<td[^>]*>([\s\S]*?)<\/td>/gi;
+      const cells = [];
+      let cellMatch;
+      while ((cellMatch = cellRegex.exec(rowContent)) !== null) {
+        const text = cellMatch[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+        cells.push(text);
+      }
+
+      if (cells.length < 4) continue;
+
+      const trailName = cells[0];  // First column is trail name
+      const status = cells[3];      // Fourth column is status
+      const notes = cells.length > 4 ? cells[4] : '';  // Fifth column is keywords/notes
+
+      if (!trailName || trailName.length < 3) continue;
+
+      const trailLower = trailName.toLowerCase();
+      for (const [fragment, activityIds] of Object.entries(TRAIL_MAP_ALBERTA_PARKS)) {
+        if (trailLower.includes(fragment)) {
+          const severity = classifyAlbertaParksStatus(status, notes);
+          activityIds.forEach(actId => {
+            if (!results.find(r => r.id === actId)) {
+              results.push({
+                id: actId,
+                trailName: trailName,
+                condition: status,
+                severity: severity,
+                comment: notes.slice(0, 200),
+                source: 'Alberta Parks'
+              });
+            }
+          });
+        }
+      }
+    }
+  } catch (error) {
+    // Silently fail - Alberta Parks unavailable
+  }
+
+  return results;
 }
 
 export default async function handler(req, res) {
@@ -50,89 +194,43 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid park. Must be jasper or banff' });
   }
 
-  const urls = {
-    jasper: 'https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions',
-    banff: 'https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking/etat-sentiers-trail-conditions',
-  };
-
   try {
-    const response = await fetch(urls[park], {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; VacationPlanner/1.0)' }
+    // Fetch from both sources in parallel
+    const [parksCanadaResults, albertaParksResults] = await Promise.all([
+      scrapeParksCanada(park),
+      park === 'banff' ? scrapeAlbertaParks() : Promise.resolve([])  // Only fetch AB Parks for banff area
+    ]);
+
+    // Merge results (Parks Canada first, then Alberta Parks for non-duplicates)
+    const results = [...parksCanadaResults];
+    albertaParksResults.forEach(trail => {
+      if (!results.find(r => r.id === trail.id)) {
+        results.push(trail);
+      }
     });
-
-    if (!response.ok) {
-      throw new Error(`Parks Canada returned ${response.status}`);
-    }
-
-    const html = await response.text();
-
-    // Parse table rows: each row has cells for Rating, Trail, Condition, Comment, Links
-    // We want the Trail (cell 2) and Condition (cell 3) from each row.
-    // The HTML structure is: <tr><td>rating</td><td>trail name</td><td>condition</td><td>comment</td>...</tr>
-    const results = [];
-    const trailMapping = TRAIL_MAP[park] || {};
-
-    // Match all table rows and extract trail name + condition
-    // The tables use <td> elements. We look for rows with at least 3 cells.
-    const rowRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
-    let rowMatch;
-
-    while ((rowMatch = rowRegex.exec(html)) !== null) {
-      const rowContent = rowMatch[1];
-
-      // Extract all <td> or <th> cell contents
-      const cellRegex = /<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi;
-      const cells = [];
-      let cellMatch;
-      while ((cellMatch = cellRegex.exec(rowContent)) !== null) {
-        // Strip HTML tags from cell content
-        const text = cellMatch[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-        cells.push(text);
-      }
-
-      // Need at least 3 cells: rating, trail name, condition
-      if (cells.length < 3) continue;
-
-      const trailName = cells[1];
-      const condition = cells[2];
-      const comment = cells.length > 3 ? cells[3] : '';
-
-      // Skip header rows or empty trails
-      if (!trailName || trailName.toLowerCase() === 'trail' || trailName.length < 3) continue;
-
-      // Check if this trail name matches any of our mapped activities
-      const trailLower = trailName.toLowerCase();
-      for (const [fragment, activityIds] of Object.entries(trailMapping)) {
-        if (trailLower.includes(fragment)) {
-          const severity = classifySeverity(condition, comment);
-          activityIds.forEach(actId => {
-            // Only add if not already found (first match wins for each activity)
-            if (!results.find(r => r.id === actId)) {
-              results.push({
-                id: actId,
-                trailName: trailName,
-                condition: condition,
-                severity: severity,
-                comment: comment.slice(0, 200), // Trim long comments
-              });
-            }
-          });
-        }
-      }
-    }
 
     // Cache for 6 hours
     res.setHeader('Cache-Control', 's-maxage=21600, stale-while-revalidate=3600');
+
+    const urls = {
+      jasper: 'https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions',
+      banff: 'https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking/etat-sentiers-trail-conditions',
+    };
 
     return res.status(200).json({
       park,
       trails: results,
       url: urls[park],
+      sources: park === 'banff' ? ['Parks Canada', 'Alberta Parks'] : ['Parks Canada'],
       lastUpdated: new Date().toISOString()
     });
 
   } catch (error) {
     console.error('Error fetching trail conditions:', error);
+    const urls = {
+      jasper: 'https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions',
+      banff: 'https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking/etat-sentiers-trail-conditions',
+    };
     return res.status(500).json({
       error: 'Failed to fetch trail conditions',
       park,
