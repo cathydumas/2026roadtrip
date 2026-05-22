@@ -1,7 +1,7 @@
 // Vercel Serverless Function - scrapes Parks Canada AND Alberta Parks trail conditions
 // and matches them to our activity IDs.
 //
-// Usage: GET /api/trail-conditions?park=banff  (or jasper or kananaskis)
+// Usage: GET /api/trail-conditions?park=banff  (or jasper)
 // Returns: { park, trails: [ { id, name, condition, severity, comment } ], url, lastUpdated }
 
 // Mapping: Parks Canada trail name fragments → our activity IDs
@@ -25,6 +25,10 @@ const TRAIL_MAP_PARKS_CANADA = {
     'wilcox pass': ['jasper-wilcox-pass'],
     'maligne lake canoe route': ['maligne-lake-status'],
     'maligne lake boat launch': ['maligne-lake-status'],
+  },
+  yoho: {
+    'emerald lake': ['banff-emerald-lake'],
+    'emerald triangle': ['banff-emerald-lake'],
   }
 };
 
@@ -65,6 +69,7 @@ async function scrapeParksCanada(park) {
   const urls = {
     jasper: 'https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions',
     banff: 'https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking/etat-sentiers-trail-conditions',
+    yoho: 'https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/etat-sentiers-trail-conditions',
   };
 
   const results = [];
@@ -195,18 +200,25 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Fetch from both sources in parallel
-    const [parksCanadaResults, albertaParksResults] = await Promise.all([
-      scrapeParksCanada(park),
-      park === 'banff' ? scrapeAlbertaParks() : Promise.resolve([])  // Only fetch AB Parks for banff area
-    ]);
+    // Fetch from all relevant sources in parallel
+    const fetchPromises = [scrapeParksCanada(park)];
 
-    // Merge results (Parks Canada first, then Alberta Parks for non-duplicates)
-    const results = [...parksCanadaResults];
-    albertaParksResults.forEach(trail => {
-      if (!results.find(r => r.id === trail.id)) {
-        results.push(trail);
-      }
+    if (park === 'banff') {
+      // For Banff area, also check Alberta Parks (Canmore trails) and Yoho (Emerald Lake)
+      fetchPromises.push(scrapeAlbertaParks());
+      fetchPromises.push(scrapeParksCanada('yoho'));
+    }
+
+    const allResults = await Promise.all(fetchPromises);
+
+    // Merge all results, avoiding duplicates
+    const results = [];
+    allResults.forEach(sourceResults => {
+      sourceResults.forEach(trail => {
+        if (!results.find(r => r.id === trail.id)) {
+          results.push(trail);
+        }
+      });
     });
 
     // Cache for 6 hours
@@ -217,11 +229,16 @@ export default async function handler(req, res) {
       banff: 'https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking/etat-sentiers-trail-conditions',
     };
 
+    const sources = ['Parks Canada'];
+    if (park === 'banff') {
+      sources.push('Alberta Parks', 'Parks Canada Yoho');
+    }
+
     return res.status(200).json({
       park,
       trails: results,
       url: urls[park],
-      sources: park === 'banff' ? ['Parks Canada', 'Alberta Parks'] : ['Parks Canada'],
+      sources: sources,
       lastUpdated: new Date().toISOString()
     });
 

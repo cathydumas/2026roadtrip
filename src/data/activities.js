@@ -293,7 +293,7 @@ export const ACTIVITIES = [
     difficulty: "easy",
     lat: 51.4434,
     lng: -116.5281,
-    park: null,
+    park: "yoho",
     alltrails: "https://www.alltrails.com/trail/canada/british-columbia/emerald-lake-loop",
     tags: ["hike", "lakes", "iconic"]
   },
@@ -709,5 +709,6 @@ export const DAY_AREAS = {
 // Parks Canada trail conditions URLs
 export const PARK_TRAIL_URLS = {
   jasper: "https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions",
-  banff: "https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking/etat-sentiers-trail-conditions"
+  banff: "https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking/etat-sentiers-trail-conditions",
+  yoho: "https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/etat-sentiers-trail-conditions"
 };
