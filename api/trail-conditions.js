@@ -16,6 +16,7 @@ const TRAIL_MAP_PARKS_CANADA = {
     'lake louise lakeshore': ['ll-lakeshore-walk', 'banff-lakeshore-morning'],
     'moraine lake': ['ll-rockpile', 'll-lakeshore-consolation'],
     'ink pots': ['banff-johnston-canyon'],
+    'lake minnewanka': ['banff-minnewanka'],
   },
   jasper: {
     'valley of the five lakes': ['jasper-valley-five-lakes'],

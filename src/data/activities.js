@@ -260,8 +260,8 @@ export const ACTIVITIES = [
     duration: "1-2 hours",
     distance: "20 min from Canmore",
     difficulty: null,
-    lat: 51.1508,
-    lng: -115.5610,
+    lat: 51.1509,
+    lng: -115.5606,
     park: "banff",
     alltrails: null,
     tags: ["relax", "hot springs"]
@@ -387,6 +387,36 @@ export const ACTIVITIES = [
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/rawson-lake--11",
     tags: ["hike", "lakes", "quiet"]
+  },
+  {
+    id: "banff-minnewanka",
+    area: "banff",
+    name: "Lake Minnewanka Lakeshore",
+    description: "Flat lakeside walk along Banff's largest lake. Stewart Canyon (6km return, 1.5 hrs) or longer sections to Aylmer Pass junction. Stunning mountain backdrop, quiet, rarely crowded.",
+    cost: "Free (park pass)",
+    duration: "1.5-4 hours",
+    distance: "15 min from Banff townsite",
+    difficulty: "easy",
+    lat: 51.2078,
+    lng: -115.4531,
+    park: "banff",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-minnewanka",
+    tags: ["hike", "lakes", "easy"]
+  },
+  {
+    id: "banff-two-jack",
+    area: "banff",
+    name: "Two Jack Lake",
+    description: "Scenic picnic spot and swimming beach. Two Jack Lakeside and Two Jack Main have picnic areas with fire pits. Short loop trail around the shoreline. Great for a quick lunch stop or sunset.",
+    cost: "Free (park pass)",
+    duration: "30 min - 1 hour",
+    distance: "12 min from Banff townsite",
+    difficulty: "easy",
+    lat: 51.1836,
+    lng: -115.5086,
+    park: null,
+    alltrails: null,
+    tags: ["scenic", "quick", "water"]
   },
   // Town
   {
@@ -608,20 +638,20 @@ export const ACTIVITIES = [
     tags: ["food"]
   },
   {
-    id: "banff-chaya",
+    id: "banff-trough",
     area: "banff",
-    name: "Chaya",
-    description: "Japanese izakaya. Gyoza, karaage, rice bowls, matcha desserts. Cozy spot for a lighter meal or post-hike snack. Good sake list. Park at train station (free), 5 min walk.",
-    cost: "$15-30/plate",
-    duration: "45 min",
-    distance: "In Banff",
+    name: "The Trough Dining + Lounge",
+    description: "Upscale comfort food and craft cocktails. Steaks, burgers, poutine done right. Modern mountain vibe. One of Canmore's top-rated spots.",
+    cost: "$25-45/plate",
+    duration: "1.5 hours",
+    distance: "In Canmore",
     difficulty: null,
-    lat: 51.1700,
-    lng: -115.5692,
+    lat: 51.0883,
+    lng: -115.3585,
     park: null,
     alltrails: null,
-    google: "https://www.google.com/maps/search/Chaya+Banff+Alberta",
-    tags: ["food"]
+    google: "https://www.google.com/maps/search/The+Trough+Canmore",
+    tags: ["food", "close"]
   },
   {
     id: "banff-epicanmore",
@@ -672,20 +702,20 @@ export const ACTIVITIES = [
     tags: ["food", "close"]
   },
   {
-    id: "banff-grizzly-house",
+    id: "banff-tavern-1883",
     area: "banff",
-    name: "Grizzly House",
-    description: "Legendary Banff fondue since 1967. Hot stone cooking, exotic meats (bison, elk, wild boar). Kitschy retro decor, genuinely fun experience. Park at train station (free), 8 min walk up Banff Ave.",
-    cost: "$40-70/person",
-    duration: "1.5 hours",
-    distance: "15 min from Canmore",
+    name: "Tavern 1883",
+    description: "Historic pub with elevated comfort food. Locally sourced ingredients, good beer selection, cozy atmosphere. Solid choice for a casual dinner in Canmore.",
+    cost: "$20-35/plate",
+    duration: "1 hour",
+    distance: "In Canmore",
     difficulty: null,
-    lat: 51.1700,
-    lng: -115.5692,
+    lat: 51.0895,
+    lng: -115.3590,
     park: null,
     alltrails: null,
-    google: "https://www.google.com/maps/search/Grizzly+House+Banff",
-    tags: ["food"]
+    google: "https://www.google.com/maps/search/Tavern+1883+Canmore",
+    tags: ["food", "close"]
   }
 ];
 
