@@ -60,8 +60,10 @@ export const TRIP_DATA = {
       km: 95,
       startAccom: { title: "Patricia Lake Bungalows", lat: 52.902511, lng: -118.097846 },
       items: [
+        { layer: 4, type: "activity", time: "8-10 AM", title: "🛶 Pyramid Lake Walk/Paddle", note: "Right next to cabin · Calm water, mountain reflections · 30-60 min walk around shore or rent canoe/kayak", lat: 52.9025, lng: -118.0978 },
         { layer: 3, type: "activity", time: "Morning", title: "🐻 Buy Bear Spray", note: "Everest Outdoor · ~$50-60 each, get 3", lat: 52.87809120000001, lng: -118.07995149999998 },
         { layer: 4, type: "market", time: "Morning", title: "🛒 Robinson's IGA", note: "218 Connaught Dr · Full grocery, deli counter. Only real supermarket in Jasper", lat: 52.8741, lng: -118.0811 },
+        { layer: 3, type: "activity", time: "12:30-3:30 PM", title: "🍗 Food Prep at Cabin", note: "Grill chicken thighs, make potato + quinoa salads · Prep wraps for boat · Pack cooler with snacks (Skinny Pop, fruit, cheese + crackers, drinks)", lat: 52.902511, lng: -118.097846 },
         { layer: 3, type: "scenic", time: "Afternoon", title: "📷 Maligne Canyon", note: "7 km from Jasper · Dramatic limestone gorge with 6 bridges over rushing water. Short walks (15-30 min) to see bridges 1-3", lat: 52.9198, lng: -118.0102 },
         { layer: 3, type: "scenic", time: "En route", title: "📷 Medicine Lake", note: "25 km from Jasper · Famous disappearing lake (drains underground in fall/winter). Multiple pullouts along east shore for photos", lat: 52.8100, lng: -117.7600 },
         { layer: 2, type: "activity", time: "5-9 PM", title: "✅ Maligne Lake Fishing", note: "Jasper Park Fishing · CONFIRMED · 48 km from Jasper (50-60 min drive) · Meet at \"Top of the personal craft boat launch\" · Park at Maligne Lake Boat House parking lot · Arrive 15-30 min early for lakeshore walk", lat: 52.7260, lng: -117.6444 }

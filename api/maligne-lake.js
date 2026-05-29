@@ -160,11 +160,13 @@ export default async function handler(req, res) {
 
 // Extract season start date from the cruise page HTML
 function extractSeasonStart(html) {
-  // Look for patterns like "May 29" or "June 1" near "operating" or schedule tables
-  // The page typically has date ranges like "May 29 – June 19"
+  // Look for patterns like "May 27" or "June 1" near "operating" or schedule tables
+  // The page typically has date ranges like "May 27 – June 19"
+  // Handle various dash characters: hyphen, en-dash, em-dash
   const patterns = [
     /(?:open|season|operating)[^<]*?((?:May|June|July)\s+\d{1,2})/i,
-    /((?:May|June)\s+\d{1,2})\s*[–-]/i,
+    /((?:May|June)\s+\d{1,2})\s*[-–—]/i, // hyphen, en-dash, em-dash
+    /(May|June)\s+\d{1,2}/i, // Fallback: just find any May/June date
   ];
 
   for (const pattern of patterns) {
