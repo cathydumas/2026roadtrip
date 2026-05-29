@@ -73,58 +73,32 @@ export default async function handler(req, res) {
   }
 
   // Signal 2: Maligne Lake Cruise operating status
-  try {
-    const cruiseUrl = 'https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/location-hours/';
-    const cruiseResp = await fetch(cruiseUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; VacationPlanner/1.0)' }
-    });
+  // 2026 season: May 27 - October 11
+  // Simplified: just check if we're in the known operating season
+  const now = new Date();
+  const year = now.getFullYear();
+  const seasonStart = new Date(year, 4, 27); // May 27 (month is 0-indexed)
+  const seasonEnd = new Date(year, 9, 11);   // October 11
 
-    if (cruiseResp.ok) {
-      const html = await cruiseResp.text();
-
-      // Look for season dates - typically "May XX" or "June XX" as start
-      // The page shows operating hours with date ranges
-      const seasonStart = extractSeasonStart(html);
-
-      // Check if there's any "closed" or "delayed" messaging
-      const htmlLower = html.toLowerCase();
-      const hasClosedMessage = htmlLower.includes('temporarily closed') ||
-        htmlLower.includes('season delayed') ||
-        htmlLower.includes('not yet open') ||
-        htmlLower.includes('opening delayed');
-
-      // Check if today is past the listed season start
-      const now = new Date();
-      let isOperating = false;
-      let note = '';
-
-      if (seasonStart) {
-        const startDate = new Date(seasonStart + ', 2026');
-        if (!isNaN(startDate.getTime())) {
-          if (now >= startDate && !hasClosedMessage) {
-            isOperating = true;
-            note = `Season started ${seasonStart}`;
-          } else if (now < startDate) {
-            isOperating = false;
-            const daysUntil = Math.ceil((startDate - now) / (1000 * 60 * 60 * 24));
-            note = `Season starts ${seasonStart} (${daysUntil} days away)`;
-          }
-        }
-      }
-
-      if (hasClosedMessage) {
-        isOperating = false;
-        note = 'Season delayed or temporarily closed';
-      }
-
-      result.cruise = {
-        operating: isOperating,
-        seasonStart: seasonStart || 'Unknown',
-        note
-      };
-    }
-  } catch (error) {
-    // Cruise site unavailable
+  if (now >= seasonStart && now <= seasonEnd) {
+    result.cruise = {
+      operating: true,
+      seasonStart: 'May 27',
+      note: 'Operating (May 27 - October 11, 2026)'
+    };
+  } else if (now < seasonStart) {
+    const daysUntil = Math.ceil((seasonStart - now) / (1000 * 60 * 60 * 24));
+    result.cruise = {
+      operating: false,
+      seasonStart: 'May 27',
+      note: `Season starts May 27 (${daysUntil} days away)`
+    };
+  } else {
+    result.cruise = {
+      operating: false,
+      seasonStart: 'May 27',
+      note: 'Season ended October 11'
+    };
   }
 
   // Build summary
