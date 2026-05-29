@@ -508,7 +508,7 @@ export default function App() {
   // Maligne Lake detailed status (canoe route + cruise signals)
   const [maligneLake, setMaligneLake] = useState(() => {
     try {
-      const cached = localStorage.getItem('rr_maligne_lake');
+      const cached = localStorage.getItem('rr_maligne_lake_v2'); // v2: fixed cruise status logic
       if (cached) {
         const { data, fetchedAt } = JSON.parse(cached);
         if (Date.now() - fetchedAt < 12 * 60 * 60 * 1000) return data;
@@ -642,7 +642,7 @@ export default function App() {
   useEffect(() => {
     // Check cache freshness
     try {
-      const cached = localStorage.getItem('rr_maligne_lake');
+      const cached = localStorage.getItem('rr_maligne_lake_v2'); // v2: fixed cruise status logic
       if (cached) {
         const { fetchedAt } = JSON.parse(cached);
         if (Date.now() - fetchedAt < 12 * 60 * 60 * 1000) return;
@@ -655,7 +655,7 @@ export default function App() {
         const data = await response.json();
         if (data && data.summary) {
           setMaligneLake(data);
-          localStorage.setItem('rr_maligne_lake', JSON.stringify({
+          localStorage.setItem('rr_maligne_lake_v2', JSON.stringify({
             data,
             fetchedAt: Date.now()
           }));

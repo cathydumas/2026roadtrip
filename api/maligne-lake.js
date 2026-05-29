@@ -126,8 +126,8 @@ export default async function handler(req, res) {
     result.summary = 'Unable to check lake status. Contact fishing operator directly.';
   }
 
-  // Cache for 12 hours
-  res.setHeader('Cache-Control', 's-maxage=43200, stale-while-revalidate=3600');
+  // Cache for 1 hour (reduced since logic is now hardcoded and fast)
+  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=600');
 
   return res.status(200).json(result);
 }
