@@ -147,6 +147,7 @@ export const ACTIVITIES = [
     lng: -118.0817,
     park: "jasper",
     alltrails: null,
+    google: "https://www.jasperplanetarium.com/",
     image: "/images/locations/night-sky.jpg",
     tags: ["evening", "unique"]
   },
