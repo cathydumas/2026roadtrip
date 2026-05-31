@@ -109,7 +109,13 @@ export const TRIP_DATA = {
         { layer: 2, type: "scenic", time: "~45 min stop", title: "📷 Peyto Lake + Bow Summit", note: "Wolf-shaped turquoise lake from Bow Summit lookout. 10-min paved walk to main viewpoint, OR 40-min loop trail along the ridgeline for even better angles (easy, well-marked)", lat: 51.7171414, lng: -116.507574 },
         { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Bow Lake", note: "Stunning glacial lake right off the highway. Walk along the shore to Bow Glacier Falls trailhead (20 min each way, flat, wildflowers). Full hike to falls is 9km return, 3 hrs", lat: 51.6769, lng: -116.4458 },
         { layer: 3, type: "drive", time: "Late afternoon", title: "ℹ️ Lake Louise Visitor Centre", note: "Samson Mall · Open 9 AM - 5 PM (summer). Trail updates, bear activity, Moraine shuttle info", lat: 51.4267, lng: -116.1775 },
-        { layer: 1, type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback Suite (Queen + 2 Twin) · 2 nights · Check-in 8:00 AM-9:30 PM at Main Lodge · Confirmation #1059211922 · 403-760-7555", url: "https://www.paradiselodge.com/", lat: 51.4161708, lng: -116.196697, coverPhoto: "https://www.paradiselodge.com/wp-content/uploads/2023/02/Paradise-Lodge-21-min-1536x1025.jpg" }
+        { layer: 1, type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback Suite (Queen + 2 Twin) · 2 nights · Check-in 8:00 AM-9:30 PM at Main Lodge · Confirmation #1059211922 · 403-760-7555", url: "https://paradiselodge.com/suites/", lat: 51.4161708, lng: -116.196697, coverPhoto: "https://paradiselodge.com/wp-content/uploads/2025/03/Saddleback-Suite-1-1080-1.jpg", photos: [
+          'https://paradiselodge.com/wp-content/uploads/2025/03/Saddleback-Suite-2-1080.jpg',
+          'https://paradiselodge.com/wp-content/uploads/2025/02/Saddleback-Twin-Suite-1.jpg',
+          'https://paradiselodge.com/wp-content/uploads/2025/03/Saddleback-Suite-3-1080-1.jpg',
+          'https://paradiselodge.com/wp-content/uploads/2025/03/temple-suite-bathroom.jpg',
+          'https://paradiselodge.com/wp-content/uploads/2025/02/Saddleback-Suite-Floor-Plan.jpg'
+        ] }
       ]
     },
     {
