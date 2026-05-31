@@ -46,7 +46,14 @@ export const TRIP_DATA = {
         { layer: 3, type: "scenic", time: "~10 min stop", title: "📷 Mt Robson Viewpoint (highway)", note: "Best unobstructed view of the peak (3,954m) with river foreground. Pulloff on Hwy 16 eastbound, before the visitor centre. Often has cloud cap - stop if it's clear!", lat: 53.0940, lng: -119.1770 },
         { layer: 3, type: "scenic", time: "~30 min stop", title: "📷 Mt Robson Visitor Centre", note: "Open 8 AM - 5 PM (mid-Jun to Sep). Info, washrooms, and short walk to Overlander Falls (10 min each way, easy, waterfall through canyon). Second angle on the peak.", lat: 53.1148, lng: -119.2314 },
         { layer: 3, type: "drive", time: "On arrival", title: "ℹ️ Jasper Visitor Centre", note: "500 Connaught Dr · Open 9 AM - 7 PM (summer). Park passes, maps, trail conditions, bear warnings", lat: 52.8773, lng: -118.0808 },
-        { layer: 1, type: "hotel", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin · 3 nights · Check-in 4:00 PM · Confirmation #50910413 · 780-852-3560", url: "https://patricialakebungalows.com/", lat: 52.902511, lng: -118.097846 }
+        { layer: 1, type: "hotel", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin · 3 nights · Check-in 4:00 PM · Confirmation #50910413 · 780-852-3560", url: "https://www.patricialakebungalows.com/maple-cabin", lat: 52.902511, lng: -118.097846, photos: [
+          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-09-1536x1024.jpg',
+          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-20-1536x1024.jpg',
+          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-15-1536x1024.jpg',
+          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-17-1536x1024.jpg',
+          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-12-1536x1024.jpg',
+          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-10-1536x1024.jpg'
+        ] }
       ]
     },
     {
