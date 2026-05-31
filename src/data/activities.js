@@ -19,7 +19,7 @@ export const ACTIVITIES = [
     lng: -118.1231,
     park: "jasper",
     alltrails: null,
-    image: "https://images.unsplash.com/photo-1680901574313-e58ceccde66f?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/6a/0b/0d/jasper-skytram.jpg",
     tags: ["views", "gondola"]
   },
   {
@@ -35,7 +35,7 @@ export const ACTIVITIES = [
     lng: -117.7587,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-skyline",
-    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/1c/e7/5c/looking-back-to-where.jpg",
     tags: ["hike", "summit", "views"]
   },
   {
@@ -51,7 +51,7 @@ export const ACTIVITIES = [
     lng: -118.0325,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/valley-of-the-five-lakes",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/8e/4f/70/valley-of-the-five-lakes.jpg",
     tags: ["hike", "lakes"]
   },
   {
@@ -67,7 +67,7 @@ export const ACTIVITIES = [
     lng: -118.0591,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/old-fort-point-trail",
-    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/2c/8d/b8/old-fort-point.jpg",
     tags: ["hike", "quick"]
   },
   {
@@ -131,7 +131,7 @@ export const ACTIVITIES = [
     lng: -117.2230,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/wilcox-pass",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/36/19/5e/incredible-hiking.jpg",
     tags: ["hike", "views", "alpine"]
   },
   {
@@ -147,7 +147,7 @@ export const ACTIVITIES = [
     lng: -118.0817,
     park: "jasper",
     alltrails: null,
-    image: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/99/81/89/planetarium-show.jpg",
     tags: ["evening", "unique"]
   },
 
@@ -165,7 +165,7 @@ export const ACTIVITIES = [
     lng: -116.2337,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore",
-    image: "https://images.unsplash.com/photo-1512182039730-45e0d9bd0a0e?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/10/2e/2c/lake-louise.jpg",
     tags: ["hike", "iconic", "easy"]
   },
   {
@@ -197,7 +197,7 @@ export const ACTIVITIES = [
     lng: -116.2728,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/plain-of-six-glaciers-trail",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/bb/a6/e5/plain-of-six-glaciers.jpg",
     tags: ["hike", "glacier", "tea house"]
   },
   {
@@ -213,7 +213,7 @@ export const ACTIVITIES = [
     lng: -116.1795,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/rockpile",
-    image: "https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/fc/85/moraine-lake.jpg",
     tags: ["hike", "quick", "iconic"]
   },
   {
@@ -229,7 +229,7 @@ export const ACTIVITIES = [
     lng: -116.1835,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/consolation-lakes-trail",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/9e/28/b1/consolation-lakes.jpg",
     tags: ["hike", "lakes", "quiet"]
   },
   {
@@ -245,7 +245,7 @@ export const ACTIVITIES = [
     lng: -116.2167,
     park: "banff",
     alltrails: null,
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/10/2e/44/canoeing-lake-louise.jpg",
     tags: ["water", "iconic"]
   },
 
@@ -264,7 +264,7 @@ export const ACTIVITIES = [
     lng: -115.5555,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-mountain-trail",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/4f/6a/e7/banff-gondola.jpg",
     tags: ["gondola", "views"]
   },
   {
@@ -280,7 +280,7 @@ export const ACTIVITIES = [
     lng: -115.5606,
     park: "banff",
     alltrails: null,
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/9e/2a/3a/banff-upper-hot-springs.jpg",
     tags: ["relax", "hot springs"]
   },
   {
@@ -296,7 +296,7 @@ export const ACTIVITIES = [
     lng: -115.7632,
     park: "banff",
     alltrails: null,
-    image: "https://images.unsplash.com/photo-1551524164-687a55dd1126?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/7f/4f/cf/sunshine-village.jpg",
     tags: ["skiing", "unique"]
   },
   // Emerald Lake + Lake Louise morning hikes (valid Day 7 morning)
@@ -313,7 +313,7 @@ export const ACTIVITIES = [
     lng: -116.5281,
     park: "yoho",
     alltrails: "https://www.alltrails.com/trail/canada/british-columbia/emerald-lake-loop",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/99/bf/0c/emerald-lake.jpg",
     tags: ["hike", "lakes", "iconic"]
   },
   {
@@ -345,7 +345,7 @@ export const ACTIVITIES = [
     lng: -116.2337,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore",
-    image: "https://images.unsplash.com/photo-1512182039730-45e0d9bd0a0e?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/10/2e/2c/lake-louise.jpg",
     tags: ["hike", "quick", "morning"]
   },
   // Hikes
@@ -362,7 +362,7 @@ export const ACTIVITIES = [
     lng: -115.8399,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/johnston-canyon-to-ink-pots",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/87/c9/87/johnston-canyon.jpg",
     tags: ["hike", "waterfall", "iconic"]
   },
   {
@@ -378,7 +378,7 @@ export const ACTIVITIES = [
     lng: -115.4031,
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/grassi-lake-trail",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/8e/4d/ab/grassi-lakes.jpg",
     tags: ["hike", "close", "lakes"]
   },
   {
@@ -394,7 +394,7 @@ export const ACTIVITIES = [
     lng: -115.4180,
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/ha-ling-peak",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/5d/3c/7b/ha-ling-peak.jpg",
     tags: ["hike", "summit", "close"]
   },
   {
@@ -410,7 +410,7 @@ export const ACTIVITIES = [
     lng: -115.1187,
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/rawson-lake--11",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/f7/02/81/rawson-lake.jpg",
     tags: ["hike", "lakes", "quiet"]
   },
   {
@@ -426,7 +426,7 @@ export const ACTIVITIES = [
     lng: -115.4531,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-minnewanka",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/32/0e/89/lake-minnewanka.jpg",
     tags: ["hike", "lakes", "easy"]
   },
   {
@@ -442,7 +442,7 @@ export const ACTIVITIES = [
     lng: -115.5086,
     park: null,
     alltrails: null,
-    image: "https://images.unsplash.com/photo-1512182039730-45e0d9bd0a0e?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/1c/a5/a8/two-jack-lake.jpg",
     tags: ["scenic", "quick", "water"]
   },
   // Town
@@ -459,7 +459,7 @@ export const ACTIVITIES = [
     lng: -115.5692,
     park: "banff",
     alltrails: null,
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/7a/e4/58/banff-avenue.jpg",
     tags: ["town", "easy"]
   },
   // Full day trip: Dinosaur Day (compound activity - adds multiple stops)
@@ -476,7 +476,7 @@ export const ACTIVITIES = [
     lng: -111.5149,
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/drumheller-hoodoos",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/3a/c6/97/royal-tyrrell-museum.jpg",
     tags: ["museum", "unique", "full day"],
     compound: true,
     stops: [
@@ -502,35 +502,6 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/The+Raven+Bistro+Jasper",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200",
-    image: "https://images.unsplash.com/photo-1512182039730-45e0d9bd0a0e?w=1200",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
-    image: "https://images.unsplash.com/photo-1512182039730-45e0d9bd0a0e?w=1200",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Lake_Agnes_Tea_House_2015.jpg/1200px-Lake_Agnes_Tea_House_2015.jpg",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
-    image: "https://images.unsplash.com/photo-1551524164-687a55dd1126?w=1200",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
-    image: "https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=1200",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Lake_Agnes_Tea_House_2015.jpg/1200px-Lake_Agnes_Tea_House_2015.jpg",
-    image: "https://images.unsplash.com/photo-1512182039730-45e0d9bd0a0e?w=1200",
-    image: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1200",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
-    image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Athabasca_Falls_-_Jasper.jpg",
-    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200",
-    image: "https://images.unsplash.com/photo-1507034589631-9433cc6bc453?w=1200",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
-    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=1200",
-    image: "https://images.unsplash.com/photo-1680901574313-e58ceccde66f?w=1200",
     website: "https://theravenbistro.com/",
     tags: ["food"]
   },
