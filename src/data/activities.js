@@ -51,7 +51,7 @@ export const ACTIVITIES = [
     lng: -118.0325,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/valley-of-the-five-lakes",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Valley_of_the_Five_Lakes.jpg/1200px-Valley_of_the_Five_Lakes.jpg",
     tags: ["hike", "lakes"]
   },
   {
