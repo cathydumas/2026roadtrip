@@ -923,6 +923,11 @@ export default function App() {
                               {item.time && <span className="item-time">{item.time}</span>}
                             </div>
                             {item.note && <div className="item-note">{item.note}</div>}
+                            {item.coverPhoto && (
+                              <div className="item-cover-photo">
+                                <img src={item.coverPhoto} alt={item.title} />
+                              </div>
+                            )}
                             {item.glacierTempDelta && weather[day.id] && weather[day.id].temperature_2m_max && (
                               <div className="item-note" style={{ marginTop: '4px', fontStyle: 'italic' }}>
                                 🧊 Glacier temperature: expect ~{Math.round(weather[day.id].temperature_2m_max[0] + item.glacierTempDelta)}°C ({item.glacierTempDelta}°C cooler than {Math.round(weather[day.id].temperature_2m_max[0])}°C forecast)
@@ -963,7 +968,7 @@ export default function App() {
                                   className="nav-btn"
                                   onClick={() => setPhotoGallery({ photos: item.photos, title: item.title })}
                                 >
-                                  Photos ({item.photos.length})
+                                  More photos
                                 </button>
                               )}
                             </div>
