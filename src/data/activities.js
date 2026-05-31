@@ -504,7 +504,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/The+Raven+Bistro+Jasper",
-    website: "https://theravenbistro.com/",
+    website: "https://theravenbistro.com/lunch",
     tags: ["food"]
   },
   {
@@ -538,7 +538,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Stone+Peak+Restaurant+Jasper",
-    website: "https://www.jasperinn.com/stone-peak-restaurant",
+    website: "https://www.jasperinn.com/the-inn-grill",
     tags: ["food"]
   },
   {
@@ -659,7 +659,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Ramen+Arashi+Canmore",
-    website: "https://www.ramenarashi.com/",
+    website: "https://www.ramenarashi.ca/",
     tags: ["food", "close"]
   },
   {
@@ -676,7 +676,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Ramen+Arashi+Banff",
-    website: "https://www.ramenarashi.com/",
+    website: "https://www.ramenarashi.ca/",
     tags: ["food"]
   },
   {
@@ -694,23 +694,6 @@ export const ACTIVITIES = [
     alltrails: null,
     google: "https://www.google.com/maps/search/The+Trough+Canmore",
     website: "https://www.thetroughcanmore.com/",
-    tags: ["food", "close"]
-  },
-  {
-    id: "banff-epicanmore",
-    area: "banff",
-    name: "ÉpiCanmore",
-    description: "French-style bakery and cafe. Croissants, pain au chocolat, quiche, tartines. Proper European baked goods. Perfect pre-hike morning stop.",
-    cost: "$6-18",
-    duration: "30 min",
-    distance: "In Canmore",
-    difficulty: null,
-    lat: 51.0895,
-    lng: -115.3585,
-    park: null,
-    alltrails: null,
-    google: "https://www.google.com/maps/search/EpiCanmore+bakery+Canmore",
-    website: "https://epicanmore.com/",
     tags: ["food", "close"]
   },
   {
