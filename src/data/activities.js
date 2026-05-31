@@ -166,7 +166,7 @@ export const ACTIVITIES = [
     lng: -116.2337,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore",
-    image: "/images/locations/lake-louise.jpg",
+    image: "/images/locations/lake-louise-lakeshore.jpg",
     tags: ["hike", "iconic", "easy"]
   },
   {
@@ -182,7 +182,7 @@ export const ACTIVITIES = [
     lng: -116.1767,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
-    image: "/images/locations/lake-agnes.jpg",
+    image: "/images/locations/lake-agnes-tea-house.jpg",
     tags: ["hike", "tea house", "iconic"]
   },
   {

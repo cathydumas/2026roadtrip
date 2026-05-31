@@ -135,7 +135,7 @@ export const TRIP_DATA = {
       startAccom: { title: "Paradise Lodge", lat: 51.4161708, lng: -116.196697 },
       items: [
         { layer: 2, type: "food", time: "12:15 PM", title: "✅ Lakeview Lounge", note: "Chateau Lake Louise · Lunch reservation", url: "https://www.fairmont.com/lake-louise/dining/lakeviewlounge/", lat: 51.4163, lng: -116.2138 },
-        { layer: 2, type: "activity", time: "4:00-5:00 PM", title: "✅ Moraine Lake Shuttle", note: "CONFIRMED · 3 adults · Depart Park & Ride · Shuttles every 30 min · 🎒 PACK CHANGE OF CLOTHES for dinner - long pants, closed shoes, no athletic wear/T-shirts/hats/shorts", lat: 51.4412008, lng: -116.162196 },
+        { layer: 2, type: "activity", time: "4:00-5:00 PM", title: "✅ Moraine Lake Shuttle", note: "CONFIRMED · 3 adults · Depart Park & Ride · Shuttles every 30 min · 🎒 PACK CHANGE OF CLOTHES for dinner - long pants, closed shoes, no athletic wear/T-shirts/hats/shorts", lat: 51.4412008, lng: -116.162196, coverPhoto: "/images/locations/moraine-lake.jpg" },
         { layer: 3, type: "activity", time: "⚠️ 7:30 PM", title: "🚌 LAST SHUTTLE back from Moraine Lake", note: "DO NOT MISS - no cell service, no lights, no way to call for help after this. Leave trailhead by 7:00 PM", lat: 51.3282264, lng: -116.179504 },
         { layer: 2, type: "food", time: "8:30 PM", title: "✅ Post Hotel Dining Room", note: "CONFIRMED · Fine dining · Dress code: Casual elegant - long pants and closed shoes for men, no athletic attire/T-shirts/hats/shorts", url: "https://posthotel.com/images/Post-Hotel_Dinner-Menu_May2026_web.pdf", lat: 51.4208, lng: -116.1824 }
       ]
