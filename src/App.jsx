@@ -416,6 +416,11 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
                   ⚡ {cond.condition}{cond.comment ? ` - ${cond.comment}` : ''}
                 </div>
               )}
+              {activity.image && (
+                <div className="explore-card-image">
+                  <img src={activity.image} alt={activity.name} />
+                </div>
+              )}
               <div className="explore-card-header">
                 <div className="explore-card-name">{activity.name}</div>
                 {activity.difficulty && (

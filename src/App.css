@@ -946,6 +946,20 @@ body {
   padding: 16px;
 }
 
+.explore-card-image {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.explore-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .explore-card-header {
   display: flex;
   justify-content: space-between;
