@@ -935,7 +935,11 @@ export default function App() {
                             {item.note && <div className="item-note">{item.note}</div>}
                             {item.coverPhoto && (
                               <div className="item-cover-photo">
-                                <img src={item.coverPhoto} alt={item.title} />
+                                <img
+                                  src={item.coverPhoto}
+                                  alt={item.title}
+                                  style={item.coverPhoto.includes('patricia-lake-paddle') ? { objectPosition: 'bottom' } : {}}
+                                />
                               </div>
                             )}
                             {item.glacierTempDelta && weather[day.id] && weather[day.id].temperature_2m_max && (
