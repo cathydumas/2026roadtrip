@@ -83,7 +83,7 @@ export const ACTIVITIES = [
     lng: -118.0978,
     park: "jasper",
     alltrails: null,
-    image: "https://www.patricialakebungalows.com/uploads/files/Images/Activities/boats-collage.webp",
+    image: "/images/locations/patricia-lake-paddle.jpg",
     tags: ["water", "close"]
   },
   {
