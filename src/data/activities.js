@@ -305,7 +305,7 @@ export const ACTIVITIES = [
     id: "banff-emerald-lake",
     area: "banff",
     name: "Emerald Lake",
-    description: "Stunning turquoise lake in Yoho NP. 5.2km flat loop trail around the lake, canoe rentals, historic lodge. On the way from Lake Louise to Canmore via Field.",
+    description: "Stunning turquoise lake in Yoho NP. 5.2km flat loop trail around the lake, canoe rentals, historic lodge. On the way from Lake Louise to Canmore via Field. The Prow serves brunch starting at 7 AM.",
     cost: "Free (park pass)",
     duration: "2-3 hours",
     distance: "40 min from Lake Louise",
@@ -314,7 +314,8 @@ export const ACTIVITIES = [
     lng: -116.5281,
     park: "yoho",
     alltrails: "https://www.alltrails.com/trail/canada/british-columbia/emerald-lake-loop",
-    image: "/images/locations/emerald-lake-yoho.jpg",
+    website: "https://theprowbanff.com/menus",
+    image: "/images/locations/emerald-lake.jpg",
     tags: ["hike", "lakes", "iconic"]
   },
   {
@@ -330,7 +331,7 @@ export const ACTIVITIES = [
     lng: -116.1767,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
-    image: "/images/locations/lake-agnes.jpg",
+    image: "/images/locations/lake-agnes-tea-house.jpg",
     tags: ["hike", "tea house", "morning"]
   },
   {
@@ -346,7 +347,7 @@ export const ACTIVITIES = [
     lng: -116.2337,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore",
-    image: "/images/locations/lake-louise.jpg",
+    image: "/images/locations/lake-louise-lakeshore.jpg",
     tags: ["hike", "quick", "morning"]
   },
   // Hikes

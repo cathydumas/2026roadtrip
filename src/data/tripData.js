@@ -204,7 +204,7 @@ export const TRIP_DATA = {
       startAccom: { title: "Canmore Airbnb", lat: 51.0865, lng: -115.3424 },
       items: [
         { layer: 3, type: "food", time: "9-10 AM", title: "🍳 Hot breakfast before you go", note: "Fuel up before raft. JK Bakery (opens 8 AM) or Safeway deli", url: "https://www.jkbakery.ca/", lat: 51.0903837, lng: -115.3612421 },
-        { layer: 2, type: "activity", time: "1:45-4:45 PM", title: "✅ Whitewater Rafting", note: "CONFIRMED · Wild Water Adventures · Kicking Horse River Class II-IV+ · Snacks at River Base after", lat: 51.300, lng: -116.963 },
+        { layer: 2, type: "activity", time: "1:45-4:45 PM", title: "✅ Whitewater Rafting", note: "CONFIRMED · Wild Water Adventures · Kicking Horse River Class II-IV+ · Snacks at River Base after", lat: 51.300, lng: -116.963, coverPhoto: "/images/locations/whitewater-rafting.jpg" },
         { layer: 3, type: "scenic", time: "En route", title: "📷 Rogers Pass", note: "Glacier NP · 1,382m summit, surrounded by massive peaks and glaciers", lat: 51.2833, lng: -117.5167, coverPhoto: "/images/locations/rogers-pass.jpg" },
         { layer: 1, type: "hotel", time: "Evening", title: "Boulder Mountain Resort", note: "Two-Bedroom Cabin · 1 night · Check-in 4:00 PM · Confirmation #50912114 · 250-837-4420", url: "https://bouldermountainresort.ca/lodging/two-bedroom-cabins/", lat: 50.9913465, lng: -118.26293, coverPhoto: "https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2462.jpg", photos: [
           'https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2607.jpg',
@@ -227,7 +227,7 @@ export const TRIP_DATA = {
       startAccom: { title: "Boulder Mountain Resort", lat: 50.9913465, lng: -118.26293 },
       items: [
         { layer: 3, type: "scenic", time: "~45 min", title: "📷 Three Valley Gap", note: "Quick pull-off on Hwy 1 - glacial lake with dramatic mountain reflections", lat: 50.9333, lng: -118.4457 , coverPhoto: "/images/locations/three-valley-gap.jpg"},
-        { layer: 3, type: "scenic", time: "~1 hr", title: "🚂 Craigellachie - Last Spike", note: "Where the last spike of the Canadian Pacific Railway was driven in 1885. 15 min stop", lat: 50.9749, lng: -118.7239 },
+        { layer: 3, type: "scenic", time: "~1 hr", title: "🚂 Craigellachie - Last Spike", note: "Where the last spike of the Canadian Pacific Railway was driven in 1885. 15 min stop", lat: 50.9749, lng: -118.7239, coverPhoto: "/images/locations/last-spike.jpg" },
         { layer: 3, type: "food", time: "Mid-morning", title: "☕ Blondies Cafe", note: "Sicamous · 302 Finlayson St · 4.5 stars. Great espresso, fresh baking, lovely yard", lat: 50.837157499999996, lng: -118.9891111 },
         { layer: 3, type: "food", time: "Lunch in Kamloops", title: "🍳 Hello Toast", note: "428 Victoria St · Kamloops' most popular brunch. Legendary eggs benny. Get there by noon", url: "https://www.hellotoast.ca/menu", lat: 50.676030100000006, lng: -120.3311102 },
         { layer: 2, type: "ferry", time: "9:00 PM", title: "✅ Tsawwassen → Swartz Bay", note: "CONFIRMED · Spirit of Vancouver Island · Arrives 10:35 PM", lat: 49.0069326, lng: -123.130321 },
