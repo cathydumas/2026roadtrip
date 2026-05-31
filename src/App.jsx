@@ -923,23 +923,6 @@ export default function App() {
                               {item.time && <span className="item-time">{item.time}</span>}
                             </div>
                             {item.note && <div className="item-note">{item.note}</div>}
-                            {item.url && (
-                              <div className="item-note" style={{ marginTop: '4px' }}>
-                                <a href={item.url} target="_blank" rel="noreferrer" style={{ color: '#0176d3', textDecoration: 'underline' }}>
-                                  View listing →
-                                </a>
-                              </div>
-                            )}
-                            {item.photos && item.photos.length > 0 && (
-                              <div className="item-note" style={{ marginTop: '4px' }}>
-                                <button
-                                  onClick={() => setPhotoGallery({ photos: item.photos, title: item.title })}
-                                  style={{ color: '#0176d3', textDecoration: 'underline', background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer' }}
-                                >
-                                  View photos ({item.photos.length}) →
-                                </button>
-                              </div>
-                            )}
                             {item.glacierTempDelta && weather[day.id] && weather[day.id].temperature_2m_max && (
                               <div className="item-note" style={{ marginTop: '4px', fontStyle: 'italic' }}>
                                 🧊 Glacier temperature: expect ~{Math.round(weather[day.id].temperature_2m_max[0] + item.glacierTempDelta)}°C ({item.glacierTempDelta}°C cooler than {Math.round(weather[day.id].temperature_2m_max[0])}°C forecast)
@@ -965,6 +948,24 @@ export default function App() {
                                   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
                                 </svg>
                               </button>
+                              {item.url && (
+                                <a
+                                  href={item.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="nav-btn"
+                                >
+                                  View listing
+                                </a>
+                              )}
+                              {item.photos && item.photos.length > 0 && (
+                                <button
+                                  className="nav-btn"
+                                  onClick={() => setPhotoGallery({ photos: item.photos, title: item.title })}
+                                >
+                                  Photos ({item.photos.length})
+                                </button>
+                              )}
                             </div>
                           </div>
                         </div>
