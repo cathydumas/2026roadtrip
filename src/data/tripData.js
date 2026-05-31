@@ -22,7 +22,7 @@ export const TRIP_DATA = {
       items: [
         { layer: 2, type: "ferry", time: "10:00 AM", title: "✅ Swartz Bay Ferry", note: "Queen of New Westminster - check in 30-60 min early", lat: 48.6865, lng: -123.4105 },
         { layer: 3, type: "food", time: "Lunch in Hope", title: "🍽️ Home Restaurant", note: "665 Old Hope Princeton Way · Classic diner, huge portions, famous homemade pie", lat: 49.3758583, lng: -121.4271316 },
-        { layer: 1, type: "hotel", time: "Late afternoon", title: "Comfort Suites Kelowna", note: "1 King + 1 Queen Suite · Check-in 4:00 PM · Confirmation #36565470 · 877-456-5770", url: "https://www.choicehotels.com/en-ca/reservations/reservation-details/36565470", lat: 49.8936661, lng: -119.4170556, coverPhoto: "https://www.choicehotels.com/content/dam/choice-hotels/en_us/country-suites/cs017/gallery/CS017_Exterior.jpg" },
+        { layer: 1, type: "hotel", time: "Late afternoon", title: "Comfort Suites Kelowna", note: "1 King + 1 Queen Suite · Check-in 4:00 PM · Confirmation #36565470 · 877-456-5770", url: "https://www.choicehotels.com/en-ca/reservations/reservation-details/36565470", lat: 49.8936661, lng: -119.4170556 },
         { layer: 2, type: "wine", time: "7:30 PM", title: "✅ Mission Hill Winery", note: "Dinner reservation 7:30 PM", lat: 49.8351166, lng: -119.5867142 }
       ]
     },
@@ -46,12 +46,13 @@ export const TRIP_DATA = {
         { layer: 3, type: "scenic", time: "~10 min stop", title: "📷 Mt Robson Viewpoint (highway)", note: "Best unobstructed view of the peak (3,954m) with river foreground. Pulloff on Hwy 16 eastbound, before the visitor centre. Often has cloud cap - stop if it's clear!", lat: 53.0940, lng: -119.1770 },
         { layer: 3, type: "scenic", time: "~30 min stop", title: "📷 Mt Robson Visitor Centre", note: "Open 8 AM - 5 PM (mid-Jun to Sep). Info, washrooms, and short walk to Overlander Falls (10 min each way, easy, waterfall through canyon). Second angle on the peak.", lat: 53.1148, lng: -119.2314 },
         { layer: 3, type: "drive", time: "On arrival", title: "ℹ️ Jasper Visitor Centre", note: "500 Connaught Dr · Open 9 AM - 7 PM (summer). Park passes, maps, trail conditions, bear warnings", lat: 52.8773, lng: -118.0808 },
-        { layer: 1, type: "hotel", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin · 3 nights · Check-in 4:00 PM · Confirmation #50910413 · 780-852-3560", url: "https://www.patricialakebungalows.com/maple-cabin", lat: 52.902511, lng: -118.097846, coverPhoto: "https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-09-1536x1024.jpg", photos: [
-          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-20-1536x1024.jpg',
-          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-15-1536x1024.jpg',
-          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-17-1536x1024.jpg',
-          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-12-1536x1024.jpg',
-          'https://www.patricialakebungalows.com/wp-content/uploads/Maple-Cabin-10-1536x1024.jpg'
+        { layer: 1, type: "hotel", time: "Evening", title: "Patricia Lake Bungalows", note: "Maple Cabin · 3 nights · Check-in 4:00 PM · Confirmation #50910413 · 780-852-3560", url: "https://www.patricialakebungalows.com/maple-cabin", lat: 52.902511, lng: -118.097846, coverPhoto: "https://www.patricialakebungalows.com/uploads/files/Maple%20Exterior%20.jpg", photos: [
+          'https://www.patricialakebungalows.com/uploads/thumbnails/ViewFromCouch.jpg.7394f860.jpg',
+          'https://www.patricialakebungalows.com/uploads/thumbnails/firepleace.jpg.3ec522a8.jpg',
+          'https://www.patricialakebungalows.com/uploads/thumbnails/KingBed.jpg.3b74bb79.jpg',
+          'https://www.patricialakebungalows.com/uploads/thumbnails/Kitchen2.jpg.5a98b808.jpg',
+          'https://www.patricialakebungalows.com/uploads/thumbnails/LivingRoom.jpg.27c0b7a2.jpg',
+          'https://www.patricialakebungalows.com/uploads/thumbnails/MasterBathroom.jpg.3afb7502.jpg'
         ] }
       ]
     },
@@ -200,7 +201,13 @@ export const TRIP_DATA = {
         { layer: 3, type: "food", time: "9-10 AM", title: "🍳 Hot breakfast before you go", note: "Fuel up before raft. JK Bakery (opens 8 AM) or Safeway deli", lat: 51.0903837, lng: -115.3612421 },
         { layer: 2, type: "activity", time: "1:45-4:45 PM", title: "✅ Whitewater Rafting", note: "CONFIRMED · Wild Water Adventures · Kicking Horse River Class II-IV+ · Snacks at River Base after", lat: 51.300, lng: -116.963 },
         { layer: 3, type: "scenic", time: "En route", title: "📷 Rogers Pass", note: "Glacier NP · 1,382m summit, surrounded by massive peaks and glaciers", lat: 51.2833, lng: -117.5167 },
-        { layer: 1, type: "hotel", time: "Evening", title: "Boulder Mountain Resort", note: "Two-Bedroom Cabin · 1 night · Check-in 4:00 PM · Confirmation #50912114 · 250-837-4420", url: "https://www.bouldermountainresort.ca/", lat: 50.9913465, lng: -118.26293, coverPhoto: "https://www.bouldermountainresort.ca/wp-content/uploads/2022/03/BMR-Cabin-Exterior-19-scaled.jpg" }
+        { layer: 1, type: "hotel", time: "Evening", title: "Boulder Mountain Resort", note: "Two-Bedroom Cabin · 1 night · Check-in 4:00 PM · Confirmation #50912114 · 250-837-4420", url: "https://bouldermountainresort.ca/lodging/two-bedroom-cabins/", lat: 50.9913465, lng: -118.26293, coverPhoto: "https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2462.jpg", photos: [
+          'https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2607.jpg',
+          'https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2625.jpg',
+          'https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2501-Edit.jpg',
+          'https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2472-Edit.jpg',
+          'https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2523.jpg'
+        ] }
       ]
     },
     {
