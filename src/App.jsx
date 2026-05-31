@@ -1024,6 +1024,23 @@ export default function App() {
                             {isCaution && (
                               <div className="conditions-caution">⚡ {cond.condition}{cond.comment ? ` - ${cond.comment}` : ''}</div>
                             )}
+                            {activity.image && (
+                              <div className="item-cover-photo">
+                                {activity.image.includes('youtube.com') ? (
+                                  <iframe
+                                    width="100%"
+                                    height="200"
+                                    src={activity.image.replace('youtube.com/live/', 'youtube-nocookie.com/embed/')}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowFullScreen
+                                    title={activity.name}
+                                  />
+                                ) : (
+                                  <img src={activity.image} alt={activity.name} />
+                                )}
+                              </div>
+                            )}
                             <div className="planned-card-top">
                               <div className="planned-card-name">{activity.name}</div>
                               {activity.difficulty && <span className={`difficulty-tag ${activity.difficulty}`}>{activity.difficulty}</span>}
