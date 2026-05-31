@@ -76,8 +76,8 @@ export const TRIP_DATA = {
         { layer: 3, type: "activity", time: "Morning", title: "🐻 Buy Bear Spray", note: "Everest Outdoor · ~$50-60 each, get 3", lat: 52.87809120000001, lng: -118.07995149999998 },
         { layer: 4, type: "market", time: "Morning", title: "🛒 Robinson's IGA", note: "218 Connaught Dr · Full grocery, deli counter. Only real supermarket in Jasper", lat: 52.8741, lng: -118.0811 },
         { layer: 3, type: "scenic", time: "Afternoon", title: "📷 Maligne Canyon", note: "7 km from Jasper · Dramatic limestone gorge with 6 bridges over rushing water. Short walks (15-30 min) to see bridges 1-3", lat: 52.9198, lng: -118.0102, coverPhoto: "https://upload.wikimedia.org/wikipedia/commons/f/f8/A_crack_on_earth.jpg" },
-        { layer: 3, type: "scenic", time: "En route", title: "📷 Medicine Lake", note: "25 km from Jasper · Famous disappearing lake (drains underground in fall/winter). Multiple pullouts along east shore for photos", lat: 52.8100, lng: -117.7600, coverPhoto: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/0a/f1/99/medicine-lake.jpg" },
-        { layer: 2, type: "activity", time: "5-9 PM", title: "✅ Maligne Lake Fishing", note: "Jasper Park Fishing · CONFIRMED · 48 km from Jasper (50-60 min drive) · Meet at \"Top of the personal craft boat launch\" · Park at Maligne Lake Boat House parking lot · Arrive 15-30 min early for lakeshore walk", lat: 52.7260, lng: -117.6444, coverPhoto: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/4c/0d/3f/maligne-lake.jpg" }
+        { layer: 3, type: "scenic", time: "En route", title: "📷 Medicine Lake", note: "25 km from Jasper · Famous disappearing lake (drains underground in fall/winter). Multiple pullouts along east shore for photos", lat: 52.8100, lng: -117.7600 },
+        { layer: 2, type: "activity", time: "5-9 PM", title: "✅ Maligne Lake Fishing", note: "Jasper Park Fishing · CONFIRMED · 48 km from Jasper (50-60 min drive) · Meet at \"Top of the personal craft boat launch\" · Park at Maligne Lake Boat House parking lot · Arrive 15-30 min early for lakeshore walk", lat: 52.7260, lng: -117.6444 }
       ]
     },
     {
@@ -107,7 +107,7 @@ export const TRIP_DATA = {
       startAccom: { title: "Patricia Lake Bungalows", lat: 52.902511, lng: -118.097846 },
       items: [
         { layer: 2, type: "scenic", time: "~30 min from Jasper", title: "📷 Athabasca Falls", note: "Most powerful waterfall in the Rockies. Paved loop trail (1km, 15 min) with multiple viewpoints and canyon bridges", lat: 52.664437, lng: -117.883767, coverPhoto: "https://upload.wikimedia.org/wikipedia/commons/9/91/Athabasca_Falls_-_Jasper.jpg" },
-        { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Sunwapta Falls", note: "Dramatic canyon waterfall. Easy 600m walk from parking lot. Continue 1km further to Lower Sunwapta Falls (quieter, almost no people)", lat: 52.5327, lng: -117.6438, coverPhoto: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/99/58/cf/sunwapta-falls.jpg" },
+        { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Sunwapta Falls", note: "Dramatic canyon waterfall. Easy 600m walk from parking lot. Continue 1km further to Lower Sunwapta Falls (quieter, almost no people)", lat: 52.5327, lng: -117.6438 },
         { layer: 2, type: "glacier", time: "⚠️ 11:15 AM arrival", title: "✅ Columbia Icefield", note: "CONFIRMED · Ice Explorer + Skywalk · Must arrive at 11:15 with ticket ready · Wear hiking shoes", glacierTempDelta: -15, lat: 52.2201943, lng: -117.226141, coverPhoto: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Columbia_icefield_view.jpg" },
         { layer: 4, type: "hike", time: "Optional 3-4 hrs", title: "🥾 Wilcox Pass Trailhead", note: "8km return, 335m gain · Alpine meadows with jaw-dropping views of Columbia Icefield from above · Wildflowers in June · Trailhead across highway from Icefield Centre", lat: 52.2180, lng: -117.2230 },
         { layer: 3, type: "drive", time: "Mid-afternoon", title: "⛽ Saskatchewan River Crossing", note: "Only gas between Jasper & Lake Louise", lat: 51.9338, lng: -116.8319 },
@@ -225,7 +225,7 @@ export const TRIP_DATA = {
       km: 700,
       startAccom: { title: "Boulder Mountain Resort", lat: 50.9913465, lng: -118.26293 },
       items: [
-        { layer: 3, type: "scenic", time: "~45 min", title: "📷 Three Valley Gap", note: "Quick pull-off on Hwy 1 - glacial lake with dramatic mountain reflections", lat: 50.9333, lng: -118.4457, coverPhoto: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/36/5e/97/three-valley-gap.jpg" },
+        { layer: 3, type: "scenic", time: "~45 min", title: "📷 Three Valley Gap", note: "Quick pull-off on Hwy 1 - glacial lake with dramatic mountain reflections", lat: 50.9333, lng: -118.4457 },
         { layer: 3, type: "scenic", time: "~1 hr", title: "🚂 Craigellachie - Last Spike", note: "Where the last spike of the Canadian Pacific Railway was driven in 1885. 15 min stop", lat: 50.9749, lng: -118.7239 },
         { layer: 3, type: "food", time: "Mid-morning", title: "☕ Blondies Cafe", note: "Sicamous · 302 Finlayson St · 4.5 stars. Great espresso, fresh baking, lovely yard", lat: 50.837157499999996, lng: -118.9891111 },
         { layer: 3, type: "food", time: "Lunch in Kamloops", title: "🍳 Hello Toast", note: "428 Victoria St · Kamloops' most popular brunch. Legendary eggs benny. Get there by noon", url: "https://www.hellotoast.ca/menu", lat: 50.676030100000006, lng: -120.3311102 },
