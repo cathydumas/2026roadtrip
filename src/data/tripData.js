@@ -21,7 +21,7 @@ export const TRIP_DATA = {
       km: 480,
       items: [
         { layer: 2, type: "ferry", time: "10:00 AM", title: "✅ Swartz Bay Ferry", note: "Queen of New Westminster - check in 30-60 min early", lat: 48.6865, lng: -123.4105 },
-        { layer: 3, type: "food", time: "Lunch in Hope", title: "🍽️ Home Restaurant", note: "665 Old Hope Princeton Way · Classic diner, huge portions, famous homemade pie", lat: 49.3758583, lng: -121.4271316 },
+        { layer: 3, type: "food", time: "Lunch in Hope", title: "🍽️ Home Restaurant", note: "665 Old Hope Princeton Way · Classic diner, huge portions, famous homemade pie", url: "https://www.homerestaurant.ca/", lat: 49.3758583, lng: -121.4271316 },
         { layer: 1, type: "hotel", time: "Late afternoon", title: "Comfort Suites Kelowna", note: "1 King + 1 Queen Suite · Check-in 4:00 PM · Confirmation #36565470 · 877-456-5770", url: "https://www.choicehotels.com/en-ca/reservations/reservation-details/36565470", lat: 49.8936661, lng: -119.4170556, coverPhoto: "/images/kelowna-comfort-suites.png" },
         { layer: 2, type: "wine", time: "7:30 PM", title: "✅ Mission Hill Winery", note: "Dinner reservation 7:30 PM", url: "https://www.missionhillwinery.com/terrace-restaurant/terrace-dinner-menu/", lat: 49.8351166, lng: -119.5867142, coverPhoto: "https://lh3.googleusercontent.com/p/AF1QipN7CM9UmnAtPSgRlX_nDoOwiRexgTfr5lkLQHe3=s1360-w1360-h1020-rw" }
       ]
@@ -41,7 +41,7 @@ export const TRIP_DATA = {
         { layer: 4, type: "market", time: "Morning", title: "🥩 Carnist Butcher", note: "1038 Richter St · Tue-Sat 10-6. Stock up on road trip meats and snacks", lat: 49.8966773, lng: -119.4887348 },
         { layer: 4, type: "market", time: "Morning", title: "🛒 Nature's Fare Market", note: "1876 Cooper Rd · Organic produce, quality groceries, bulk snacks. Best veg selection in Kelowna", lat: 49.8827, lng: -119.4537 },
         { layer: 3, type: "drive", time: "En route", title: "⛽ Fill up in Kamloops", note: "Last fuel before mountains", lat: 50.6745, lng: -120.3273 },
-        { layer: 3, type: "food", time: "Lunch", title: "☕ Wild Flour Cafe", note: "Clearwater · Fresh sourdough, homemade baking", lat: 51.6521206, lng: -120.0389419 },
+        { layer: 3, type: "food", time: "Lunch", title: "☕ Wild Flour Cafe", note: "Clearwater · Fresh sourdough, homemade baking", url: "https://www.wildflourcafe.ca/menu-with-tabs/", lat: 51.6521206, lng: -120.0389419 },
         { layer: 3, type: "activity", time: "En route", title: "⛽ Fill up in Valemount", note: "Last fuel before Jasper", lat: 52.8321, lng: -119.2626 },
         { layer: 3, type: "scenic", time: "~10 min stop", title: "📷 Mt Robson Viewpoint (highway)", note: "Best unobstructed view of the peak (3,954m) with river foreground. Pulloff on Hwy 16 eastbound, before the visitor centre. Often has cloud cap - stop if it's clear!", lat: 53.0940, lng: -119.1770, coverPhoto: "https://lh3.googleusercontent.com/p/AF1QipMXxCj8kqH_4YYv5XUxD_-T0lkR0sXK-kRJX6mW=s1360-w1360-h1020" },
         { layer: 3, type: "scenic", time: "~30 min stop", title: "📷 Mt Robson Visitor Centre", note: "Open 8 AM - 5 PM (mid-Jun to Sep). Info, washrooms, and short walk to Overlander Falls (10 min each way, easy, waterfall through canyon). Second angle on the peak.", lat: 53.1148, lng: -119.2314, coverPhoto: "https://lh3.googleusercontent.com/p/AF1QipMXxCj8kqH_4YYv5XUxD_-T0lkR0sXK-kRJX6mW=s1360-w1360-h1020" },
