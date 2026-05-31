@@ -430,8 +430,13 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
                 <span>{activity.duration}</span>
                 <span>{activity.distance}</span>
               </div>
-              {(activity.alltrails || activity.park || activity.google) && (
+              {(activity.alltrails || activity.park || activity.google || activity.website) && (
                 <div className="explore-card-links">
+                  {activity.website && (
+                    <a href={activity.website} target="_blank" rel="noreferrer" className="explore-link website">
+                      Menu
+                    </a>
+                  )}
                   {activity.alltrails && (
                     <a href={activity.alltrails} target="_blank" rel="noreferrer" className="explore-link alltrails">
                       AllTrails

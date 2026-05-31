@@ -473,6 +473,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/The+Raven+Bistro+Jasper",
+    website: "https://theravenbistro.com/",
     tags: ["food"]
   },
   {
@@ -489,6 +490,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Kumama+Jasper+Alberta",
+    website: "https://kumama.ca/",
     tags: ["food"]
   },
   {
@@ -505,6 +507,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Stone+Peak+Restaurant+Jasper",
+    website: "https://www.jasperinn.com/stone-peak-restaurant",
     tags: ["food"]
   },
   {
@@ -521,6 +524,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Otto's+Cache+Provisions+Jasper+Alberta",
+    website: "https://ottoscache.com/",
     tags: ["food"]
   },
   {
@@ -537,6 +541,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Orso+Trattoria+Fairmont+Jasper+Park+Lodge",
+    website: "https://www.fairmont.com/jasper/dining/orso/",
     tags: ["food"]
   },
   // Lake Louise - Fairmont dining + village options
@@ -554,6 +559,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Fairview+Bar+Restaurant+Chateau+Lake+Louise",
+    website: "https://www.fairmont.com/lake-louise/dining/fairview/",
     tags: ["food"]
   },
   {
@@ -570,6 +576,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Walliser+Stube+Chateau+Lake+Louise",
+    website: "https://www.fairmont.com/lake-louise/dining/walliserstube/",
     tags: ["food"]
   },
   {
@@ -586,6 +593,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Afternoon+Tea+Fairmont+Chateau+Lake+Louise",
+    website: "https://www.fairmont.com/lake-louise/dining/afternoontea/",
     tags: ["food"]
   },
   {
@@ -602,6 +610,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Truffle+Pigs+Bistro+Lake+Louise",
+    website: "https://www.trufflepigs.ca/",
     tags: ["food"]
   },
   // Banff / Canmore - ramen, brunch, bakery, fine dining
@@ -619,6 +628,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Ramen+Arashi+Canmore",
+    website: "https://www.ramenarashi.com/",
     tags: ["food", "close"]
   },
   {
@@ -635,6 +645,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Ramen+Arashi+Banff",
+    website: "https://www.ramenarashi.com/",
     tags: ["food"]
   },
   {
@@ -651,6 +662,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/The+Trough+Canmore",
+    website: "https://www.thetroughcanmore.com/",
     tags: ["food", "close"]
   },
   {
@@ -667,6 +679,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/EpiCanmore+bakery+Canmore",
+    website: "https://epicanmore.com/",
     tags: ["food", "close"]
   },
   {
@@ -683,6 +696,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Harvest+Cafe+Canmore",
+    website: "https://www.harvestcanmore.ca/",
     tags: ["food", "close"]
   },
   {
@@ -699,6 +713,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Block+Kitchen+Bar+Canmore",
+    website: "https://www.blockkitchenandbar.com/",
     tags: ["food", "close"]
   },
   {
@@ -715,6 +730,7 @@ export const ACTIVITIES = [
     park: null,
     alltrails: null,
     google: "https://www.google.com/maps/search/Tavern+1883+Canmore",
+    website: "https://www.tavern1883.ca/",
     tags: ["food", "close"]
   }
 ];
