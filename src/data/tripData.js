@@ -23,7 +23,7 @@ export const TRIP_DATA = {
         { layer: 2, type: "ferry", time: "10:00 AM", title: "✅ Swartz Bay Ferry", note: "Queen of New Westminster - check in 30-60 min early", lat: 48.6865, lng: -123.4105 },
         { layer: 3, type: "food", time: "Lunch in Hope", title: "🍽️ Home Restaurant", note: "665 Old Hope Princeton Way · Classic diner, huge portions, famous homemade pie", lat: 49.3758583, lng: -121.4271316 },
         { layer: 1, type: "hotel", time: "Late afternoon", title: "Comfort Suites Kelowna", note: "1 King + 1 Queen Suite · Check-in 4:00 PM · Confirmation #36565470 · 877-456-5770", url: "https://www.choicehotels.com/en-ca/reservations/reservation-details/36565470", lat: 49.8936661, lng: -119.4170556, coverPhoto: "/images/kelowna-comfort-suites.png" },
-        { layer: 2, type: "wine", time: "7:30 PM", title: "✅ Mission Hill Winery", note: "Dinner reservation 7:30 PM", url: "https://www.missionhillwinery.com/terrace-restaurant/terrace-dinner-menu/", lat: 49.8351166, lng: -119.5867142, coverPhoto: "https://www.missionhillwinery.com/wp-content/uploads/2026/05/MH-Terrace-Plated-Alternating-Red-Angle.jpg" }
+        { layer: 2, type: "wine", time: "7:30 PM", title: "✅ Mission Hill Winery", note: "Dinner reservation 7:30 PM", url: "https://www.missionhillwinery.com/terrace-restaurant/terrace-dinner-menu/", lat: 49.8351166, lng: -119.5867142, coverPhoto: "https://lh3.googleusercontent.com/p/AF1QipN7CM9UmnAtPSgRlX_nDoOwiRexgTfr5lkLQHe3=s1360-w1360-h1020-rw" }
       ]
     },
     {
