@@ -35,6 +35,7 @@ export const ACTIVITIES = [
     lng: -117.7587,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-skyline",
+    image: "/images/locations/sulphur-skyline.jpg",
     tags: ["hike", "summit", "views"]
   },
   {
@@ -50,6 +51,7 @@ export const ACTIVITIES = [
     lng: -118.0325,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/valley-of-the-five-lakes",
+    image: "/images/locations/valley-five-lakes.jpg",
     tags: ["hike", "lakes"]
   },
   {
@@ -65,6 +67,7 @@ export const ACTIVITIES = [
     lng: -118.0591,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/old-fort-point-trail",
+    image: "/images/locations/old-fort-point.jpg",
     tags: ["hike", "quick"]
   },
   {
@@ -128,6 +131,7 @@ export const ACTIVITIES = [
     lng: -117.2230,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/wilcox-pass",
+    image: "/images/locations/wilcox-pass.jpg",
     tags: ["hike", "views", "alpine"]
   },
   {
@@ -143,6 +147,7 @@ export const ACTIVITIES = [
     lng: -118.0817,
     park: "jasper",
     alltrails: null,
+    image: "/images/locations/night-sky.jpg",
     tags: ["evening", "unique"]
   },
 
@@ -160,6 +165,7 @@ export const ACTIVITIES = [
     lng: -116.2337,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore",
+    image: "/images/locations/lake-louise.jpg",
     tags: ["hike", "iconic", "easy"]
   },
   {
@@ -175,7 +181,7 @@ export const ACTIVITIES = [
     lng: -116.1767,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Lake_Agnes_Tea_House_2015.jpg/1200px-Lake_Agnes_Tea_House_2015.jpg",
+    image: "/images/locations/lake-agnes.jpg",
     tags: ["hike", "tea house", "iconic"]
   },
   {
@@ -191,6 +197,7 @@ export const ACTIVITIES = [
     lng: -116.2728,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/plain-of-six-glaciers-trail",
+    image: "/images/locations/plain-six-glaciers.jpg",
     tags: ["hike", "glacier", "tea house"]
   },
   {
@@ -206,6 +213,7 @@ export const ACTIVITIES = [
     lng: -116.1795,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/rockpile",
+    image: "/images/locations/rockpile-moraine.jpg",
     tags: ["hike", "quick", "iconic"]
   },
   {
@@ -221,6 +229,7 @@ export const ACTIVITIES = [
     lng: -116.1835,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/consolation-lakes-trail",
+    image: "/images/locations/consolation-lakes.jpg",
     tags: ["hike", "lakes", "quiet"]
   },
   {
@@ -236,6 +245,7 @@ export const ACTIVITIES = [
     lng: -116.2167,
     park: "banff",
     alltrails: null,
+    image: "/images/locations/lake-louise-canoe.jpg",
     tags: ["water", "iconic"]
   },
 
@@ -270,6 +280,7 @@ export const ACTIVITIES = [
     lng: -115.5606,
     park: "banff",
     alltrails: null,
+    image: "/images/locations/hot-springs.jpg",
     tags: ["relax", "hot springs"]
   },
   {
@@ -285,6 +296,7 @@ export const ACTIVITIES = [
     lng: -115.7632,
     park: "banff",
     alltrails: null,
+    image: "/images/locations/skiing.jpg",
     tags: ["skiing", "unique"]
   },
   // Emerald Lake + Lake Louise morning hikes (valid Day 7 morning)
@@ -301,6 +313,7 @@ export const ACTIVITIES = [
     lng: -116.5281,
     park: "yoho",
     alltrails: "https://www.alltrails.com/trail/canada/british-columbia/emerald-lake-loop",
+    image: "/images/locations/emerald-lake-yoho.jpg",
     tags: ["hike", "lakes", "iconic"]
   },
   {
@@ -316,7 +329,7 @@ export const ACTIVITIES = [
     lng: -116.1767,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-agnes-trail",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Lake_Agnes_Tea_House_2015.jpg/1200px-Lake_Agnes_Tea_House_2015.jpg",
+    image: "/images/locations/lake-agnes.jpg",
     tags: ["hike", "tea house", "morning"]
   },
   {
@@ -332,6 +345,7 @@ export const ACTIVITIES = [
     lng: -116.2337,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-louise-lakeshore",
+    image: "/images/locations/lake-louise.jpg",
     tags: ["hike", "quick", "morning"]
   },
   // Hikes
@@ -348,6 +362,7 @@ export const ACTIVITIES = [
     lng: -115.8399,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/johnston-canyon-to-ink-pots",
+    image: "/images/locations/johnston-canyon.jpg",
     tags: ["hike", "waterfall", "iconic"]
   },
   {
@@ -363,6 +378,7 @@ export const ACTIVITIES = [
     lng: -115.4031,
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/grassi-lake-trail",
+    image: "/images/locations/grassi-lakes.jpg",
     tags: ["hike", "close", "lakes"]
   },
   {
@@ -378,6 +394,7 @@ export const ACTIVITIES = [
     lng: -115.4180,
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/ha-ling-peak",
+    image: "/images/locations/ha-ling-peak.jpg",
     tags: ["hike", "summit", "close"]
   },
   {
@@ -393,6 +410,7 @@ export const ACTIVITIES = [
     lng: -115.1187,
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/rawson-lake--11",
+    image: "/images/locations/rawson-lake.jpg",
     tags: ["hike", "lakes", "quiet"]
   },
   {
@@ -408,6 +426,7 @@ export const ACTIVITIES = [
     lng: -115.4531,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/lake-minnewanka",
+    image: "/images/locations/lake-minnewanka.jpg",
     tags: ["hike", "lakes", "easy"]
   },
   {
@@ -423,6 +442,7 @@ export const ACTIVITIES = [
     lng: -115.5086,
     park: null,
     alltrails: null,
+    image: "/images/locations/two-jack-lake.jpg",
     tags: ["scenic", "quick", "water"]
   },
   // Town
@@ -439,6 +459,7 @@ export const ACTIVITIES = [
     lng: -115.5692,
     park: "banff",
     alltrails: null,
+    image: "/images/locations/banff-townsite.jpg",
     tags: ["town", "easy"]
   },
   // Full day trip: Dinosaur Day (compound activity - adds multiple stops)
@@ -455,6 +476,7 @@ export const ACTIVITIES = [
     lng: -111.5149,
     park: null,
     alltrails: "https://www.alltrails.com/trail/canada/alberta/drumheller-hoodoos",
+    image: "/images/locations/dinosaur-museum.jpg",
     tags: ["museum", "unique", "full day"],
     compound: true,
     stops: [
