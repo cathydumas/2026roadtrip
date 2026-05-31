@@ -103,7 +103,7 @@ export const TRIP_DATA = {
         { layer: 2, type: "scenic", time: "~45 min stop", title: "📷 Peyto Lake + Bow Summit", note: "Wolf-shaped turquoise lake from Bow Summit lookout. 10-min paved walk to main viewpoint, OR 40-min loop trail along the ridgeline for even better angles (easy, well-marked)", lat: 51.7171414, lng: -116.507574 },
         { layer: 2, type: "scenic", time: "~30 min stop", title: "📷 Bow Lake", note: "Stunning glacial lake right off the highway. Walk along the shore to Bow Glacier Falls trailhead (20 min each way, flat, wildflowers). Full hike to falls is 9km return, 3 hrs", lat: 51.6769, lng: -116.4458 },
         { layer: 3, type: "drive", time: "Late afternoon", title: "ℹ️ Lake Louise Visitor Centre", note: "Samson Mall · Open 9 AM - 5 PM (summer). Trail updates, bear activity, Moraine shuttle info", lat: 51.4267, lng: -116.1775 },
-        { layer: 1, type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback Suite, 2 nights", url: "https://www.paradiselodge.com/", lat: 51.4161708, lng: -116.196697 }
+        { layer: 1, type: "hotel", time: "Evening", title: "Paradise Lodge", note: "Saddleback Suite (Queen + 2 Twin) · 2 nights · Check-in 8:00 AM-9:30 PM at Main Lodge · Confirmation #1059211922 · 403-760-7555", url: "https://www.paradiselodge.com/", lat: 51.4161708, lng: -116.196697 }
       ]
     },
     {
