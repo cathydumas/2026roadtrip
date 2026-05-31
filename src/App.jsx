@@ -418,7 +418,19 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
               )}
               {activity.image && (
                 <div className="explore-card-image">
-                  <img src={activity.image} alt={activity.name} />
+                  {activity.image.includes('youtube.com') ? (
+                    <iframe
+                      width="100%"
+                      height="200"
+                      src={activity.image.replace('youtube.com/live/', 'youtube.com/embed/')}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title={activity.name}
+                    />
+                  ) : (
+                    <img src={activity.image} alt={activity.name} />
+                  )}
                 </div>
               )}
               <div className="explore-card-header">

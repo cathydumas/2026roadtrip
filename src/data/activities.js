@@ -297,8 +297,7 @@ export const ACTIVITIES = [
     lng: -115.7632,
     park: "banff",
     google: "https://www.skibanff.com/conditions/",
-    website: "https://www.youtube.com/live/m1F2ggd0hxA",
-    image: "/images/locations/sunshine-village.jpg",
+    image: "https://www.youtube.com/live/m1F2ggd0hxA",
     tags: ["skiing", "unique"]
   },
   // Emerald Lake + Lake Louise morning hikes (valid Day 7 morning)
