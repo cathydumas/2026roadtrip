@@ -91,7 +91,7 @@ export const TRIP_DATA = {
       startAccom: { title: "Patricia Lake Bungalows", lat: 52.902511, lng: -118.097846 },
       items: [
         { layer: 4, type: "market", time: "11 AM - 3 PM", title: "🧑‍🌾 Jasper Farmers Market", note: "701 Turret St · Wednesdays in summer · Local produce, baked goods, crafts", lat: 52.8755, lng: -118.0828 },
-        { layer: 3, type: "drive", time: "On way home", title: "⛽ Fill up in Jasper", note: "Fill tonight - leaving early tomorrow", lat: 52.8734, lng: -118.0817 }
+        { layer: 3, type: "drive", time: "On way home", title: "⛽ Fill up in Jasper", note: "Fill tonight - leaving early tomorrow. Next gas is 175 km (109 mi) away at Saskatchewan River Crossing", lat: 52.8734, lng: -118.0817 }
       ]
     },
     {
