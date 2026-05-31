@@ -205,7 +205,7 @@ export const TRIP_DATA = {
       items: [
         { layer: 3, type: "food", time: "9-10 AM", title: "🍳 Hot breakfast before you go", note: "Fuel up before raft. JK Bakery (opens 8 AM) or Safeway deli", url: "https://www.jkbakery.ca/", lat: 51.0903837, lng: -115.3612421 },
         { layer: 2, type: "activity", time: "1:45-4:45 PM", title: "✅ Whitewater Rafting", note: "CONFIRMED · Wild Water Adventures · Kicking Horse River Class II-IV+ · Snacks at River Base after", lat: 51.300, lng: -116.963, coverPhoto: "/images/locations/whitewater-rafting.jpg" },
-        { layer: 3, type: "scenic", time: "En route", title: "📷 Rogers Pass", note: "Glacier NP · 1,382m summit, surrounded by massive peaks and glaciers", lat: 51.2833, lng: -117.5167, coverPhoto: "/images/locations/rogers-pass.jpg" },
+        { layer: 3, type: "scenic", time: "En route", title: "📷 Rogers Pass", note: "Glacier NP · 1,382m summit, surrounded by massive peaks and glaciers. Fun fact: Maggie's dad skied off this massive cliff!", lat: 51.2833, lng: -117.5167, coverPhoto: "/images/locations/rogers-pass.jpg" },
         { layer: 1, type: "hotel", time: "Evening", title: "Boulder Mountain Resort", note: "Two-Bedroom Cabin · 1 night · Check-in 4:00 PM · Confirmation #50912114 · 250-837-4420", url: "https://bouldermountainresort.ca/lodging/two-bedroom-cabins/", lat: 50.9913465, lng: -118.26293, coverPhoto: "https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2462.jpg", photos: [
           'https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2607.jpg',
           'https://bouldermountainresort.ca/wp-content/uploads/2022/12/IMG_2625.jpg',
