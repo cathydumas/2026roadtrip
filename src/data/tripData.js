@@ -134,7 +134,17 @@ export const TRIP_DATA = {
       startAccom: { title: "Paradise Lodge", lat: 51.4161708, lng: -116.196697 },
       items: [
         { layer: 3, type: "drive", time: "Afternoon", title: "ℹ️ Banff Visitor Centre", note: "224 Banff Ave · Open 9 AM - 7 PM (summer). Park passes, trail conditions, wildlife alerts. Park at train station (free), 5 min walk north", lat: 51.1780, lng: -115.5702 },
-        { layer: 1, type: "hotel", time: "Evening", title: "Canmore Airbnb", note: "Hot Tub | Pool | Mountain Getaway | 2 BR · 140 Kananaskis Way · 3 nights · Check-in after 4:00 PM", url: "https://www.airbnb.ca/rooms/50138595", lat: 51.0865, lng: -115.3424 }
+        { layer: 1, type: "hotel", time: "Evening", title: "Canmore Airbnb", note: "Hot Tub | Pool | Mountain Getaway | 2 BR · 140 Kananaskis Way · 3 nights · Check-in after 4:00 PM", url: "https://www.airbnb.ca/rooms/50138595", lat: 51.0865, lng: -115.3424, photos: [
+          '/images/canmore-airbnb/1.jpg',
+          '/images/canmore-airbnb/2.jpg',
+          '/images/canmore-airbnb/3.jpg',
+          '/images/canmore-airbnb/4.jpg',
+          '/images/canmore-airbnb/5.jpg',
+          '/images/canmore-airbnb/6.jpg',
+          '/images/canmore-airbnb/7.jpg',
+          '/images/canmore-airbnb/8.jpg',
+          '/images/canmore-airbnb/9.jpg'
+        ] }
       ]
     },
     {

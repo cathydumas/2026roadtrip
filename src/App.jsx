@@ -492,6 +492,7 @@ export default function App() {
   const [activeLayers, setActiveLayers] = useState([1, 2, 3, 4]);
   const [prefsOpen, setPrefsOpen] = useState(false);
   const [exploreArea, setExploreArea] = useState(null);
+  const [photoGallery, setPhotoGallery] = useState(null);
   const [weather, setWeather] = useState({});
   // Per-activity conditions from Parks Canada scraper: { activityId: { severity, condition, comment } }
   const [activityConditions, setActivityConditions] = useState(() => {
@@ -929,6 +930,16 @@ export default function App() {
                                 </a>
                               </div>
                             )}
+                            {item.photos && item.photos.length > 0 && (
+                              <div className="item-note" style={{ marginTop: '4px' }}>
+                                <button
+                                  onClick={() => setPhotoGallery({ photos: item.photos, title: item.title })}
+                                  style={{ color: '#0176d3', textDecoration: 'underline', background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer' }}
+                                >
+                                  View photos ({item.photos.length}) →
+                                </button>
+                              </div>
+                            )}
                             {item.glacierTempDelta && weather[day.id] && weather[day.id].temperature_2m_max && (
                               <div className="item-note" style={{ marginTop: '4px', fontStyle: 'italic' }}>
                                 🧊 Glacier temperature: expect ~{Math.round(weather[day.id].temperature_2m_max[0] + item.glacierTempDelta)}°C ({item.glacierTempDelta}°C cooler than {Math.round(weather[day.id].temperature_2m_max[0])}°C forecast)
@@ -1078,6 +1089,24 @@ export default function App() {
             onRemoveActivity={removeActivity}
             activityConditions={activityConditions}
           />
+        </>
+      )}
+
+      {/* Photo gallery modal */}
+      {photoGallery && (
+        <>
+          <div className="photo-backdrop" onClick={() => setPhotoGallery(null)} />
+          <div className="photo-modal">
+            <div className="photo-header">
+              <div className="photo-title">{photoGallery.title.replace(/[✅📷🥾⭐♨️🚡🦕🚂☕🍽️🍳🥩🛒⛽🐻🌊🚌🧑‍🌾🏨]/g, '').trim()}</div>
+              <button className="photo-close" onClick={() => setPhotoGallery(null)}>✕</button>
+            </div>
+            <div className="photo-grid">
+              {photoGallery.photos.map((src, i) => (
+                <img key={i} src={src} alt={`Photo ${i + 1}`} className="photo-img" />
+              ))}
+            </div>
+          </div>
         </>
       )}
 
