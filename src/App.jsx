@@ -922,6 +922,13 @@ export default function App() {
                               {item.time && <span className="item-time">{item.time}</span>}
                             </div>
                             {item.note && <div className="item-note">{item.note}</div>}
+                            {item.url && (
+                              <div className="item-note" style={{ marginTop: '4px' }}>
+                                <a href={item.url} target="_blank" rel="noreferrer" style={{ color: '#0176d3', textDecoration: 'underline' }}>
+                                  View listing →
+                                </a>
+                              </div>
+                            )}
                             {item.glacierTempDelta && weather[day.id] && weather[day.id].temperature_2m_max && (
                               <div className="item-note" style={{ marginTop: '4px', fontStyle: 'italic' }}>
                                 🧊 Glacier temperature: expect ~{Math.round(weather[day.id].temperature_2m_max[0] + item.glacierTempDelta)}°C ({item.glacierTempDelta}°C cooler than {Math.round(weather[day.id].temperature_2m_max[0])}°C forecast)
