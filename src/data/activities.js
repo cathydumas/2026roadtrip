@@ -99,7 +99,7 @@ export const ACTIVITIES = [
     lng: -117.7698,
     park: "jasper",
     alltrails: null,
-    image: "https://parks.canada.ca/content/dam/pn-np/ab/jasper/WET4/activ/experience/piscines-pools/miette/h/PCM-H-MIETTEH_01_D.jpg/_jcr_content/renditions/cq5dam.web.1280.1280.jpeg",
+    image: "/images/locations/miette-hot-springs.jpg",
     tags: ["relax", "hot springs"]
   },
   {
@@ -148,7 +148,7 @@ export const ACTIVITIES = [
     park: "jasper",
     alltrails: null,
     google: "https://www.jasperplanetarium.com/",
-    image: "/images/locations/night-sky.jpg",
+    image: "/images/locations/dark-sky-preserve.jpg",
     tags: ["evening", "unique"]
   },
 
