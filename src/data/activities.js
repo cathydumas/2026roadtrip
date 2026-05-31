@@ -67,7 +67,7 @@ export const ACTIVITIES = [
     lng: -118.0591,
     park: "jasper",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/old-fort-point-trail",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1200",
     tags: ["hike", "quick"]
   },
   {
@@ -83,7 +83,7 @@ export const ACTIVITIES = [
     lng: -118.0978,
     park: "jasper",
     alltrails: null,
-    image: "https://images.unsplash.com/photo-1507034589631-9433cc6bc453?w=1200",
+    image: "https://www.patricialakebungalows.com/uploads/files/Images/Activities/boats-collage.webp",
     tags: ["water", "close"]
   },
   {
@@ -99,7 +99,7 @@ export const ACTIVITIES = [
     lng: -117.7698,
     park: "jasper",
     alltrails: null,
-    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200",
+    image: "https://parks.canada.ca/content/dam/pn-np/ab/jasper/WET4/activ/experience/piscines-pools/miette/h/PCM-H-MIETTEH_01_D.jpg/_jcr_content/renditions/cq5dam.web.1280.1280.jpeg",
     tags: ["relax", "hot springs"]
   },
   {
