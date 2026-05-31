@@ -226,7 +226,7 @@ export const TRIP_DATA = {
       km: 700,
       startAccom: { title: "Boulder Mountain Resort", lat: 50.9913465, lng: -118.26293 },
       items: [
-        { layer: 3, type: "scenic", time: "~45 min", title: "📷 Three Valley Gap", note: "Quick pull-off on Hwy 1 - glacial lake with dramatic mountain reflections", lat: 50.9333, lng: -118.4457 , coverPhoto: "/images/locations/three-valley-gap.jpg"},
+        { layer: 3, type: "scenic", time: "~45 min", title: "📷 Three Valley Gap", note: "Historic ghost town and heritage village with glacial lake views. Quick stop on Hwy 1 with dramatic mountain reflections. Restored 1880s buildings and old general store.", lat: 50.9333, lng: -118.4457 , coverPhoto: "/images/locations/three-valley-gap.jpg"},
         { layer: 3, type: "scenic", time: "~1 hr", title: "🚂 Craigellachie - Last Spike", note: "Where the last spike of the Canadian Pacific Railway was driven in 1885. 15 min stop", lat: 50.9749, lng: -118.7239, coverPhoto: "/images/locations/last-spike.jpg" },
         { layer: 3, type: "food", time: "Mid-morning", title: "☕ Blondies Cafe", note: "Sicamous · 302 Finlayson St · 4.5 stars. Great espresso, fresh baking, lovely yard", lat: 50.837157499999996, lng: -118.9891111 },
         { layer: 3, type: "food", time: "Lunch in Kamloops", title: "🍳 Hello Toast", note: "428 Victoria St · Kamloops' most popular brunch. Legendary eggs benny. Get there by noon", url: "https://www.hellotoast.ca/menu", lat: 50.676030100000006, lng: -120.3311102 },
