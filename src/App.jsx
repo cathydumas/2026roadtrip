@@ -422,9 +422,9 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
                     <iframe
                       width="100%"
                       height="200"
-                      src={activity.image.replace('youtube.com/live/', 'youtube.com/embed/')}
+                      src={activity.image.replace('youtube.com/live/', 'youtube-nocookie.com/embed/')}
                       frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
                       title={activity.name}
                     />
