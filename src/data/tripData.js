@@ -52,7 +52,13 @@ export const TRIP_DATA = {
           'https://www.patricialakebungalows.com/uploads/thumbnails/KingBed.jpg.3b74bb79.jpg',
           'https://www.patricialakebungalows.com/uploads/thumbnails/Kitchen2.jpg.5a98b808.jpg',
           'https://www.patricialakebungalows.com/uploads/thumbnails/LivingRoom.jpg.27c0b7a2.jpg',
-          'https://www.patricialakebungalows.com/uploads/thumbnails/MasterBathroom.jpg.3afb7502.jpg'
+          'https://www.patricialakebungalows.com/uploads/thumbnails/MasterBathroom.jpg.3afb7502.jpg',
+          'https://www.patricialakebungalows.com/uploads/files/Images/Activities/boats-collage.webp',
+          'https://www.patricialakebungalows.com/uploads/files/Images/Activities/swimming.webp',
+          'https://www.patricialakebungalows.com/uploads/files/Images/Activities/hot-tub.webp',
+          'https://www.patricialakebungalows.com/uploads/files/Images/Activities/bbq.webp',
+          'https://www.patricialakebungalows.com/uploads/files/Images/Activities/fire-pits.webp',
+          'https://www.patricialakebungalows.com/uploads/files/Images/Activities/playground.webp'
         ] }
       ]
     },
