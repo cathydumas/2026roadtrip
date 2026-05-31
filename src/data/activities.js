@@ -256,7 +256,7 @@ export const ACTIVITIES = [
     id: "banff-gondola",
     area: "banff",
     name: "Banff Gondola - Sulphur Mountain",
-    description: "8-min ride to 2,281m. Boardwalk to Sanson Peak, interpretive centre, 360-degree views of six mountain ranges. Restaurant at summit.",
+    description: "8-min ride to 2,281m. Boardwalk to Sanson Peak, interpretive centre, 360-degree views of six mountain ranges. Restaurant at summit. Free shuttle from Banff train station.",
     cost: "$76/person",
     duration: "2-3 hours",
     distance: "20 min from Canmore",
@@ -281,14 +281,14 @@ export const ACTIVITIES = [
     lng: -115.5606,
     park: "banff",
     alltrails: null,
-    image: "/images/locations/hot-springs.jpg",
+    image: "/images/locations/banff-hot-springs.jpg",
     tags: ["relax", "hot springs"]
   },
   {
     id: "banff-sunshine-ski",
     area: "banff",
     name: "Summer Skiing - Sunshine Village",
-    description: "Rare summer ski season Jun 20 - Jul 5, 2026. One lift, several runs after record snowfall. Unique once-in-a-lifetime experience.",
+    description: "Rare summer ski season Jun 20 - Jul 5, 2026. One lift, several runs after record snowfall. Unique once-in-a-lifetime experience. Live webcam available.",
     cost: "$70-90/person",
     duration: "Half day",
     distance: "35 min drive",
@@ -296,8 +296,9 @@ export const ACTIVITIES = [
     lat: 51.1182,
     lng: -115.7632,
     park: "banff",
-    alltrails: null,
-    image: "/images/locations/skiing.jpg",
+    google: "https://www.skibanff.com/conditions/",
+    website: "https://www.youtube.com/live/m1F2ggd0hxA?si=j-SGEnbBQa5csYkZ",
+    image: "https://www.youtube.com/live/m1F2ggd0hxA?si=j-SGEnbBQa5csYkZ",
     tags: ["skiing", "unique"]
   },
   // Emerald Lake + Lake Louise morning hikes (valid Day 7 morning)
