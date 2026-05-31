@@ -254,6 +254,7 @@ export const ACTIVITIES = [
     lng: -115.5555,
     park: "banff",
     alltrails: "https://www.alltrails.com/trail/canada/alberta/sulphur-mountain-trail",
+    image: "/images/locations/banff-gondola.jpg",
     tags: ["gondola", "views"]
   },
   {
