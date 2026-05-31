@@ -288,7 +288,7 @@ export const ACTIVITIES = [
     id: "banff-sunshine-ski",
     area: "banff",
     name: "Summer Skiing - Sunshine Village",
-    description: "Rare summer ski season Jun 20 - Jul 5, 2026. One lift, several runs after record snowfall. Unique once-in-a-lifetime experience. Live webcam available.",
+    description: "Rare summer ski season Jun 20 - Jul 5, 2026. One lift, several runs after record snowfall. Unique once-in-a-lifetime experience. Live webcam and ski conditions available.",
     cost: "$70-90/person",
     duration: "Half day",
     distance: "35 min drive",
@@ -297,8 +297,8 @@ export const ACTIVITIES = [
     lng: -115.7632,
     park: "banff",
     google: "https://www.skibanff.com/conditions/",
-    website: "https://www.youtube.com/live/m1F2ggd0hxA?si=j-SGEnbBQa5csYkZ",
-    image: "https://www.youtube.com/live/m1F2ggd0hxA?si=j-SGEnbBQa5csYkZ",
+    website: "https://www.youtube.com/live/m1F2ggd0hxA",
+    image: "/images/locations/sunshine-village.jpg",
     tags: ["skiing", "unique"]
   },
   // Emerald Lake + Lake Louise morning hikes (valid Day 7 morning)
