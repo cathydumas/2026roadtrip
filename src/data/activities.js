@@ -19,6 +19,7 @@ export const ACTIVITIES = [
     lng: -118.1231,
     park: "jasper",
     alltrails: null,
+    image: "/images/locations/jasper-skytram.jpg",
     tags: ["views", "gondola"]
   },
   {
