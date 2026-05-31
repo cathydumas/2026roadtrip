@@ -55,6 +55,22 @@ export const ACTIVITIES = [
     tags: ["hike", "lakes"]
   },
   {
+    id: "jasper-edith-cavell",
+    area: "jasper",
+    name: "Edith Cavell Meadows",
+    description: "8km return, 370m gain. Stunning alpine meadows with close-up views of Angel Glacier and Mt Edith Cavell. Wildflowers in July. One of Jasper's most scenic hikes.",
+    cost: "Free (park pass)",
+    duration: "3-4 hours",
+    distance: "30 min drive south",
+    difficulty: "moderate",
+    lat: 52.6764,
+    lng: -118.0561,
+    park: "jasper",
+    alltrails: "https://www.alltrails.com/trail/canada/alberta/cavell-meadows-trail",
+    image: "/images/locations/edith-cavell.jpg",
+    tags: ["hike", "alpine", "wildflowers", "glacier"]
+  },
+  {
     id: "jasper-old-fort-point",
     area: "jasper",
     name: "Old Fort Point Loop",
