@@ -718,11 +718,11 @@ export default function App() {
       if (activity.compound && activity.stops) {
         activity.stops.forEach(stop => {
           if (stop.lat && stop.lng) {
-            points.push({ lat: stop.lat, lng: stop.lng, title: stop.title, note: stop.note, time: stop.time, layer: 'planned' });
+            points.push({ lat: stop.lat, lng: stop.lng, title: stop.title, note: stop.note, time: stop.time, layer: 'planned', coverPhoto: activity.image });
           }
         });
       } else if (activity.lat && activity.lng) {
-        points.push({ lat: activity.lat, lng: activity.lng, title: activity.name, note: activity.description, time: activity.duration, layer: 'planned' });
+        points.push({ lat: activity.lat, lng: activity.lng, title: activity.name, note: activity.description, time: activity.duration, layer: 'planned', coverPhoto: activity.image });
       }
     });
     return points;
