@@ -960,7 +960,7 @@ export default function App() {
                                   rel="noreferrer"
                                   className="nav-btn"
                                 >
-                                  View listing
+                                  {item.type === 'food' || item.type === 'wine' ? 'View menu' : 'View listing'}
                                 </a>
                               )}
                               {item.photos && item.photos.length > 0 && (

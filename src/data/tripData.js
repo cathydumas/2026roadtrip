@@ -136,7 +136,7 @@ export const TRIP_DATA = {
       km: 30,
       startAccom: { title: "Paradise Lodge", lat: 51.4161708, lng: -116.196697 },
       items: [
-        { layer: 2, type: "food", time: "12:15 PM", title: "✅ Lakeview Lounge", note: "Chateau Lake Louise · Lunch reservation", lat: 51.4163, lng: -116.2138 },
+        { layer: 2, type: "food", time: "12:15 PM", title: "✅ Lakeview Lounge", note: "Chateau Lake Louise · Lunch reservation", url: "https://www.fairmont.com/lake-louise/dining/lakeviewlounge/", lat: 51.4163, lng: -116.2138 },
         { layer: 2, type: "activity", time: "4:00-5:00 PM", title: "✅ Moraine Lake Shuttle", note: "CONFIRMED · 3 adults · Depart Park & Ride · Shuttles every 30 min", lat: 51.4412008, lng: -116.162196 },
         { layer: 3, type: "activity", time: "⚠️ 7:30 PM", title: "🚌 LAST SHUTTLE back from Moraine Lake", note: "DO NOT MISS - no cell service, no lights, no way to call for help after this. Leave trailhead by 7:00 PM", lat: 51.3282264, lng: -116.179504 }
       ]
@@ -230,7 +230,7 @@ export const TRIP_DATA = {
         { layer: 3, type: "scenic", time: "~45 min", title: "📷 Three Valley Gap", note: "Quick pull-off on Hwy 1 - glacial lake with dramatic mountain reflections", lat: 50.9333, lng: -118.4457, coverPhoto: "https://lh3.googleusercontent.com/p/AF1QipNGxW5qhK_0kEQGH-MqWFo8LB3nwLzPq-xhKbw=s1360-w1360-h1020" },
         { layer: 3, type: "scenic", time: "~1 hr", title: "🚂 Craigellachie - Last Spike", note: "Where the last spike of the Canadian Pacific Railway was driven in 1885. 15 min stop", lat: 50.9749, lng: -118.7239 },
         { layer: 3, type: "food", time: "Mid-morning", title: "☕ Blondies Cafe", note: "Sicamous · 302 Finlayson St · 4.5 stars. Great espresso, fresh baking, lovely yard", lat: 50.837157499999996, lng: -118.9891111 },
-        { layer: 3, type: "food", time: "Lunch in Kamloops", title: "🍳 Hello Toast", note: "428 Victoria St · Kamloops' most popular brunch. Legendary eggs benny. Get there by noon", lat: 50.676030100000006, lng: -120.3311102 },
+        { layer: 3, type: "food", time: "Lunch in Kamloops", title: "🍳 Hello Toast", note: "428 Victoria St · Kamloops' most popular brunch. Legendary eggs benny. Get there by noon", url: "https://www.hellotoast.ca/menu", lat: 50.676030100000006, lng: -120.3311102 },
         { layer: 2, type: "ferry", time: "9:00 PM", title: "✅ Tsawwassen → Swartz Bay", note: "CONFIRMED · Spirit of Vancouver Island · Arrives 10:35 PM", lat: 49.0069326, lng: -123.130321 },
         { layer: 1, type: "activity", time: "Evening", title: "Home sweet Victoria", note: "Trip complete - 10 days, ~2,400 km" }
       ]
