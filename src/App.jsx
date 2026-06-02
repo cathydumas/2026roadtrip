@@ -791,28 +791,15 @@ export default function App() {
     return diff;
   };
 
-  // Get hero photo for a day (first scenic coverPhoto or accommodation coverPhoto)
+  // Get hero photo for a day (first scenic/activity/wine coverPhoto, then hotel as fallback)
   const getDayHeroPhoto = (day) => {
-    const scenic = day.items.find(i => i.coverPhoto && (i.type === 'scenic' || i.type === 'glacier' || i.type === 'activity'));
+    const scenic = day.items.find(i => i.coverPhoto && (i.type === 'scenic' || i.type === 'glacier' || i.type === 'activity' || i.type === 'wine'));
     if (scenic) return scenic.coverPhoto;
+    const booked = day.items.find(i => i.coverPhoto && i.layer === 2);
+    if (booked) return booked.coverPhoto;
     const hotel = day.items.find(i => i.coverPhoto && i.type === 'hotel');
     if (hotel) return hotel.coverPhoto;
     return day.items.find(i => i.coverPhoto)?.coverPhoto || null;
-  };
-
-  // Packing checklists per day
-  const PACKING = {
-    1: [],
-    2: ['Snacks for long drive', 'Phone charger'],
-    3: ['Bear spray (buy today)', 'Fishing gear', 'Warm layers for boat', 'Cooler with drinks'],
-    4: [],
-    5: ['Hiking shoes for glacier', 'Warm jacket (-15C on ice)', 'Sunscreen + sunglasses', 'Camera/extra battery', 'Snacks + water'],
-    6: ['Change of clothes for Post Hotel', 'Cash for tea house', 'Swimsuit (lake paddle)', 'Bear spray', 'Sunscreen'],
-    7: ['Cash for tea house (if hiking)', 'Swimsuit for hot springs'],
-    8: ['Groceries for cabin', 'BBQ supplies'],
-    9: ['Bear spray', 'Hiking poles', 'Packed lunch + water', 'Rain jacket', 'Sunscreen'],
-    10: ['Quick-dry clothes for rafting', 'Change of dry clothes', 'Waterproof phone case', 'Towel'],
-    11: ['Snacks for long drive', 'Ferry ticket screenshot']
   };
 
   return (
@@ -1209,20 +1196,6 @@ export default function App() {
                     </button>
                   )}
 
-                  {/* Packing checklist */}
-                  {PACKING[day.id] && PACKING[day.id].length > 0 && (
-                    <details className="packing-section">
-                      <summary className="packing-toggle">🎒 Packing list ({PACKING[day.id].length} items)</summary>
-                      <div className="packing-list">
-                        {PACKING[day.id].map((item, i) => (
-                          <label key={i} className="packing-item">
-                            <input type="checkbox" className="packing-check" />
-                            <span>{item}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </details>
-                  )}
                 </div>
               )}
             </div>
