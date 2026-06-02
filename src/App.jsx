@@ -776,6 +776,45 @@ export default function App() {
 
   const activeLayerCount = activeLayers.length;
 
+  // Trip progress
+  const tripStart = new Date('2026-06-14');
+  const tripEnd = new Date('2026-06-24');
+  const now = new Date();
+  const tripProgress = now < tripStart ? 0 : now > tripEnd ? 100 : Math.round(((now - tripStart) / (tripEnd - tripStart)) * 100);
+  const currentDayNum = getTodayId();
+  const daysUntilTrip = Math.max(0, Math.ceil((tripStart - now) / (1000 * 60 * 60 * 24)));
+
+  // Countdown to a specific date
+  const getDaysUntil = (dayDate) => {
+    const date = new Date(`${dayDate.replace(/^[A-Za-z]+ /, '')} 2026`);
+    const diff = Math.ceil((date - now) / (1000 * 60 * 60 * 24));
+    return diff;
+  };
+
+  // Get hero photo for a day (first scenic coverPhoto or accommodation coverPhoto)
+  const getDayHeroPhoto = (day) => {
+    const scenic = day.items.find(i => i.coverPhoto && (i.type === 'scenic' || i.type === 'glacier' || i.type === 'activity'));
+    if (scenic) return scenic.coverPhoto;
+    const hotel = day.items.find(i => i.coverPhoto && i.type === 'hotel');
+    if (hotel) return hotel.coverPhoto;
+    return day.items.find(i => i.coverPhoto)?.coverPhoto || null;
+  };
+
+  // Packing checklists per day
+  const PACKING = {
+    1: [],
+    2: ['Snacks for long drive', 'Phone charger'],
+    3: ['Bear spray (buy today)', 'Fishing gear', 'Warm layers for boat', 'Cooler with drinks'],
+    4: [],
+    5: ['Hiking shoes for glacier', 'Warm jacket (-15C on ice)', 'Sunscreen + sunglasses', 'Camera/extra battery', 'Snacks + water'],
+    6: ['Change of clothes for Post Hotel', 'Cash for tea house', 'Swimsuit (lake paddle)', 'Bear spray', 'Sunscreen'],
+    7: ['Cash for tea house (if hiking)', 'Swimsuit for hot springs'],
+    8: ['Groceries for cabin', 'BBQ supplies'],
+    9: ['Bear spray', 'Hiking poles', 'Packed lunch + water', 'Rain jacket', 'Sunscreen'],
+    10: ['Quick-dry clothes for rafting', 'Change of dry clothes', 'Waterproof phone case', 'Towel'],
+    11: ['Snacks for long drive', 'Ferry ticket screenshot']
+  };
+
   return (
     <div className="app">
       {/* Minimal header */}
@@ -799,6 +838,28 @@ export default function App() {
           {activeLayerCount < 4 && <span className="prefs-badge">{activeLayerCount}</span>}
         </button>
       </header>
+
+      {/* Trip progress bar */}
+      <div className="trip-progress">
+        <div className="trip-progress-bar">
+          <div className="trip-progress-fill" style={{ width: `${tripProgress}%` }} />
+          {TRIP_DATA.days.map(day => (
+            <div
+              key={day.id}
+              className={`trip-progress-dot ${day.id <= currentDayNum ? 'visited' : ''} ${day.id === currentDayNum ? 'current' : ''}`}
+              style={{ left: `${((day.id - 1) / 10) * 100}%` }}
+              title={day.title}
+            />
+          ))}
+        </div>
+        <div className="trip-progress-label">
+          {now < tripStart
+            ? `${daysUntilTrip} days until departure`
+            : now > tripEnd
+            ? 'Trip complete!'
+            : `Day ${currentDayNum} of 11`}
+        </div>
+      </div>
 
       {/* Day cards */}
       <div className="days-container">
@@ -838,7 +899,31 @@ export default function App() {
 
               {isExpanded && (
                 <div className="day-content">
-                  <div className="day-subtitle">{day.emoji} {day.subtitle}</div>
+                  {/* Hero photo */}
+                  {getDayHeroPhoto(day) && (
+                    <div className="day-hero">
+                      <img src={getDayHeroPhoto(day)} alt={day.title} />
+                      <div className="day-hero-overlay">
+                        <div className="day-hero-title">{day.emoji} {day.subtitle}</div>
+                      </div>
+                    </div>
+                  )}
+                  {!getDayHeroPhoto(day) && <div className="day-subtitle">{day.emoji} {day.subtitle}</div>}
+
+                  {/* Countdown chips for booked activities */}
+                  {now < tripStart && (
+                    <div className="countdown-strip">
+                      {day.items.filter(i => i.layer === 2 && i.title.includes('✅')).slice(0, 2).map((item, i) => {
+                        const daysLeft = getDaysUntil(day.date);
+                        return (
+                          <div key={i} className="countdown-chip">
+                            <span className="countdown-num">{daysLeft}</span>
+                            <span className="countdown-label">days until {item.title.replace(/✅\s?/, '').replace(/📷\s?/, '')}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
 
                   {/* Embedded map */}
                   {leafletLoaded && (
@@ -945,11 +1030,22 @@ export default function App() {
                               {item.time && <span className="item-time">{item.time}</span>}
                             </div>
                             {item.note && <div className="item-note">{item.note}</div>}
-                            {item.coverPhoto && (
+                            {item.photos && item.photos.length > 0 ? (
+                              <div className="photo-carousel">
+                                <div className="photo-carousel-track">
+                                  {[item.coverPhoto, ...item.photos].filter(Boolean).map((photo, pi) => (
+                                    <img key={pi} src={photo} alt={`${item.title} ${pi + 1}`} className="photo-carousel-img" />
+                                  ))}
+                                </div>
+                                <div className="photo-carousel-dots">
+                                  {[item.coverPhoto, ...item.photos].filter(Boolean).length} photos - swipe
+                                </div>
+                              </div>
+                            ) : item.coverPhoto ? (
                               <div className="item-cover-photo">
                                 <img src={item.coverPhoto} alt={item.title} />
                               </div>
-                            )}
+                            ) : null}
                             {item.glacierTempDelta && weather[day.id] && weather[day.id].temperature_2m_max && (
                               <div className="item-note" style={{ marginTop: '4px', fontStyle: 'italic' }}>
                                 🧊 Glacier temperature: expect ~{Math.round(weather[day.id].temperature_2m_max[0] + item.glacierTempDelta)}°C ({item.glacierTempDelta}°C cooler than {Math.round(weather[day.id].temperature_2m_max[0])}°C forecast)
@@ -1111,6 +1207,21 @@ export default function App() {
                         {ACTIVITIES.filter(a => a.area === dayArea).length} options
                       </span>
                     </button>
+                  )}
+
+                  {/* Packing checklist */}
+                  {PACKING[day.id] && PACKING[day.id].length > 0 && (
+                    <details className="packing-section">
+                      <summary className="packing-toggle">🎒 Packing list ({PACKING[day.id].length} items)</summary>
+                      <div className="packing-list">
+                        {PACKING[day.id].map((item, i) => (
+                          <label key={i} className="packing-item">
+                            <input type="checkbox" className="packing-check" />
+                            <span>{item}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </details>
                   )}
                 </div>
               )}

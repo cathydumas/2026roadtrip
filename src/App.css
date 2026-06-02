@@ -103,6 +103,62 @@ body {
   justify-content: center;
 }
 
+/* ===== TRIP PROGRESS ===== */
+.trip-progress {
+  padding: 12px 20px 0;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.trip-progress-bar {
+  position: relative;
+  height: 4px;
+  background: light-dark(#e0e0e0, #3a3a3c);
+  border-radius: 2px;
+  margin-bottom: 6px;
+}
+
+.trip-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #34C759, #007AFF);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.trip-progress-dot {
+  position: absolute;
+  top: -3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: light-dark(#e0e0e0, #3a3a3c);
+  border: 2px solid var(--card-bg);
+  transform: translateX(-50%);
+  transition: all 0.3s;
+}
+
+.trip-progress-dot.visited {
+  background: #007AFF;
+}
+
+.trip-progress-dot.current {
+  background: #34C759;
+  box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.3);
+  width: 12px;
+  height: 12px;
+  top: -4px;
+}
+
+.trip-progress-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-align: center;
+}
+
 /* ===== DAYS ===== */
 .days-container {
   padding: 12px 16px;
@@ -233,6 +289,173 @@ body {
   color: var(--text-secondary);
   margin-bottom: 12px;
   font-weight: 500;
+}
+
+/* Day hero photo */
+.day-hero {
+  position: relative;
+  margin: -0px -16px 12px;
+  height: 240px;
+  overflow: hidden;
+}
+
+.day-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.day-hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px 16px 12px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+}
+
+.day-hero-title {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* Countdown chips */
+.countdown-strip {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.countdown-strip::-webkit-scrollbar { display: none; }
+
+.countdown-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, light-dark(#e8f5e9, #1a3a1f), light-dark(#f1f8e9, #1a3a20));
+  border: 1px solid light-dark(#c8e6c9, #2e7d32);
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.countdown-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: light-dark(#2e7d32, #81c784);
+}
+
+.countdown-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  max-width: 120px;
+  line-height: 1.2;
+}
+
+/* Photo carousel */
+.photo-carousel {
+  margin-top: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.photo-carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  gap: 0;
+}
+
+.photo-carousel-track::-webkit-scrollbar { display: none; }
+
+.photo-carousel-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.photo-carousel-dots {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+  padding: 3px 8px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+
+/* Packing checklist */
+.packing-section {
+  margin-top: 16px;
+  border-radius: 10px;
+  background: light-dark(#f5f5f7, #2c2c2e);
+  overflow: hidden;
+}
+
+.packing-toggle {
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.packing-toggle::-webkit-details-marker { display: none; }
+
+.packing-toggle::after {
+  content: '▸';
+  margin-left: auto;
+  color: var(--text-tertiary);
+  transition: transform 0.2s;
+}
+
+details[open] .packing-toggle::after {
+  transform: rotate(90deg);
+}
+
+.packing-list {
+  padding: 0 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.packing-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.packing-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  accent-color: #34C759;
+  flex-shrink: 0;
+}
+
+.packing-item:has(.packing-check:checked) span {
+  text-decoration: line-through;
+  color: var(--text-tertiary);
 }
 
 /* Map - z-index kept LOW so sheets go above */
