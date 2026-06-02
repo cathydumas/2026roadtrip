@@ -939,7 +939,7 @@ export default function App() {
                               <span className="weather-high">{Math.round(high)}°</span>
                               {low != null && <span className="weather-low">{Math.round(low)}°</span>}
                             </div>
-                            <span className="weather-day-label">{['Today', 'Tmrw', '+2'][i]}</span>
+                            <span className="weather-day-label">{i === 0 ? 'Today' : new Date(date).toLocaleDateString('en-US', { weekday: 'short' })}</span>
                           </div>
                         );
                       })}
