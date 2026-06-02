@@ -924,20 +924,25 @@ export default function App() {
                   )}
 
                   {/* Weather strip */}
-                  {weather[day.id] && weather[day.id].time && (
+                  {weather[day.id] && weather[day.id].time && weather[day.id].temperature_2m_max && (
                     <div className="weather-strip">
-                      {weather[day.id].time.slice(0, 3).map((date, i) => (
-                        <div key={date} className="weather-chip">
-                          <span className="weather-emoji">
-                            {getWeatherEmoji(weather[day.id].weather_code ? weather[day.id].weather_code[i] : weather[day.id].weathercode?.[i])}
-                          </span>
-                          <div className="weather-temps">
-                            <span className="weather-high">{Math.round(weather[day.id].temperature_2m_max[i])}°</span>
-                            <span className="weather-low">{Math.round(weather[day.id].temperature_2m_min[i])}°</span>
+                      {weather[day.id].time.slice(0, 3).map((date, i) => {
+                        const high = weather[day.id].temperature_2m_max[i];
+                        const low = weather[day.id].temperature_2m_min?.[i];
+                        if (high == null) return null;
+                        return (
+                          <div key={date} className="weather-chip">
+                            <span className="weather-emoji">
+                              {getWeatherEmoji(weather[day.id].weather_code ? weather[day.id].weather_code[i] : weather[day.id].weathercode?.[i])}
+                            </span>
+                            <div className="weather-temps">
+                              <span className="weather-high">{Math.round(high)}°</span>
+                              {low != null && <span className="weather-low">{Math.round(low)}°</span>}
+                            </div>
+                            <span className="weather-day-label">{['Today', 'Tmrw', '+2'][i]}</span>
                           </div>
-                          <span className="weather-day-label">{['Today', 'Tmrw', '+2'][i]}</span>
-                        </div>
-                      ))}
+                        );
+                      })}
                       <span className="weather-label">GEM forecast</span>
                     </div>
                   )}

@@ -540,7 +540,7 @@ body {
   align-items: center;
   gap: 4px;
   padding: 14px 16px;
-  background: light-dark(linear-gradient(135deg, #e8f4fd, #f0f8ff), linear-gradient(135deg, #1a2a3a, #2c3e4e));
+  background: light-dark(#e8f4fd, #1a2a3a);
   border-radius: 14px;
   margin-bottom: 14px;
   overflow-x: auto;
