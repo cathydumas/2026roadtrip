@@ -931,7 +931,11 @@ export default function App() {
                           <span className="weather-emoji">
                             {getWeatherEmoji(weather[day.id].weather_code ? weather[day.id].weather_code[i] : weather[day.id].weathercode?.[i])}
                           </span>
-                          <span className="weather-temp">{Math.round(weather[day.id].temperature_2m_max[i])}°</span>
+                          <div className="weather-temps">
+                            <span className="weather-high">{Math.round(weather[day.id].temperature_2m_max[i])}°</span>
+                            <span className="weather-low">{Math.round(weather[day.id].temperature_2m_min[i])}°</span>
+                          </div>
+                          <span className="weather-day-label">{['Today', 'Tmrw', '+2'][i]}</span>
                         </div>
                       ))}
                       <span className="weather-label">GEM forecast</span>
