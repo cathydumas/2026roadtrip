@@ -1034,18 +1034,18 @@ export default function App() {
         <div className="header-left">
           <h1 className="header-title">Rockies 2026</h1>
           <svg className="header-mountains" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,40 L30,15 L50,25 L80,5 L100,18 L130,8 L160,20 L200,12 L200,40 Z" fill="url(#mountainGradient)" opacity="0.9"/>
-            <path d="M0,40 L20,25 L45,30 L70,15 L95,22 L120,12 L150,25 L180,18 L200,22 L200,40 Z" fill="url(#mountainGradient2)" opacity="0.6"/>
             <defs>
               <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#1B4332;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#2D6A4F;stop-opacity:1" />
+                <stop offset="0%" stopColor="#1B4332" stopOpacity="1" />
+                <stop offset="100%" stopColor="#2D6A4F" stopOpacity="1" />
               </linearGradient>
               <linearGradient id="mountainGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#2D6A4F;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#40916C;stop-opacity:1" />
+                <stop offset="0%" stopColor="#2D6A4F" stopOpacity="1" />
+                <stop offset="100%" stopColor="#40916C" stopOpacity="1" />
               </linearGradient>
             </defs>
+            <path d="M0,40 L30,15 L50,25 L80,5 L100,18 L130,8 L160,20 L200,12 L200,40 Z" fill="url(#mountainGradient)" opacity="0.9"/>
+            <path d="M0,40 L20,25 L45,30 L70,15 L95,22 L120,12 L150,25 L180,18 L200,22 L200,40 Z" fill="url(#mountainGradient2)" opacity="0.6"/>
           </svg>
           <div className="header-meta">{TRIP_DATA.dates} · {TRIP_DATA.totalKm.toLocaleString()} km</div>
         </div>
