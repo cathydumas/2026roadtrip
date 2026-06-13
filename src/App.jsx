@@ -277,6 +277,237 @@ function DayMap({ day, itemsKey, items, plannedPoints, mapProvider }) {
   return <div className="day-map" ref={mapRef} />;
 }
 
+// Packing list panel
+function PackingListPanel({ onClose }) {
+  const [checkedItems, setCheckedItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem('rr_packing_checked');
+      return saved ? JSON.parse(saved) : {};
+    } catch { return {}; }
+  });
+
+  const toggleItem = (key) => {
+    const newChecked = { ...checkedItems, [key]: !checkedItems[key] };
+    setCheckedItems(newChecked);
+    localStorage.setItem('rr_packing_checked', JSON.stringify(newChecked));
+  };
+
+  const packingData = {
+    'Essential Documents & Money': [
+      'Driver\'s license or ID',
+      'Health insurance card (BC Care Card)',
+      'Credit/debit cards',
+      'Cash (small bills for tips, parking, small vendors)',
+      'Park pass confirmation (if applicable)',
+      'Activity confirmations (saved on phone is fine)'
+    ],
+    'Clothing - Everyday Basics': [
+      '5-6 T-shirts / casual tops',
+      '2-3 long-sleeve shirts (layering, sun protection)',
+      '1 flannel or button-down shirt',
+      '2-3 pairs of shorts',
+      '2 pairs of jeans or hiking pants',
+      '1 pair of leggings (hiking, lounging, layering)',
+      'Light fleece or hoodie',
+      'Rain jacket (waterproof, breathable - essential!)',
+      'Warm jacket or puffer (evenings are cold, glacier stops)',
+      'Underwear (7-8 pairs)',
+      'Socks (7-8 pairs - mix of regular and hiking)',
+      'Sports bra (if hiking)',
+      'Pajamas',
+      'Swimsuit (hot tubs at Patricia Lake and Canmore!)'
+    ],
+    'Clothing - Fancy Dinner Outfit': [
+      'One nice outfit (casual elegant - long pants or dress)',
+      'Closed-toe shoes (not sandals/sneakers)',
+      'Light cardigan or blazer (restaurants can be cold)'
+    ],
+    'Footwear': [
+      'Hiking boots or sturdy trail shoes (broken in!)',
+      'Comfortable walking shoes or sneakers',
+      'Sandals or flip-flops (hot tub, cabin)',
+      'Nice shoes for dinner (flats, loafers, or low boots)'
+    ],
+    'Accessories': [
+      'Baseball cap or sun hat',
+      'Warm toque (glacier stops, early mornings)',
+      'Sunglasses (essential - mountain glare is intense)'
+    ],
+    'Hiking & Outdoor Gear': [
+      'Day pack (20-30L)',
+      'Refillable water bottle (1L minimum - bring 2!)',
+      'Snacks (trail mix, protein bars, jerky)',
+      'Headlamp or flashlight (late Moraine Lake shuttle)',
+      'Trekking poles (optional - helpful for longer hikes)',
+      'Dry bag or ziplock bags (protect phone/camera from rain)',
+      'Bear spray (buying in Jasper - don\'t pack this!)'
+    ],
+    'Toiletries & Personal Care': [
+      'Toothbrush & toothpaste',
+      'Shampoo & conditioner (travel size or share)',
+      'Body wash or soap',
+      'Face wash',
+      'Moisturizer (dry mountain air!)',
+      'Sunscreen SPF 50+ (reapply every 2 hours - high altitude UV is brutal)',
+      'Lip balm with SPF',
+      'Deodorant',
+      'Hair ties / clips',
+      'Brush or comb',
+      'Razor',
+      'Feminine hygiene products',
+      'Makeup (if you wear it)',
+      'Glasses / contacts + solution',
+      'Prescription medications (if any)',
+      'First aid basics (band-aids, Advil, Benadryl)',
+      'Bug spray (mosquitoes love lakes and trails)',
+      'Hand sanitizer',
+      'Tissues or wet wipes'
+    ],
+    'Electronics & Tech': [
+      'Phone + charger',
+      'Portable battery pack (cell service is spotty!)',
+      'Camera (if not using phone)',
+      'Earbuds or headphones',
+      'Car charger or USB adapter',
+      'Laptop or tablet (if needed for work/school)'
+    ],
+    'Day Trip Essentials': [
+      'Sunscreen',
+      'Water bottle (full!)',
+      'Snacks (granola bars, trail mix)',
+      'Phone + portable charger',
+      'Sunglasses',
+      'Hat',
+      'Rain jacket (always!)',
+      'Warm layer (fleece or hoodie)',
+      'Map or trail guide (offline - no cell service)',
+      'Hand sanitizer',
+      'Kleenex or toilet paper (backcountry bathrooms can run out)',
+      'Lip balm',
+      'Small first aid kit (band-aids, blister pads)'
+    ],
+    'Car / Road Trip Extras': [
+      'Reusable shopping bags (groceries, markets)',
+      'Insulated cooler bag (keep snacks/drinks cold)',
+      'Travel mug or water bottle',
+      'Road trip snacks (chips, candy, crackers)',
+      'Pillow or neck pillow (long drives!)',
+      'Blanket or throw (car naps, picnics)',
+      'Garbage bags (keep car tidy)',
+      'Hand sanitizer + wipes',
+      'Gum or mints',
+      'Book or Kindle (downtime, ferry rides)',
+      'Journal or notebook (trip memories!)'
+    ],
+    'Cabin / Accommodation Extras': [
+      'Slippers or cozy socks',
+      'Book or e-reader',
+      'Playing cards or travel games',
+      'Small towel (lake/hot tub - cabins provide bath towels)',
+      'Laundry bag (dirty clothes)',
+      'Ziploc bags (wet swimsuits, leftovers)',
+      'Phone stand or small tripod (family photos!)'
+    ]
+  };
+
+  const daySpecificNotes = [
+    {
+      title: 'Fishing (Day 3 - Maligne Lake)',
+      items: [
+        'Warm layers (on the water = cold!)',
+        'Sunscreen, hat, sunglasses',
+        'Rain jacket',
+        'Waterproof shoes or hiking boots',
+        'Camera!'
+      ]
+    },
+    {
+      title: 'Columbia Icefield (Day 5)',
+      items: [
+        'HIKING SHOES REQUIRED (no sandals, flats, or fashion sneakers)',
+        'Warm jacket (it\'s 15°C colder than the forecast)',
+        'Gloves or hand warmers (optional but nice)',
+        'Sunglasses (glacier glare is blinding)',
+        'Sunscreen'
+      ]
+    },
+    {
+      title: 'Moraine Lake + Post Hotel Dinner (Day 6)',
+      items: [
+        '🎒 PACK CHANGE OF CLOTHES IN DAY PACK:',
+        '  • Long pants (no shorts)',
+        '  • Closed-toe shoes (no sneakers, hiking boots, or sandals)',
+        '  • Nice top',
+        '  • Light cardigan',
+        'Hiking outfit for shuttle',
+        'Camera (Moraine Lake is the postcard shot)'
+      ]
+    },
+    {
+      title: 'Whitewater Rafting (Day 10)',
+      items: [
+        'Swimsuit (wear under clothes)',
+        'Quick-dry clothes (you WILL get soaked)',
+        'Towel',
+        'Change of clothes in car',
+        'Secure shoes (Tevas, old sneakers - will get wet)',
+        'Sunscreen (waterproof!)',
+        'Hair tie'
+      ]
+    }
+  ];
+
+  const totalItems = Object.values(packingData).flat().length;
+  const checkedCount = Object.values(checkedItems).filter(Boolean).length;
+
+  return (
+    <div className="explore-panel">
+      <div className="explore-header">
+        <div>
+          <div className="explore-title">Packing List</div>
+          <div className="explore-subtitle">{checkedCount} of {totalItems} packed</div>
+        </div>
+        <button className="explore-close" onClick={onClose}>Done</button>
+      </div>
+
+      <div className="packing-list">
+        {Object.entries(packingData).map(([category, items]) => (
+          <div key={category} className="packing-category">
+            <div className="packing-category-title">{category}</div>
+            {items.map((item, i) => {
+              const key = `${category}-${i}`;
+              return (
+                <label key={key} className="packing-item">
+                  <input
+                    type="checkbox"
+                    checked={checkedItems[key] || false}
+                    onChange={() => toggleItem(key)}
+                  />
+                  <span className={checkedItems[key] ? 'checked' : ''}>{item}</span>
+                </label>
+              );
+            })}
+          </div>
+        ))}
+
+        <div className="packing-category">
+          <div className="packing-category-title">Day-Specific Notes</div>
+          {daySpecificNotes.map((note, i) => (
+            <div key={i} className="day-note">
+              <div className="day-note-title">{note.title}</div>
+              <ul>
+                {note.items.map((item, j) => (
+                  <li key={j}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Explore panel for optional activities
 function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, onAddActivity, onRemoveActivity, activityConditions }) {
   const [view, setView] = useState('activities'); // 'activities' or 'food'
@@ -514,6 +745,7 @@ export default function App() {
   const [activeLayers, setActiveLayers] = useState([1, 2, 3, 4]);
   const [prefsOpen, setPrefsOpen] = useState(false);
   const [exploreArea, setExploreArea] = useState(null);
+  const [packingListOpen, setPackingListOpen] = useState(false);
   const [photoGallery, setPhotoGallery] = useState(null);
   const [weather, setWeather] = useState({});
   // Per-activity conditions from Parks Canada scraper: { activityId: { severity, condition, comment } }
@@ -810,20 +1042,30 @@ export default function App() {
           <h1 className="header-title">Rockies 2026</h1>
           <div className="header-meta">{TRIP_DATA.dates} · {TRIP_DATA.totalKm.toLocaleString()} km</div>
         </div>
-        <button
-          className="prefs-btn"
-          onClick={() => setPrefsOpen(!prefsOpen)}
-          aria-label="Preferences"
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="4" y1="21" x2="4" y2="14" /><line x1="4" y1="10" x2="4" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="12" /><line x1="12" y1="8" x2="12" y2="3" />
-            <line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" />
-            <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" />
-            <line x1="17" y1="16" x2="23" y2="16" />
-          </svg>
-          {activeLayerCount < 4 && <span className="prefs-badge">{activeLayerCount}</span>}
-        </button>
+        <div className="header-actions">
+          <button
+            className="packing-btn"
+            onClick={() => setPackingListOpen(true)}
+            aria-label="Packing List"
+            title="Packing List"
+          >
+            🎒
+          </button>
+          <button
+            className="prefs-btn"
+            onClick={() => setPrefsOpen(!prefsOpen)}
+            aria-label="Preferences"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="4" y1="21" x2="4" y2="14" /><line x1="4" y1="10" x2="4" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="12" /><line x1="12" y1="8" x2="12" y2="3" />
+              <line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" />
+              <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" />
+              <line x1="17" y1="16" x2="23" y2="16" />
+            </svg>
+            {activeLayerCount < 4 && <span className="prefs-badge">{activeLayerCount}</span>}
+          </button>
+        </div>
       </header>
 
       {/* Trip progress bar */}
@@ -1211,6 +1453,14 @@ export default function App() {
           );
         })}
       </div>
+
+      {/* Packing list panel */}
+      {packingListOpen && (
+        <>
+          <div className="explore-backdrop" onClick={() => setPackingListOpen(false)} />
+          <PackingListPanel onClose={() => setPackingListOpen(false)} />
+        </>
+      )}
 
       {/* Explore activities panel */}
       {exploreArea && (
