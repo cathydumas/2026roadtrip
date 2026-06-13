@@ -44,6 +44,12 @@ const TRAIL_MAP_ALBERTA_PARKS = {
 // Checks both fields since avalanche warnings are sometimes in the comment only
 function classifySeverity(condition, comment) {
   const text = ((condition || '') + ' ' + (comment || '')).toLowerCase();
+
+  // Special case: Moraine Lake road closure for personal vehicles is normal (shuttle access)
+  if (text.includes('moraine lake') && text.includes('closed to personal vehicle') && text.includes('shuttle')) {
+    return 'caution'; // Yellow warning, not red
+  }
+
   if (text.includes('closed') || text.includes('no access')) return 'closed';
   if (text.includes('hazardous') || text.includes('not recommended') || text.includes('avalanche')) return 'hazardous';
   if (text.includes('warning') || text.includes('poor') || text.includes('variable') || text.includes('wet') || text.includes('winter condition') || text.includes('snow covered') || text.includes('icy') || text.includes('muddy')) return 'caution';
