@@ -60,12 +60,25 @@ body {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.header-mountains {
+  height: 24px;
+  width: 120px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  .header-mountains path {
+    opacity: 0.7;
+  }
 }
 
 .header-meta {
   font-size: 13px;
   color: var(--text-secondary);
-  margin-top: 2px;
 }
 
 .header-actions {
