@@ -1090,6 +1090,22 @@ export default function App() {
         </div>
       </div>
 
+      {/* Get Ready banner - shows before trip starts */}
+      {now < tripStart && (
+        <div className="get-ready-banner">
+          <div className="get-ready-content">
+            <div className="get-ready-icon">🎒</div>
+            <div className="get-ready-text">
+              <div className="get-ready-title">Get Ready for the Rockies</div>
+              <div className="get-ready-subtitle">{daysUntilTrip} days until departure - time to pack!</div>
+            </div>
+            <button className="get-ready-btn" onClick={() => setPackingListOpen(true)}>
+              View packing list
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Day cards */}
       <div className="days-container">
         {TRIP_DATA.days.map(day => {
