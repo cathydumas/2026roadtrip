@@ -1019,6 +1019,7 @@ export default function App() {
   const tripStart = new Date('2026-06-14');
   const tripEnd = new Date('2026-06-24');
   const now = new Date();
+  now.setHours(0, 0, 0, 0); // Normalize to start of day for consistent counting
   const tripProgress = now < tripStart ? 0 : now > tripEnd ? 100 : Math.round(((now - tripStart) / (tripEnd - tripStart)) * 100);
   const currentDayNum = getTodayId();
   const daysUntilTrip = Math.max(0, Math.ceil((tripStart - now) / (1000 * 60 * 60 * 24)));
@@ -1026,6 +1027,7 @@ export default function App() {
   // Countdown to a specific date
   const getDaysUntil = (dayDate) => {
     const date = new Date(`${dayDate.replace(/^[A-Za-z]+ /, '')} 2026`);
+    date.setHours(0, 0, 0, 0); // Normalize to start of day
     const diff = Math.ceil((date - now) / (1000 * 60 * 60 * 24));
     return diff;
   };
