@@ -293,166 +293,170 @@ function PackingListPanel({ onClose }) {
   };
 
   const packingData = {
-    'Essential Documents & Money': [
-      'Driver\'s license or ID',
-      'Health insurance card (BC Care Card)',
-      'Credit/debit cards',
-      'Cash (small bills for tips, parking, small vendors)',
-      'Park pass confirmation (if applicable)',
-      'Activity confirmations (saved on phone is fine)'
+    '📋 Essentials': [
+      '🪪 Driver\'s license or ID',
+      '🏥 Health insurance card (BC Care Card)',
+      '💳 Credit/debit cards',
+      '💵 Cash (small bills for tips, parking)',
+      '🎫 Park pass confirmation',
+      '📱 Activity confirmations (screenshot them!)'
     ],
-    'Clothing - Everyday Basics': [
-      '5-6 T-shirts / casual tops',
-      '2-3 long-sleeve shirts (layering, sun protection)',
-      '1 flannel or button-down shirt',
-      '2-3 pairs of shorts',
-      '2 pairs of jeans or hiking pants',
-      '1 pair of leggings (hiking, lounging, layering)',
-      'Light fleece or hoodie',
-      'Rain jacket (waterproof, breathable - essential!)',
-      'Warm jacket or puffer (evenings are cold, glacier stops)',
-      'Underwear (7-8 pairs)',
-      'Socks (7-8 pairs - mix of regular and hiking)',
-      'Sports bra (if hiking)',
-      'Pajamas',
-      'Swimsuit (hot tubs at Patricia Lake and Canmore!)'
+    '👕 Everyday Fits': [
+      '👚 5-6 T-shirts / casual tops',
+      '🧥 2-3 long-sleeve shirts (layering)',
+      '🪵 1 flannel or button-down',
+      '🩳 2-3 pairs of shorts',
+      '👖 2 pairs of jeans or hiking pants',
+      '🧘 Leggings (hiking, lounging)',
+      '🧥 Light fleece or hoodie',
+      '🌧️ Rain jacket (waterproof - essential!)',
+      '🧊 Warm puffer jacket (glacier stops are cold)',
+      '🩲 Underwear (7-8 pairs)',
+      '🧦 Socks (7-8 pairs - hiking + regular)',
+      '🏃‍♀️ Sports bra',
+      '😴 Pajamas',
+      '🩱 Swimsuit (hot tubs at Patricia Lake + Canmore!)'
     ],
-    'Clothing - Fancy Dinner Outfit': [
-      'One nice outfit (casual elegant - long pants or dress)',
-      'Closed-toe shoes (not sandals/sneakers)',
-      'Light cardigan or blazer (restaurants can be cold)'
+    '✨ Fancy Dinner Night': [
+      '👗 One nice outfit (casual elegant)',
+      '👞 Closed-toe shoes (no sneakers/sandals)',
+      '🧥 Light cardigan or blazer'
     ],
-    'Footwear': [
-      'Hiking boots or sturdy trail shoes (broken in!)',
-      'Comfortable walking shoes or sneakers',
-      'Sandals or flip-flops (hot tub, cabin)',
-      'Nice shoes for dinner (flats, loafers, or low boots)'
+    '👟 Shoes': [
+      '🥾 Hiking boots (broken in!)',
+      '👟 Walking shoes or sneakers',
+      '🩴 Sandals or flip-flops (hot tub)',
+      '👠 Nice shoes for dinner (flats/loafers)'
     ],
-    'Accessories': [
-      'Baseball cap or sun hat',
-      'Warm toque (glacier stops, early mornings)',
-      'Sunglasses (essential - mountain glare is intense)'
+    '🧢 Accessories': [
+      '🧢 Baseball cap or sun hat',
+      '🧣 Warm toque (glacier stops)',
+      '🕶️ Sunglasses (mountain glare is real)'
     ],
-    'Hiking & Outdoor Gear': [
-      'Day pack (20-30L)',
-      'Refillable water bottle (1L minimum - bring 2!)',
-      'Snacks (trail mix, protein bars, jerky)',
-      'Headlamp or flashlight (late Moraine Lake shuttle)',
-      'Trekking poles (optional - helpful for longer hikes)',
-      'Dry bag or ziplock bags (protect phone/camera from rain)',
-      'Bear spray (buying in Jasper - don\'t pack this!)'
+    '🥾 Outdoor Gear': [
+      '🎒 Day pack (20-30L)',
+      '💧 Water bottle x2 (1L minimum each)',
+      '🍫 Snacks (trail mix, protein bars)',
+      '🔦 Headlamp or flashlight',
+      '🥢 Trekking poles (optional)',
+      '🎒 Dry bag or ziplock bags',
+      '🐻 Bear spray (buying in Jasper!)'
     ],
-    'Toiletries & Personal Care': [
-      'Toothbrush & toothpaste',
-      'Shampoo & conditioner (travel size or share)',
-      'Body wash or soap',
-      'Face wash',
-      'Moisturizer (dry mountain air!)',
-      'Sunscreen SPF 50+ (reapply every 2 hours - high altitude UV is brutal)',
-      'Lip balm with SPF',
-      'Deodorant',
-      'Hair ties / clips',
-      'Brush or comb',
-      'Razor',
-      'Feminine hygiene products',
-      'Makeup (if you wear it)',
-      'Glasses / contacts + solution',
-      'Prescription medications (if any)',
-      'First aid basics (band-aids, Advil, Benadryl)',
-      'Bug spray (mosquitoes love lakes and trails)',
-      'Hand sanitizer',
-      'Tissues or wet wipes'
+    '🧴 Toiletries': [
+      '🪥 Toothbrush & toothpaste',
+      '🧴 Shampoo & conditioner',
+      '🧼 Body wash',
+      '🧖‍♀️ Face wash',
+      '💧 Moisturizer (dry mountain air)',
+      '☀️ Sunscreen SPF 50+ (reapply often!)',
+      '💋 Lip balm with SPF',
+      '🧴 Deodorant',
+      '🎀 Hair ties / clips',
+      '🪮 Brush or comb',
+      '🪒 Razor',
+      '🩸 Feminine hygiene products',
+      '💄 Makeup (if you wear it)',
+      '👓 Glasses / contacts + solution',
+      '💊 Prescription meds',
+      '🩹 First aid (band-aids, Advil, Benadryl)',
+      '🦟 Bug spray',
+      '🧼 Hand sanitizer',
+      '🧻 Tissues or wet wipes'
     ],
-    'Electronics & Tech': [
-      'Phone + charger',
-      'Portable battery pack (cell service is spotty!)',
-      'Camera (if not using phone)',
-      'Earbuds or headphones',
-      'Car charger or USB adapter',
-      'Laptop or tablet (if needed for work/school)'
+    '📱 Tech': [
+      '📱 Phone + charger',
+      '🔋 Portable battery pack',
+      '📷 Camera (if not using phone)',
+      '🎧 Earbuds or headphones',
+      '🚗 Car charger',
+      '💻 Laptop or tablet (if needed)'
     ],
-    'Day Trip Essentials': [
-      'Sunscreen',
-      'Water bottle (full!)',
-      'Snacks (granola bars, trail mix)',
-      'Phone + portable charger',
-      'Sunglasses',
-      'Hat',
-      'Rain jacket (always!)',
-      'Warm layer (fleece or hoodie)',
-      'Map or trail guide (offline - no cell service)',
-      'Hand sanitizer',
-      'Kleenex or toilet paper (backcountry bathrooms can run out)',
-      'Lip balm',
-      'Small first aid kit (band-aids, blister pads)'
+    '🌄 Day Pack Must-Haves': [
+      '☀️ Sunscreen',
+      '💧 Full water bottle',
+      '🍫 Snacks',
+      '📱 Phone + portable charger',
+      '🕶️ Sunglasses',
+      '🧢 Hat',
+      '🌧️ Rain jacket',
+      '🧥 Warm layer (fleece/hoodie)',
+      '🗺️ Offline maps (no cell service)',
+      '🧼 Hand sanitizer',
+      '🧻 Kleenex or TP (trust me)',
+      '💋 Lip balm',
+      '🩹 Small first aid kit'
     ],
-    'Car / Road Trip Extras': [
-      'Reusable shopping bags (groceries, markets)',
-      'Insulated cooler bag (keep snacks/drinks cold)',
-      'Travel mug or water bottle',
-      'Road trip snacks (chips, candy, crackers)',
-      'Pillow or neck pillow (long drives!)',
-      'Blanket or throw (car naps, picnics)',
-      'Garbage bags (keep car tidy)',
-      'Hand sanitizer + wipes',
-      'Gum or mints',
-      'Book or Kindle (downtime, ferry rides)',
-      'Journal or notebook (trip memories!)'
+    '🚗 Road Trip Vibes': [
+      '🛍️ Reusable shopping bags',
+      '🧊 Insulated cooler bag',
+      '☕ Travel mug',
+      '🍿 Road trip snacks',
+      '😴 Pillow or neck pillow',
+      '🧸 Blanket or throw',
+      '🗑️ Garbage bags',
+      '🧼 Hand sanitizer + wipes',
+      '🍬 Gum or mints',
+      '📖 Book or Kindle',
+      '📔 Journal (capture the memories!)'
     ],
-    'Cabin / Accommodation Extras': [
-      'Slippers or cozy socks',
-      'Book or e-reader',
-      'Playing cards or travel games',
-      'Small towel (lake/hot tub - cabins provide bath towels)',
-      'Laundry bag (dirty clothes)',
-      'Ziploc bags (wet swimsuits, leftovers)',
-      'Phone stand or small tripod (family photos!)'
+    '🏡 Cabin Life': [
+      '🥿 Slippers or cozy socks',
+      '📖 Book or e-reader',
+      '🃏 Playing cards or games',
+      '🏖️ Small towel (lake/hot tub)',
+      '🧺 Laundry bag',
+      '🥡 Ziploc bags',
+      '📱 Phone stand or tripod (selfies!)'
     ]
   };
 
   const daySpecificNotes = [
     {
-      title: 'Fishing (Day 3 - Maligne Lake)',
+      title: '🎣 Fishing Day (Day 3 - Maligne Lake)',
+      emoji: '🎣',
       items: [
-        'Warm layers (on the water = cold!)',
-        'Sunscreen, hat, sunglasses',
-        'Rain jacket',
-        'Waterproof shoes or hiking boots',
-        'Camera!'
+        '🧥 Warm layers (on the water = freezing)',
+        '☀️ Sunscreen, hat, sunglasses',
+        '🌧️ Rain jacket',
+        '🥾 Waterproof shoes or hiking boots',
+        '📷 Camera (the views are unreal)'
       ]
     },
     {
-      title: 'Columbia Icefield (Day 5)',
+      title: '🧊 Columbia Icefield Day (Day 5)',
+      emoji: '❄️',
       items: [
-        'HIKING SHOES REQUIRED (no sandals, flats, or fashion sneakers)',
-        'Warm jacket (it\'s 15°C colder than the forecast)',
-        'Gloves or hand warmers (optional but nice)',
-        'Sunglasses (glacier glare is blinding)',
-        'Sunscreen'
+        '🥾 HIKING SHOES REQUIRED (no sandals/flats)',
+        '🧥 Warm jacket (15°C colder than forecast)',
+        '🧤 Gloves or hand warmers (trust)',
+        '🕶️ Sunglasses (glacier glare is blinding)',
+        '☀️ Sunscreen'
       ]
     },
     {
-      title: 'Moraine Lake + Post Hotel Dinner (Day 6)',
+      title: '🏔️ Moraine Lake + Fancy Dinner (Day 6)',
+      emoji: '✨',
       items: [
-        '🎒 PACK CHANGE OF CLOTHES IN DAY PACK:',
-        '  • Long pants (no shorts)',
-        '  • Closed-toe shoes (no sneakers, hiking boots, or sandals)',
-        '  • Nice top',
-        '  • Light cardigan',
-        'Hiking outfit for shuttle',
-        'Camera (Moraine Lake is the postcard shot)'
+        '🎒 PACK OUTFIT CHANGE IN DAY PACK:',
+        '  👖 Long pants (no shorts)',
+        '  👞 Closed-toe shoes (no sneakers/boots/sandals)',
+        '  👗 Nice top',
+        '  🧥 Light cardigan',
+        '🥾 Hiking outfit for shuttle',
+        '📷 Camera (most Instagrammable spot)'
       ]
     },
     {
-      title: 'Whitewater Rafting (Day 10)',
+      title: '🌊 Whitewater Rafting Day (Day 10)',
+      emoji: '🚣‍♀️',
       items: [
-        'Swimsuit (wear under clothes)',
-        'Quick-dry clothes (you WILL get soaked)',
-        'Towel',
-        'Change of clothes in car',
-        'Secure shoes (Tevas, old sneakers - will get wet)',
-        'Sunscreen (waterproof!)',
-        'Hair tie'
+        '🩱 Swimsuit (wear under clothes)',
+        '💧 Quick-dry clothes (you WILL get drenched)',
+        '🏖️ Towel',
+        '👕 Change of clothes in car',
+        '👟 Secure shoes (Tevas, old sneakers)',
+        '☀️ Waterproof sunscreen',
+        '🎀 Hair tie'
       ]
     }
   ];
@@ -491,10 +495,13 @@ function PackingListPanel({ onClose }) {
         ))}
 
         <div className="packing-category">
-          <div className="packing-category-title">Day-Specific Notes</div>
+          <div className="packing-category-title">📅 Day-Specific Notes</div>
           {daySpecificNotes.map((note, i) => (
             <div key={i} className="day-note">
-              <div className="day-note-title">{note.title}</div>
+              <div className="day-note-header">
+                <span className="day-note-emoji">{note.emoji}</span>
+                <div className="day-note-title">{note.title}</div>
+              </div>
               <ul>
                 {note.items.map((item, j) => (
                   <li key={j}>{item}</li>
