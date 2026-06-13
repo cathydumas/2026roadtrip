@@ -60,25 +60,12 @@ body {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 4px;
-}
-
-.header-mountains {
-  height: 24px;
-  width: 120px;
-  margin-bottom: 4px;
-  display: block;
-}
-
-@media (prefers-color-scheme: dark) {
-  .header-mountains path {
-    opacity: 0.7;
-  }
 }
 
 .header-meta {
   font-size: 13px;
   color: var(--text-secondary);
+  margin-top: 2px;
 }
 
 .header-actions {
@@ -143,7 +130,7 @@ body {
 /* ===== TRIP PROGRESS ===== */
 .trip-progress {
   padding: 12px 20px 0;
-  max-width: 1200px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
@@ -199,7 +186,7 @@ body {
 /* ===== DAYS ===== */
 .days-container {
   padding: 12px 16px;
-  max-width: 1200px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
@@ -1663,19 +1650,11 @@ body {
 
 /* ===== GET READY BANNER ===== */
 .get-ready-banner {
-  margin: 20px auto 24px;
-  max-width: 1200px;
-  padding: 20px;
+  margin: 20px 20px 24px;
   background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
   border-radius: 16px;
+  padding: 20px;
   box-shadow: 0 8px 24px rgba(0,122,255,0.25);
-}
-
-@media (min-width: 1240px) {
-  .get-ready-banner {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
 }
 
 .get-ready-content {
