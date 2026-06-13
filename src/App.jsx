@@ -410,57 +410,6 @@ function PackingListPanel({ onClose }) {
     ]
   };
 
-  const daySpecificNotes = [
-    {
-      title: '🎣 Fishing Day (Day 3 - Maligne Lake)',
-      emoji: '🎣',
-      items: [
-        '🧥 Warm layers (on the water = freezing)',
-        '☀️ Sunscreen, hat, sunglasses',
-        '🌧️ Rain jacket',
-        '🥾 Waterproof shoes or hiking boots',
-        '📷 Camera (the views are unreal)'
-      ]
-    },
-    {
-      title: '🧊 Columbia Icefield Day (Day 5)',
-      emoji: '❄️',
-      items: [
-        '🥾 HIKING SHOES REQUIRED (no sandals/flats)',
-        '🧥 Warm jacket (15°C colder than forecast)',
-        '🧤 Gloves or hand warmers (trust)',
-        '🕶️ Sunglasses (glacier glare is blinding)',
-        '☀️ Sunscreen'
-      ]
-    },
-    {
-      title: '🏔️ Moraine Lake + Fancy Dinner (Day 6)',
-      emoji: '✨',
-      items: [
-        '🎒 PACK OUTFIT CHANGE IN DAY PACK:',
-        '  👖 Long pants (no shorts)',
-        '  👞 Closed-toe shoes (no sneakers/boots/sandals)',
-        '  👗 Nice top',
-        '  🧥 Light cardigan',
-        '🥾 Hiking outfit for shuttle',
-        '📷 Camera (most Instagrammable spot)'
-      ]
-    },
-    {
-      title: '🌊 Whitewater Rafting Day (Day 10)',
-      emoji: '🚣‍♀️',
-      items: [
-        '🩱 Swimsuit (wear under clothes)',
-        '💧 Quick-dry clothes (you WILL get drenched)',
-        '🏖️ Towel',
-        '👕 Change of clothes in car',
-        '👟 Secure shoes (Tevas, old sneakers)',
-        '☀️ Waterproof sunscreen',
-        '🎀 Hair tie'
-      ]
-    }
-  ];
-
   const totalItems = Object.values(packingData).flat().length;
   const checkedCount = Object.values(checkedItems).filter(Boolean).length;
 
@@ -493,23 +442,6 @@ function PackingListPanel({ onClose }) {
             })}
           </div>
         ))}
-
-        <div className="packing-category">
-          <div className="packing-category-title">📅 Day-Specific Notes</div>
-          {daySpecificNotes.map((note, i) => (
-            <div key={i} className="day-note">
-              <div className="day-note-header">
-                <span className="day-note-emoji">{note.emoji}</span>
-                <div className="day-note-title">{note.title}</div>
-              </div>
-              <ul>
-                {note.items.map((item, j) => (
-                  <li key={j}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
@@ -743,6 +675,58 @@ function ExplorePanel({ area, dayId, dayDate, onClose, mapProvider, plannedIds, 
     </div>
   );
 }
+
+// Day-specific packing notes - keyed by day ID
+const DAY_PACKING_NOTES = {
+  3: {
+    emoji: '🎣',
+    title: 'Fishing Day Essentials',
+    items: [
+      '🧥 Warm layers (on the water = freezing)',
+      '☀️ Sunscreen, hat, sunglasses',
+      '🌧️ Rain jacket',
+      '🥾 Waterproof shoes or hiking boots',
+      '📷 Camera (the views are unreal)'
+    ]
+  },
+  5: {
+    emoji: '❄️',
+    title: 'Columbia Icefield - Pack Smart',
+    items: [
+      '🥾 HIKING SHOES REQUIRED (no sandals/flats)',
+      '🧥 Warm jacket (15°C colder than forecast)',
+      '🧤 Gloves or hand warmers (trust)',
+      '🕶️ Sunglasses (glacier glare is blinding)',
+      '☀️ Sunscreen'
+    ]
+  },
+  6: {
+    emoji: '✨',
+    title: 'Moraine Lake + Fancy Dinner',
+    items: [
+      '🎒 PACK OUTFIT CHANGE IN DAY PACK:',
+      '  👖 Long pants (no shorts)',
+      '  👞 Closed-toe shoes (no sneakers/boots/sandals)',
+      '  👗 Nice top',
+      '  🧥 Light cardigan',
+      '🥾 Hiking outfit for shuttle',
+      '📷 Camera (most Instagrammable spot)'
+    ]
+  },
+  10: {
+    emoji: '🚣‍♀️',
+    title: 'Whitewater Rafting Day',
+    items: [
+      '🩱 Swimsuit (wear under clothes)',
+      '💧 Quick-dry clothes (you WILL get drenched)',
+      '🏖️ Towel',
+      '👕 Change of clothes in car',
+      '👟 Secure shoes (Tevas, old sneakers)',
+      '☀️ Waterproof sunscreen',
+      '🎀 Hair tie'
+    ]
+  }
+};
 
 export default function App() {
   const [expandedDay, setExpandedDay] = useState(getTodayId());
@@ -1279,6 +1263,21 @@ export default function App() {
                     </div>
                   )}
 
+
+                  {/* Day-specific packing note */}
+                  {DAY_PACKING_NOTES[day.id] && (
+                    <div className="day-packing-note">
+                      <div className="day-packing-header">
+                        <span className="day-packing-emoji">{DAY_PACKING_NOTES[day.id].emoji}</span>
+                        <div className="day-packing-title">{DAY_PACKING_NOTES[day.id].title}</div>
+                      </div>
+                      <ul className="day-packing-list">
+                        {DAY_PACKING_NOTES[day.id].items.map((item, i) => (
+                          <li key={i}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   {/* Items list */}
                   <div className="items-list">

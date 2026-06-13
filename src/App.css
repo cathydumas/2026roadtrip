@@ -1716,6 +1716,44 @@ body {
   }
 }
 
+/* ===== DAY PACKING NOTES ===== */
+.day-packing-note {
+  margin: 16px 20px 20px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(88,86,214,0.1) 0%, rgba(0,122,255,0.1) 100%);
+  border-radius: 12px;
+  border-left: 4px solid #5856D6;
+}
+
+.day-packing-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.day-packing-emoji {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.day-packing-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.day-packing-list {
+  margin-left: 20px;
+  color: var(--text-primary);
+}
+
+.day-packing-list li {
+  margin-bottom: 8px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
 /* ===== PACKING LIST ===== */
 .packing-list {
   padding: 16px 20px 80px;
